@@ -11,11 +11,20 @@ client.on('ready', () => {
 });
 
 client.on('message', msg => {
-    if (guildRepos.get(msg.guild.id).getPrefix() == msg.content.charAt(0)) {
-        command = msg.content.slice(1);
 
-        let args;
-        commands.get(command).run(msg,args);
+    msg.guild.repository = guildRepos.get(msg.guild.id)
+    const prefix = msg.guild.repository.getPrefix();
+
+    if (msg.author.id !== '774637611482349578' && msg.content.startsWith(prefix) === true) {
+        const args = msg.content.slice(prefix.length).trim().split(' ');
+        const command = args.shift().toLowerCase();
+
+        if (commands.has(command)) {
+            commands.get(command).run(msg,args);
+        }
+        else {
+            msg.reply(`There is no ${command} command!`)
+        }
     }
 
 });
