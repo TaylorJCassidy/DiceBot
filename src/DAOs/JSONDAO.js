@@ -4,12 +4,12 @@ const fs = require('fs');
 class JSONDAO {
 
     static filepath = './guildConfigs/';
-    guildID;
     filename;
+    guild;
 
     constructor(guildID) {
         this.guildID = guildID;
-        this.filename = `${JSONDAO.filepath}${this.guildID}.json`
+        this.filename = `${JSONDAO.filepath}${guildID}.json`
     }
 
     get jsonfile() {
@@ -22,18 +22,25 @@ class JSONDAO {
     }
 
     getPrefix() {
-        let guild = this.jsonfile;
-        if (guild === null) {
-            guild = new Guild();
-            fs.writeFileSync(this.filename,JSON.stringify(guild));
+        if (this.guild === undefined) {
+            this.guild = this.jsonfile;
+            if (this.guild === null) {
+                this.guild = new Guild();
+                fs.writeFileSync(this.filename,JSON.stringify(this.guild));
+            }
         }
-        return guild.prefix;
+        return this.guild.prefix;
     }
 
     setPrefix(prefix) {
-        const guild = this.jsonfile;
-        guild.prefix = prefix;
-        fs.writeFileSync(this.filename,JSON.stringify(guild));
+        this.guild.prefix = prefix;
+        try {
+            fs.writeFileSync(this.filename,JSON.stringify(this.guild));
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
     }
 }
 
