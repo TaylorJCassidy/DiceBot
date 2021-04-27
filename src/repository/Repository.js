@@ -11,8 +11,8 @@ class Repository {
         return this.dao.getPrefix();
     }
 
-    setPrefix() {
-        return this.dao.setPrefix();
+    setPrefix(prefix) {
+        return this.dao.setPrefix(prefix);
     }
 }
 
