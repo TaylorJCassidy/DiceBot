@@ -1,0 +1,8 @@
+class Guilds {
+
+    prefix
+
+    constructor() {
+
+    }
+}
