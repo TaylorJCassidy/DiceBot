@@ -9,7 +9,7 @@ module.exports = {
         \n${prefix}d20\
         \n${prefix}2d6+5\
         \n${prefix}3d12-3\
-        \n${prefix}69d420+911\n\ `/*
+        \n${prefix}69d420+911\n\
         \nThe command can also take these arguements:\n\
         \n~a    Advantage (Rolls twice and picks highest)\
         \n~d    Disadvantage (Rolls twice and picks lowest)\
@@ -18,14 +18,68 @@ module.exports = {
         \nThese arguements can used as such:\n\
         \n${prefix}d20 ~a       Rolls the d20 twice and picks the highest\
         \n${prefix}d20 ~d       Rolls the d20 twice and picks the lowest\
-        \n${prefix}d20 ~d ~vul  Same as above, but doubles final number`;*/
+        \n${prefix}d20 ~d ~vul  Same as above, but doubles final number`;
         
         const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Dice Info');
         msg.channel.send(finalHelp);
     },
-    roll: (msg,dicecontent) => {
-        const {randomNoGen} = require('../utils/randomNoGen.js');
+    diceController: function(msg,dicecontent) {
         dicecontent = dicecontent.toLowerCase();
+        let argsIndex = dicecontent.search(/~/);
+        if (argsIndex > 0) {
+            const diceToRoll = dicecontent.substring(0,argsIndex);
+            const args = dicecontent.substring(argsIndex).match(/(?<=~)\w+/g);
+            this.rollWithArguements(msg,diceToRoll,args);
+        }
+        else {
+            let diceResults = this.diceroller(dicecontent);
+            let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\
+            \nYou rolled: ${diceResults.diceRolls}`;
+            msg.channel.send(msgReturn);
+        }
+    },
+
+    rollWithArguements: function(msg,dicecontent,args) {
+        const diceResults = this.diceroller(dicecontent);
+        let msgReturn = `>>> ${msg.author.toString()}, `
+        
+        if (args.indexOf('a') >= 0) {
+            const diceResults2 = this.diceroller(dicecontent);
+            diceResults.total = resvul(diceResults.total);
+            diceResults2.total = resvul(diceResults2.total);
+            msgReturn += `**${diceResults.total > diceResults2.total ? diceResults.total:diceResults2.total}**\
+            \n1st Roll:   **${diceResults.total}**\t${diceResults.diceRolls}\
+            \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`
+        }
+        else if (args.indexOf('d') >= 0) {
+            const diceResults2 = this.diceroller(dicecontent);
+            diceResults.total = resvul(diceResults.total);
+            diceResults2.total = resvul(diceResults2.total);
+            msgReturn += `**${diceResults.total < diceResults2.total ? diceResults.total:diceResults2.total}**\
+            \n1st Roll:   **${diceResults.total}**\t${diceResults.diceRolls}\
+            \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`
+        }
+        else {
+            msgReturn += `**${resvul(diceResults.total)}**\
+            \nYou rolled: ${diceResults.diceRolls}`;
+        }
+        msg.channel.send(msgReturn);
+
+        function resvul(total) {
+            if (args.indexOf('res') >= 0) {
+                return Math.floor(total/2);
+            }
+            else if (args.indexOf('vul') >= 0) {
+                return Math.floor(total*2);
+            }
+            else {
+                return total;
+            }
+        }
+    },
+
+    diceroller: function(dicecontent) {
+        const {randomNoGen} = require('../utils/randomNoGen.js');
         let diceRolls = '';
 
         do {
@@ -62,8 +116,9 @@ module.exports = {
             dicecontent = dicecontent.replace(toReplace,randomNumbers);
         }
         while (dicecontent.includes('d'));
-        let msgReturn = `>>> ${msg.author.toString()}, **${new Function('return ' + dicecontent)()}**\
-        \nYou rolled: ${diceRolls.substring(0,diceRolls.length-2)}`
-        msg.channel.send(msgReturn);
+        return {
+            total: new Function('return ' + dicecontent)(),
+            diceRolls: diceRolls.substring(0,diceRolls.length-2)
+        };
     }
 }
