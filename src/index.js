@@ -4,7 +4,7 @@ const {token} = require("./config/token.json");
 const client = new Discord.Client();
 const commands = require('./utils/getCommands.js').getCommands();
 let guildRepos;
-const diceRegex = new RegExp(/^((((\d{0,4}d\d{1,6})|-?\d{1,6})[\+\-\*\/])*(\d{0,4}d\d{1,6})([\+\-\*\/]\d{1,6})*)$/,'i');
+const diceRegex = new RegExp(/^((((\d{0,4}d\d{1,6})|-?\d{1,6}) ?[\+\-\*\/] ?)*(\d{0,4}d\d{1,6})( ?[\+\-\*\/] ?\d{1,6})*( ?~(res|vul|a|d))*)$/,'i');
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
@@ -17,11 +17,10 @@ client.on('message', msg => {
     msg.guild.prefix = msg.guild.repository.getPrefix();
 
     if (msg.author.id !== '774637611482349578' && msg.content.startsWith(msg.guild.prefix)) {
-        msgcontent = msg.content.slice(msg.guild.prefix.length).trim();
+        let msgcontent = msg.content.slice(msg.guild.prefix.length).trim();
 
-        let dicecontent = msgcontent.replace(/ /g,'');
-        if (diceRegex.test(dicecontent)) {
-            commands.get('dice').roll(msg,dicecontent);
+        if (diceRegex.test(msgcontent)) {
+            commands.get('dice').diceController(msg,msgcontent);
         }
         else {
             const args = msgcontent.split(' ');
