@@ -3,7 +3,7 @@
 A Discord Dice bot written using NodeJS and a module called "Discord.JS".
 
 This bot can currently do:
-* Nothing
+* Roll a simple set of dice
 
 Planned:
 * Roll a complex set of dice
