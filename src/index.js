@@ -15,6 +15,7 @@ client.on('message', msg => {
 
     msg.guild.repository = guildRepos.get(msg.guild.id);
     msg.guild.prefix = msg.guild.repository.getPrefix();
+    const aliases = msg.guild.repository.getAliases();
 
     if (msg.author.id !== '774637611482349578' && msg.content.startsWith(msg.guild.prefix)) {
         let msgcontent = msg.content.slice(msg.guild.prefix.length).trim();
@@ -26,7 +27,10 @@ client.on('message', msg => {
             const args = msgcontent.split(' ');
             const command = args.shift().toLowerCase();
 
-            if (commands.has(command)) {
+            if (aliases.has(command)) {
+                commands.get('alias').aliasController();
+            }
+            else if (commands.has(command)) {
                 commands.get(command).run(msg,args);
             }
             else {
