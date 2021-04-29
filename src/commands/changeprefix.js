@@ -15,7 +15,7 @@ module.exports = {
                 msg.reply('There has been an error. Please try again.');
             }
             else {
-                msg.reply(`The prefix has been changed to '${args[0]}.'`);
+                msg.reply(`The prefix has been changed to '${args[0]}'`);
             }
         }
     }
