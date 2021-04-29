@@ -12,18 +12,31 @@ class JSONDAO {
         this.filename = `${JSONDAO.filepath}${guildID}.json`
     }
 
-    get jsonfile() {
+    getJsonFile() {
         try {
-            return JSON.parse(fs.readFileSync(this.filename));
+            const readObj = JSON.parse(fs.readFileSync(this.filename));
+            return new Guild(readObj);
         }
         catch (e) {
             return null;
         }
     }
 
+    setJsonFile() {
+        try {
+            fs.writeFileSync(this.filename,JSON.stringify(this.guild));
+            return true;
+        }
+        catch (e) {
+            return false;
+        }
+    }
+
+
+
     getPrefix() {
         if (this.guild === undefined) {
-            this.guild = this.jsonfile;
+            this.guild = this.getJsonFile();
             if (this.guild === null) {
                 this.guild = new Guild();
                 fs.writeFileSync(this.filename,JSON.stringify(this.guild));
@@ -34,13 +47,25 @@ class JSONDAO {
 
     setPrefix(prefix) {
         this.guild.prefix = prefix;
-        try {
-            fs.writeFileSync(this.filename,JSON.stringify(this.guild));
-            return true;
-        }
-        catch (e) {
-            return false;
-        }
+        return this.setJsonFile();
+    }
+
+    getAlias(alias) {
+        return this.guild.aliases.get(alias);
+    }
+
+    setAlias(alias,dice) {
+        this.guild.aliases.set(alias,dice);
+        return this.setJsonFile();
+    }
+
+    getAliases() {
+        return this.guild.aliases;
+    }
+
+    setAliases(aliases) {
+        this.guild.aliases = aliases;
+        this.setJsonFile();
     }
 }
 
