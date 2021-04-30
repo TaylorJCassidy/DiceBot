@@ -7,28 +7,12 @@ class Repository {
         this.dao = new JSONDAO(guildID);
     }
 
-    getPrefix() {
-        return this.dao.getPrefix();
+    getGuild() {
+        return this.dao.getGuild();
     }
 
-    setPrefix(prefix) {
-        return this.dao.setPrefix(prefix);
-    }
-
-    getAlias(alias) {
-        return this.dao.getAlias(alias);
-    }
-
-    setAlias(alias,dice) {
-        return this.dao.setAlias(alias,dice);
-    }
-
-    getAliases(aliases) {
-        return this.dao.getAliases(aliases);
-    }
-
-    setAliases(aliases) {
-        return this.dao.setAliases(aliases);
+    setGuild(guild) {
+        return this.dao.setGuild(guild);
     }
 }
 
