@@ -1,5 +1,8 @@
 class Guild {
 
+    prefix;
+    alias;
+
     constructor(guild) {
         if (guild === undefined) {
             this.prefix = '.'
