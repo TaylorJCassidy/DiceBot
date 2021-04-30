@@ -8,7 +8,7 @@ class JSONmodel {
             this.guild = new Guild();
         }
         else {
-            this.guild = json.guild || new Guild();
+            this.guild = new Guild(json.guild);
         }
     }
 }

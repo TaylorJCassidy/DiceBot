@@ -19,20 +19,20 @@ class GuildCache {
     }
 
     getAlias(alias) {
-        return this.guild.aliases.get(alias);
+        return this.guild.getAliases.get(alias);
     }
 
     setAlias(alias,dice) {
-        this.guild.aliases.set(alias,dice);
+        this.guild.getAliases.set(alias,dice);
         return this.repository.setGuild(this.guild);
     }
 
     getAliases() {
-        return this.guild.aliases;
+        return this.guild.getAliases();
     }
 
     setAliases(aliases) {
-        this.guild.aliases = aliases;
+        this.guild.setAliases(aliases);
         return this.repository.setGuild(this.guild);
     }
 }

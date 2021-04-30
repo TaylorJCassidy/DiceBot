@@ -1,18 +1,22 @@
 class Guild {
 
-    prefix = '.'
-    #aliases = [];
-
-    constructor() {
-
+    constructor(guild) {
+        if (guild === undefined) {
+            this.prefix = '.'
+            this.aliases = [];
+        }
+        else {
+            this.prefix = guild.prefix || '.';
+            this.aliases = guild.aliases || [];
+        }
     }
 
-    get aliases() {
-        return new Map(this.#aliases);
+    getAliases() {
+        return new Map(this.aliases);
     }
 
-    set aliases(aliases) {
-        this.#aliases = Array.from(aliases.entries());
+    setAliases(aliases) {
+        this.aliases = Array.from(aliases.entries());
     }
 }
 
