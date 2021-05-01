@@ -32,7 +32,7 @@ module.exports = {
             this.rollWithArguements(msg,diceToRoll,args);
         }
         else {
-            let diceResults = this.diceroller(dicecontent);
+            let diceResults = this.diceroller(dicecontent,msg.guild.cache.getRigged());
             let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\
             \nYou rolled: ${diceResults.diceRolls}`;
             this.formatReply(msg,msgReturn);
@@ -40,11 +40,11 @@ module.exports = {
     },
 
     rollWithArguements: function(msg,dicecontent,args) {
-        const diceResults = this.diceroller(dicecontent);
+        const diceResults = this.diceroller(dicecontent,msg.guild.cache.getRigged());
         let msgReturn = `>>> ${msg.author.toString()}, `
         
         if (args.indexOf('a') >= 0) {
-            const diceResults2 = this.diceroller(dicecontent);
+            const diceResults2 = this.diceroller(dicecontent,msg.guild.cache.getRigged());
             diceResults.total = resvul(diceResults.total);
             diceResults2.total = resvul(diceResults2.total);
             msgReturn += `**${diceResults.total > diceResults2.total ? diceResults.total:diceResults2.total}**\
@@ -52,7 +52,7 @@ module.exports = {
             \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`
         }
         else if (args.indexOf('d') >= 0) {
-            const diceResults2 = this.diceroller(dicecontent);
+            const diceResults2 = this.diceroller(dicecontent,msg.guild.cache.getRigged());
             diceResults.total = resvul(diceResults.total);
             diceResults2.total = resvul(diceResults2.total);
             msgReturn += `**${diceResults.total < diceResults2.total ? diceResults.total:diceResults2.total}**\
@@ -91,11 +91,10 @@ module.exports = {
         }
         else {
             msg.channel.send(msgReturn);
-        }
-        
+        }      
     },
 
-    diceroller: function(dicecontent) {
+    diceroller: function(dicecontent,rigged) {
         const {randomNoGen} = require('../utils/randomNoGen.js');
         let diceRolls = '';
 
@@ -117,20 +116,33 @@ module.exports = {
             }
             max = parseInt(rMax[0]);
             endIndex = rMax.index+rMax[0].length;
-            
-            let toReplace = dicecontent.slice(startIndex,endIndex);
+
             let randomNumbers = 0;
-            for (let i=0;i<multiplier;i++) {
-                let randomNo = randomNoGen(max,1);
-                randomNumbers += randomNo;
-                if (randomNo == max || randomNo == 1) {
-                    diceRolls += '__' + randomNo + '__, ';
+
+            if (rigged > 0) {
+                if (rigged == 2) {
+                    randomNumbers = max*multiplier;
+                    diceRolls += `__${max}__, `.repeat(multiplier);
                 }
                 else {
-                    diceRolls += randomNo + ', ';
+                    randomNumbers = 1*multiplier;
+                    diceRolls += '__1__, '.repeat(multiplier);
                 }
             }
-            dicecontent = dicecontent.replace(toReplace,randomNumbers);
+            else {
+                for (let i=0;i<multiplier;i++) {
+                    let randomNo = randomNoGen(max,1);
+                    randomNumbers += randomNo;
+                    if (randomNo == max || randomNo == 1) {
+                        diceRolls += '__' + randomNo + '__, ';
+                    }
+                    else {
+                        diceRolls += randomNo + ', ';
+                    }
+                }
+                
+            }
+            dicecontent = dicecontent.replace(dicecontent.slice(startIndex,endIndex),randomNumbers);
         }
         while (dicecontent.includes('d'));
         return {
