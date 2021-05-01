@@ -10,7 +10,7 @@ module.exports = {
         \n${prefix}alias add attack1 3d6+10\
         \n${prefix}alias add chr d20-2\
         \n${prefix}alias add flank1 4d8+3 ~a\
-        \nNo spaces should be used within the alias name\n\
+        \nThe alias name cannot include spaces and should not be the same as a default commands.\n\
         \nTo remove an alias format as such:\n\
         \n${prefix}alias remove <alias name>\
         \n${prefix}alias remove attack1\
@@ -37,37 +37,13 @@ module.exports = {
 
             switch (arguement) {
                 case 'add':
-                    split = args.search(/(?<=^\w+) /);
-                    if (split < 1) {
-                        msg.reply(`Invalid formatting, ${prefix}alias add <name> <dice>`)
-                    }
-                    else {
-                        const name = args.substring(0,split);
-                        const dice = args.substring(split+1);
-
-                        if (!diceRegex.test(dice)) {
-                            msg.reply('The dice provided is an invalid dice roll. Make sure you name has no spaces.');
-                        }
-                        else if (!/^(\w+)$/.test(name)){
-                            msg.reply('The name provided includes invalid characters.')
-                        }
-                        else {
-                            let status = msg.guild.cache.setAlias(name,dice);
-                            if (!status) {
-                                msg.reply('There has been an error. Please try again');
-                            }
-                            else {
-                                msg.reply(`Success! Alias '${name}' added.`);
-                            }
-                        }
-                    }
-                    
+                    this.addAlias(msg,args);
                     break;
                 case 'remove':
-
+                    this.removeAlias(msg,args);
                     break
                 case 'list':
-
+                    this.listAliases(msg)
                     break;
                 case 'help':
                     msg.channel.send(finalHelp);
@@ -75,7 +51,60 @@ module.exports = {
             }
         }
     },
-    aliasController: function() {
+    addAlias: function(msg,args) {
+        let split = args.search(/(?<=^\w+) /);
+        if (split < 1) {
+            msg.reply(`Invalid formatting ${prefix}alias add <name> <dice>`);
+        }
+        else {
+            const name = args.substring(0,split);
+            const dice = args.substring(split+1);
 
+            if (!diceRegex.test(dice)) {
+                msg.reply('The dice provided is an invalid dice roll. Make sure you name has no spaces.');
+            }
+            else if (!/^(\w+)$/.test(name)){
+                msg.reply('Invalid name. The name provided includes invalid characters.');
+            }
+            else if (msg.client.commands.has(name) || msg.guild.cache.getAliases().has(name)) {
+                msg.reply('Invalid name. The name provided overrides a command or a previous alias.');
+            }
+            else {
+                let status = msg.guild.cache.setAlias(name,dice);
+                if (!status) {
+                    msg.reply('There has been an error. Please try again');
+                }
+                else {
+                    msg.reply(`Alias '${name}' has been added.`);
+                }
+            }
+        }
+    },
+    removeAlias: function(msg,args) {
+        const name = args;
+        if (!/^(\w+)$/.test(name)){
+            msg.reply('Invalid name. The name provided includes invalid characters.');
+        }
+        else if (msg.guild.cache.getAliases().has(name)) {
+            let status = msg.guild.cache.removeAlias(name);
+            if (!status) {
+                msg.reply('There has been an error. Please try again');
+            }
+            else {
+                msg.reply(`Alias '${name}' has been removed.`);
+            }
+        }
+        else {
+            msg.reply(`There is no '${name}' alias.`)
+        }
+    },
+    listAliases: function(msg) {
+        const Discord = require('discord.js');
+
+        let msgReturn = '';
+        msg.guild.cache.getAliases().forEach((value,key) => {
+            msgReturn += `${key}:  ${value}\n`;
+        });
+        msg.channel.send(new Discord.MessageEmbed().setDescription('```' + msg.guild.name + '\'s Aliases:\t\t\n\n' + msgReturn + '```').setTitle('Alias List'));
     }
 }
