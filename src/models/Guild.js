@@ -14,6 +14,20 @@ class Guild {
         }
     }
 
+    setAlias(alias,dice) {
+        let lastIndex = this.aliases.length;
+        this.aliases[lastIndex] = [alias,dice];
+    }
+
+    getAlias(alias) {
+        return new Map(this.aliases).get(alias);
+    }
+
+    removeAlias(alias) {
+        let map = this.getAliases().delete(alias);
+        this.setAliases(map);
+    }
+
     getAliases() {
         return new Map(this.aliases);
     }
