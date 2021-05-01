@@ -25,13 +25,13 @@ client.on('message', msg => {
                 commands.get('dice').diceController(msg,msgcontent);
             }
             else {
-                let split = msgcontent.search(/\s|$/);
+                let split = msgcontent.search(/ |$/);
                 const aliases = cache.getAliases();
-                const command = msgcontent.substring(0,split);
+                const command = msgcontent.substring(0,split).toLowerCase();
                 const args = msgcontent.substring(split+1).trim();
 
                 if (aliases.has(command)) {
-                    commands.get('alias').aliasController();
+                    commands.get('dice').diceController(msg,aliases.get(command));
                 }
                 else if (commands.has(command)) {
                     commands.get(command).run(msg,args);
