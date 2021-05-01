@@ -37,7 +37,7 @@ class GuildCache {
     }
 
     getRigged() {
-        return this.rigged;
+        return this.guild.getRigged();
     }
 
     setRigged(rigged) {
