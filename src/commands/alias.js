@@ -3,7 +3,7 @@ module.exports = {
     run: function(msg,args) {
         const Discord = require('discord.js');
 
-        const prefix = msg.guild.prefix;
+        const prefix = msg.guild.cache.getPrefix();
         const help = `Can be used to save dice rolls for easy access later.\
         \nTo add an alias format as such:\n\
         \n${prefix}alias add <alias name> <dice>\
@@ -27,7 +27,8 @@ module.exports = {
             msg.channel.send(finalHelp);
         }
         else {
-            switch (args[0]) {
+            let arguements = args.split(' ');
+            switch (arguements[0]) {
                 case 'add':
                     
                     break;
