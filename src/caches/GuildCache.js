@@ -35,6 +35,15 @@ class GuildCache {
     getAliases() {
         return this.guild.getAliases();
     }
+
+    getRigged() {
+        return this.rigged;
+    }
+
+    setRigged(rigged) {
+        this.guild.setRigged(rigged);
+        return this.repository.setGuild(this.guild);
+    }
 }
 
 module.exports = GuildCache;

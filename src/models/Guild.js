@@ -2,6 +2,8 @@ class Guild {
 
     prefix;
     alias;
+    //-1- unriggable 0-not rigged 1-rigged low 2-rigged high
+    rigged = 1;
 
     constructor(guild) {
         if (guild === undefined) {
@@ -35,6 +37,22 @@ class Guild {
 
     setAliases(aliases) {
         this.aliases = Array.from(aliases.entries());
+    }
+
+    getRigged() {
+        return this.rigged;
+    }
+
+    /**
+     * Set the guild's rigged number.
+     * -1-unriggable 0-not rigged 1-rigged low 2-rigged high
+     * @param {int} rigged the rigged number
+     */
+    setRigged(rigged) {
+        if (rigged < -1 || rigged > 2) {
+            throw new Error('Guild rigged number must must be either >= -1 and =< 2'); 
+        }
+        this.rigged = rigged;
     }
 }
 
