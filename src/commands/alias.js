@@ -6,10 +6,11 @@ module.exports = {
         const prefix = msg.guild.cache.getPrefix();
         const help = `Can be used to save dice rolls for easy access later.\
         \nTo add an alias format as such:\n\
-        \n${prefix}alias add <alias name> <dice>\
+        \n${prefix}alias add <name> <dice>\
         \n${prefix}alias add attack1 3d6+10\
         \n${prefix}alias add chr d20-2\
-        \n${prefix}alias add flank1 4d8+3 ~a\n\
+        \n${prefix}alias add flank1 4d8+3 ~a\
+        \nNo spaces should be used within the alias name\n\
         \nTo remove an alias format as such:\n\
         \n${prefix}alias remove <alias name>\
         \n${prefix}alias remove attack1\
@@ -27,9 +28,39 @@ module.exports = {
             msg.channel.send(finalHelp);
         }
         else {
-            let arguements = args.split(' ');
-            switch (arguements[0]) {
+            const diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
+            args = args.toLowerCase();
+
+            let split = args.search(/ |$/)
+            const arguement = args.substring(0,split);
+            args = args.substring(split+1);
+
+            switch (arguement) {
                 case 'add':
+                    split = args.search(/(?<=^\w+) /);
+                    if (split < 1) {
+                        msg.reply(`Invalid formatting, ${prefix}alias add <name> <dice>`)
+                    }
+                    else {
+                        const name = args.substring(0,split);
+                        const dice = args.substring(split+1);
+
+                        if (!diceRegex.test(dice)) {
+                            msg.reply('The dice provided is an invalid dice roll. Make sure you name has no spaces.');
+                        }
+                        else if (!/^(\w+)$/.test(name)){
+                            msg.reply('The name provided includes invalid characters.')
+                        }
+                        else {
+                            let status = msg.guild.cache.setAlias(name,dice);
+                            if (!status) {
+                                msg.reply('There has been an error. Please try again');
+                            }
+                            else {
+                                msg.reply(`Success! Alias '${name}' added.`);
+                            }
+                        }
+                    }
                     
                     break;
                 case 'remove':
