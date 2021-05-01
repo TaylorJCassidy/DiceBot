@@ -3,6 +3,7 @@ const {token} = require("./config/token.json");
 
 const client = new Discord.Client();
 const commands = require('./utils/getCommands.js').getCommands();
+client.commands = commands;
 const diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
 let guildCaches;
 
