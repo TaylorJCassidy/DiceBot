@@ -35,7 +35,7 @@ module.exports = {
             let diceResults = this.diceroller(dicecontent);
             let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\
             \nYou rolled: ${diceResults.diceRolls}`;
-            msg.channel.send(msgReturn);
+            this.formatReply(msg,msgReturn);
         }
     },
 
@@ -63,7 +63,7 @@ module.exports = {
             msgReturn += `**${resvul(diceResults.total)}**\
             \nYou rolled: ${diceResults.diceRolls}`;
         }
-        msg.channel.send(msgReturn);
+        this.formatReply(msg,msgReturn);
 
         function resvul(total) {
             if (args.indexOf('res') >= 0) {
@@ -76,6 +76,23 @@ module.exports = {
                 return total;
             }
         }
+    },
+
+    formatReply: async function(msg,msgReturn) {
+        if (msgReturn.length > 6000) {
+            msg.channel.send("Result is too large to display.");
+        }
+        else if (msgReturn.length > 2000) {
+            do {
+                await msg.channel.send('>>> ' + msgReturn.substr(4,1996));
+                msgReturn = msgReturn.substr(1996);
+            }
+            while (msgReturn.length > 0);
+        }
+        else {
+            msg.channel.send(msgReturn);
+        }
+        
     },
 
     diceroller: function(dicecontent) {
