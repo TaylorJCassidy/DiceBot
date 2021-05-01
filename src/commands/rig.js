@@ -54,13 +54,18 @@ module.exports = {
                     }
                     break;
                 case 'toggle':
-                    if (rigged == -1) {
-                        msg.guild.cache.setRigged(0);
-                        msg.reply('The dice can now be rigged.')
+                    if (msg.member.hasPermission('ADMINISTRATOR')) {
+                        if (rigged == -1) {
+                            msg.guild.cache.setRigged(0);
+                            msg.reply('The dice can now be rigged.')
+                        }
+                        else {
+                            msg.guild.cache.setRigged(-1);
+                            msg.reply('The dice can now no longer be rigged.')
+                        }
                     }
                     else {
-                        msg.guild.cache.setRigged(-1);
-                        msg.reply('The dice can now no longer be rigged.')
+                        msg.reply('You do not have the permission to do this action.')
                     }
                     break;
                 case 'help':
