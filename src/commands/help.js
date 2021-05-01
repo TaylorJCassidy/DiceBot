@@ -2,7 +2,7 @@ module.exports = {
     name: 'help',
     run: (msg,args) => {
         const Discord = require('discord.js');
-        const prefix = msg.guild.prefix;
+        const prefix = msg.guild.cache.getPrefix();
 
         const help = 
          `${prefix}ping          Checks if the bot is still active\

@@ -3,7 +3,7 @@ module.exports = {
     run: (msg,args) => {
         const Discord = require('discord.js');
 
-        const prefix = msg.guild.prefix;
+        const prefix = msg.guild.cache.getPrefix();
         const help = 
         `Can roll any dice you want. Format the command as you would say it, e.g:\n\
         \n${prefix}d20\
