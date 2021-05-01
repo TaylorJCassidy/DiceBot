@@ -24,7 +24,8 @@ class Guild {
     }
 
     removeAlias(alias) {
-        let map = this.getAliases().delete(alias);
+        let map = this.getAliases();
+        map.delete(alias);
         this.setAliases(map);
     }
 
