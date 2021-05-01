@@ -9,37 +9,59 @@ module.exports = {
             let rigged = msg.guild.cache.getRigged();
             switch(args.shift()) {
                 case 'high':
-                    if (rigged != 2) {
-                        msg.guild.cache.setRigged(2);
-                        msg.reply('Dice is now rigged for maximum.');
+                    if (rigged != -1) {
+                        if (rigged != 2) {
+                            msg.guild.cache.setRigged(2);
+                            msg.reply('Dice is now rigged for maximum.');
+                        }
+                        else {
+                            msg.reply('Dice is no longer rigged.');
+                            msg.guild.cache.setRigged(0);
+                        }
                     }
                     else {
-                        msg.reply('Dice is no longer rigged');
-                        msg.guild.cache.setRigged(0);
+                        msg.reply('Dice cannot be rigged in this server');
                     }
                     break;
                 case 'low':
-                    if (rigged != 1) {
-                        msg.guild.cache.setRigged(1);
-                        msg.reply('Dice is now rigged for minimum.');
+                    if (rigged != -1) {
+                        if (rigged != 1) {
+                            msg.guild.cache.setRigged(1);
+                            msg.reply('Dice is now rigged for minimum.');
+                        }
+                        else {
+                            msg.reply('Dice is no longer rigged.');
+                            msg.guild.cache.setRigged(0);
+                        }
                     }
                     else {
-                        msg.reply('Dice is no longer rigged');
-                        msg.guild.cache.setRigged(0);
+                        msg.reply('Dice cannot be rigged in this server.');
                     }
                     break;
                 case 'status':
-                    if (rigged == 1) {
-                        msg.reply('The dice is rigged for minimum.');
-                    }
-                    else if (rigged == 2) {
-                        msg.reply('The dice is rigged for maximum.');
-                    }
-                    else {
-                        msg.reply('The dice is not rigged.');
+                    switch(rigged) {
+                        case 1:
+                            msg.reply('The dice is rigged for minimum.');
+                            break;
+                        case 2:
+                            msg.reply('The dice is rigged for maximum.');
+                            break;
+                        case -1:
+                            msg.reply('The dice cannot be rigged in this server.')
+                            break
+                        default:
+                            msg.reply('The dice is not rigged.');
                     }
                     break;
                 case 'toggle':
+                    if (rigged == -1) {
+                        msg.guild.cache.setRigged(0);
+                        msg.reply('The dice can now be rigged.')
+                    }
+                    else {
+                        msg.guild.cache.setRigged(-1);
+                        msg.reply('The dice can now no longer be rigged.')
+                    }
                     break;
                 case 'help':
                 default:
