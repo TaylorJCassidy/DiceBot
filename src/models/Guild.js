@@ -1,18 +1,19 @@
 class Guild {
 
     prefix;
-    alias;
     //-1- unriggable 0-not rigged 1-rigged low 2-rigged high
-    rigged = 1;
+    rigged;
 
     constructor(guild) {
         if (guild === undefined) {
             this.prefix = '.'
             this.aliases = [];
+            this.rigged = 1;
         }
         else {
             this.prefix = guild.prefix || '.';
             this.aliases = guild.aliases || [];
+            this.rigged = guild.rigged || 1;
         }
     }
 
