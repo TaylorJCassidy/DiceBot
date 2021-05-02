@@ -18,7 +18,7 @@ module.exports = {
         \n${prefix}stats         Shows random dnd stats\
         \n${prefix}getmod        Shows ability modifier of a number\
         \n${prefix}changeprefix  Changes prefix. Currently '${prefix}'`
-        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Dice Info');
+        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Help');
         msg.channel.send(finalHelp);
     }
 }
