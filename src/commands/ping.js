@@ -1,6 +1,6 @@
 module.exports = {
     name: 'ping',
-    run: (msg,args) => {
+    run: function(msg,args) {
         msg.reply('pong');
     }
 }

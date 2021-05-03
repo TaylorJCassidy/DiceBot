@@ -1,7 +1,7 @@
 module.exports = {
     name: 'maths',
     aliases: ['m','math'],
-    run: (msg,args) => {
+    run: function(msg,args) {
         let eq = args;
         if (/[^0-9%^*\/()\-+.]/g.test(eq)) {
             msg.reply('The equation only contain the following operators: () - + * / ^ %');

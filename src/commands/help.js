@@ -1,6 +1,6 @@
 module.exports = {
     name: 'help',
-    run: (msg,args) => {
+    run: function(msg,args) {
         const Discord = require('discord.js');
         const prefix = msg.guild.cache.getPrefix();
 

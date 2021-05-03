@@ -1,6 +1,6 @@
 module.exports = {
     name: 'changeprefix',
-    run: (msg,args) => {
+    run: function(msg,args) {
 
         if (args.length == 0) {
             msg.reply(`Please supply a prefix e.g. ${msg.guild.cache.getPrefix()}changeprefix /`)
