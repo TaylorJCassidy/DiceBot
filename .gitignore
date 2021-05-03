@@ -1,4 +1,5 @@
 /icon
 /src/config/token.json
-/guildConfigs
+/guildConfigs/*
 /todo.txt
+/src/commands/crab.js
