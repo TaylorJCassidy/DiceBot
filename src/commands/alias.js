@@ -10,7 +10,7 @@ module.exports = {
         \n${prefix}alias add attack1 3d6+10\
         \n${prefix}alias add chr d20-2\
         \n${prefix}alias add flank1 4d8+3 ~a\
-        \nThe alias name cannot include spaces and should not be the same as a default commands.\n\
+        \nThe alias name cannot include spaces and cannot be the same as any default commands.\n\
         \nTo remove an alias format as such:\n\
         \n${prefix}alias remove <alias name>\
         \n${prefix}alias remove attack1\
