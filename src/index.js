@@ -32,7 +32,7 @@ client.on('message', msg => {
                 const args = msgcontent.substring(split+1).trim();
 
                 if (aliases.has(command)) {
-                    commands.get('dice').diceController(msg,aliases.get(command));
+                    commands.get('dice').diceController(msg,aliases.get(command)+args);
                 }
                 else if (commands.has(command)) {
                     commands.get(command).run(msg,args);
