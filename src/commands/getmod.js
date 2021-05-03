@@ -6,7 +6,7 @@ module.exports = {
 
             const prefix = msg.guild.cache.getPrefix();
             const help = 
-            `Gets the D&D modifier of any whole number e.g:\n\
+            `Gets the D&D modifier of any positive whole number e.g:\n\
             \n${prefix}getmod <number>\
             \n${prefix}getmod 10  Would return 0\
             \n${prefix}getmod 20  Would return +5\
@@ -17,7 +17,7 @@ module.exports = {
         }
         else {
             if (!/^(\d{1,5})$/.test(args)) {
-                msg.reply('The number provided is not a number, or is too large.')
+                msg.reply('The number provided is not a positive whole number, or is too large.')
             }
             else {
                 msg.reply(this.getMod(args));
