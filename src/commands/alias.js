@@ -1,54 +1,25 @@
 module.exports = {
     name: 'alias',
     run: function(msg,args) {
-        const Discord = require('discord.js');
+        args = args.toLowerCase();
 
-        const prefix = msg.guild.cache.getPrefix();
-        const help = `Can be used to save dice rolls for easy access later.\
-        \nTo add an alias format as such:\n\
-        \n${prefix}alias add <name> <dice>\
-        \n${prefix}alias add attack1 3d6+10\
-        \n${prefix}alias add chr d20-2\
-        \n${prefix}alias add flank1 4d8+3 ~a\
-        \nThe alias name cannot include spaces and cannot be the same as any default commands.\n\
-        \nTo remove an alias format as such:\n\
-        \n${prefix}alias remove <alias name>\
-        \n${prefix}alias remove attack1\
-        \n${prefix}alias remove chr\n\
-        \nTo use a alias, format as such:\n\
-        \n${prefix}attack1\
-        \n${prefix}chr\n\
-        \nYou can also add arguements to the end of aliases.e.g.\n\
-        \n${prefix}attack1 ~a\
-        \n${prefix}chr ~res\n\
-        \nTo view a list of aliases, type ${prefix}alias list`;
-        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Alias Info');
+        let split = args.search(/ |$/)
+        const arguement = args.substring(0,split);
+        args = args.substring(split+1);
 
-        if (args.length == 0) {
-            msg.channel.send(finalHelp);
-        }
-        else {
-            
-            args = args.toLowerCase();
-
-            let split = args.search(/ |$/)
-            const arguement = args.substring(0,split);
-            args = args.substring(split+1);
-
-            switch (arguement) {
-                case 'add':
-                    this.addAlias(msg,args);
-                    break;
-                case 'remove':
-                    this.removeAlias(msg,args);
-                    break
-                case 'list':
-                    this.listAliases(msg)
-                    break;
-                case 'help':
-                    msg.channel.send(finalHelp);
-                    break;
-            }
+        switch (arguement) {
+            case 'add':
+                this.addAlias(msg,args);
+                break;
+            case 'remove':
+                this.removeAlias(msg,args);
+                break
+            case 'list':
+                this.listAliases(msg);
+                break;
+            case 'help':
+            default:
+                this.help(msg);
         }
     },
     addAlias: function(msg,args) {
@@ -107,5 +78,29 @@ module.exports = {
             msgReturn += `${key}:  ${value}\n`;
         });
         msg.channel.send(new Discord.MessageEmbed().setDescription('```' + msg.guild.name + '\'s Aliases:\t\t\n\n' + msgReturn + '```').setTitle('Alias List'));
+    },
+    help: function(msg) {
+        const Discord = require('discord.js');
+        const prefix = msg.guild.cache.getPrefix();
+        const help = `Can be used to save dice rolls for easy access later.\
+        \nTo add an alias format as such:\n\
+        \n${prefix}alias add <name> <dice>\
+        \n${prefix}alias add attack1 3d6+10\
+        \n${prefix}alias add chr d20-2\
+        \n${prefix}alias add flank1 4d8+3 ~a\
+        \nThe alias name cannot include spaces and cannot be the same as any default commands.\n\
+        \nTo remove an alias format as such:\n\
+        \n${prefix}alias remove <alias name>\
+        \n${prefix}alias remove attack1\
+        \n${prefix}alias remove chr\n\
+        \nTo use a alias, format as such:\n\
+        \n${prefix}attack1\
+        \n${prefix}chr\n\
+        \nYou can also add arguements to the end of aliases.e.g.\n\
+        \n${prefix}attack1 ~a\
+        \n${prefix}chr ~res\n\
+        \nTo view a list of aliases, type ${prefix}alias list`;
+        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Alias Info');
+        msg.channel.send(finalHelp);
     }
 }
