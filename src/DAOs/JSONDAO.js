@@ -1,4 +1,3 @@
-const Guild = require("../models/Guild.js")
 const fs = require('fs');
 const JSONmodel = require("./JSONmodel.js");
 
@@ -32,8 +31,20 @@ class JSONDAO {
             return true;
         }
         catch (e) {
+            console.log(e.message);
             return false;
         }
+    }
+
+    deleteGuild() {
+        try{
+            fs.rmSync(this.filename);
+            this.jsonModel = null;
+            return true;
+        }
+        catch(e) {
+            return false;
+        }     
     }
 }
 

@@ -14,6 +14,10 @@ class Repository {
     setGuild(guild) {
         return this.dao.setGuild(guild);
     }
+
+    deleteGuild(guildID) {
+        return this.dao.deleteGuild(guildID);
+    }
 }
 
 module.exports = Repository;
