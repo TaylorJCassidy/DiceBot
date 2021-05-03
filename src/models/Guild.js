@@ -8,12 +8,12 @@ class Guild {
         if (guild === undefined) {
             this.prefix = '.'
             this.aliases = [];
-            this.rigged = 1;
+            this.rigged = 0;
         }
         else {
             this.prefix = guild.prefix || '.';
             this.aliases = guild.aliases || [];
-            this.rigged = guild.rigged || 1;
+            this.rigged = guild.rigged || 0;
         }
     }
 
