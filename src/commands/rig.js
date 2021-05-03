@@ -74,10 +74,11 @@ module.exports = {
                     const prefix = msg.guild.cache.getPrefix();
                     const help = `Can be used to rig any dice rolled within this server\
                     \nTo rig a dice:\n\
-                    \n${prefix}rigged high   - Rigs the dice to only roll the maximum value\
-                    \n${prefix}rigged low    - Rigs the dice to only roll the minimum value\
-                    \n${prefix}rigged status - Shows the current rig status\
-                    \n${prefix}rigged toggle - Toggles whether the dice can be rigged`;
+                    \n${prefix}rig high   - Rigs the dice to only roll the maximum value\
+                    \n${prefix}rig low    - Rigs the dice to only roll the minimum value\
+                    \n${prefix}rig status - Shows the current rig status\n\
+                    \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
+                    \n${prefix}rig toggle - Toggles whether the dice can be rigged`;
                     const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Rig Info');
                     msg.channel.send(finalHelp);
             }

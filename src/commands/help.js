@@ -5,12 +5,13 @@ module.exports = {
         const prefix = msg.guild.cache.getPrefix();
 
         const help = 
-         `${prefix}ping          Checks if the bot is still active\
+         `${prefix}ping          Gets a pong response from the bot\
         \n${prefix}uptime        Shows uptime of the bot\
         \n${prefix}maths         Evaluate a maths expression\
         \n${prefix}d20           Rolls any dice .dice for info\
         \n${prefix}alias add     Adds an alias .alias for info\
         \n${prefix}alias remove  Removes an alias .alias for info\
+        \n${prefix}alias list    Lists all aliases in this server\
         \n${prefix}rig high      Rigs the dice to roll the maximum value\
         \n${prefix}rig low       Rigs the dice to roll the minimum value\
         \n${prefix}rig status    Shows if dice is rigged or not\
