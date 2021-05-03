@@ -3,7 +3,7 @@ module.exports = {
     run: function(msg,args) {
         args = args.toLowerCase();
 
-        let split = args.search(/ |$/)
+        const split = args.search(/ |$/)
         const arguement = args.substring(0,split);
         args = args.substring(split+1);
 
@@ -24,7 +24,7 @@ module.exports = {
     },
     addAlias: function(msg,args) {
         const diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
-        let split = args.search(/(?<=^\w+) /);
+        const split = args.search(/(?<=^\w+) /);
         if (split < 1) {
             msg.reply(`Invalid formatting ${prefix}alias add <name> <dice>`);
         }
@@ -44,7 +44,7 @@ module.exports = {
             else {
                 let status = msg.guild.cache.setAlias(name,dice);
                 if (!status) {
-                    msg.reply('There has been an error. Please try again');
+                    msg.reply('There has been an error. Please try again.');
                 }
                 else {
                     msg.reply(`Alias '${name}' has been added.`);
@@ -53,21 +53,20 @@ module.exports = {
         }
     },
     removeAlias: function(msg,args) {
-        const name = args;
-        if (!/^(\w+)$/.test(name)){
+        if (!/^(\w+)$/.test(args)){
             msg.reply('Invalid name. The name provided includes invalid characters.');
         }
-        else if (msg.guild.cache.getAliases().has(name)) {
-            let status = msg.guild.cache.removeAlias(name);
+        else if (msg.guild.cache.getAliases().has(args)) {
+            let status = msg.guild.cache.removeAlias(args);
             if (!status) {
-                msg.reply('There has been an error. Please try again');
+                msg.reply('There has been an error. Please try again.');
             }
             else {
-                msg.reply(`Alias '${name}' has been removed.`);
+                msg.reply(`Alias '${args}' has been removed.`);
             }
         }
         else {
-            msg.reply(`There is no '${name}' alias.`)
+            msg.reply(`There is no '${args}' alias.`)
         }
     },
     listAliases: function(msg) {

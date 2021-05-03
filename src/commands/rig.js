@@ -20,7 +20,7 @@ module.exports = {
                         }
                     }
                     else {
-                        msg.reply('Dice cannot be rigged in this server');
+                        msg.reply('Dice cannot be rigged in this server.');
                     }
                     break;
                 case 'low':
@@ -49,7 +49,7 @@ module.exports = {
                         case -1:
                             msg.reply('The dice cannot be rigged in this server.')
                             break
-                        default:
+                        case 0:
                             msg.reply('The dice is not rigged.');
                     }
                     break;
@@ -76,7 +76,8 @@ module.exports = {
                     \nTo rig a dice:\n\
                     \n${prefix}rig high    Rigs the dice to only roll the maximum value\
                     \n${prefix}rig low     Rigs the dice to only roll the minimum value\
-                    \n${prefix}rig status  Shows the current rig status\n\
+                    \n${prefix}rig status  Shows the current rig status\
+                    \nTo unrig the dice, simply repeat the same command e.g. if rigged high, retype ${prefix}rig high\n\
                     \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
                     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
                     const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Rig Info');
