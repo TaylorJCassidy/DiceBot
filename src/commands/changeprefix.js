@@ -5,8 +5,8 @@ module.exports = {
         if (args.length == 0) {
             msg.reply(`Please supply a prefix e.g. ${msg.guild.cache.getPrefix()}changeprefix /`)
         }
-        else if (!/^([^~\\'])$/.test(args)) {
-            msg.reply('Prefix cannot be more than one character and cannot be any of the following: ^ ~ \\ \'');
+        else if (!/^([^~\\']{1,2})$/.test(args)) {
+            msg.reply('Prefix cannot be more than two characters and cannot be any of the following: ^ ~ \\ \'');
         }
         else {
             let status = msg.guild.cache.setPrefix(args);
