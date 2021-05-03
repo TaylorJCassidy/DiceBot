@@ -2,7 +2,6 @@ module.exports = {
     name: 'stats',
     run: function(msg,args) {
         const {randomNoGen} = require('../utils/randomNoGen.js');
-        const Discord = require('discord.js');
 
         let msgReturn = '\n>>> ';
         const getMod = msg.client.commands.get('getmod').getMod;
