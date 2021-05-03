@@ -8,9 +8,9 @@ module.exports = {
             const help = 
             `Gets the D&D modifier of any whole number e.g:\n\
             \n${prefix}getmod <number>\
-            \n${prefix}getmod 10 - Would return 0\
-            \n${prefix}getmod 20 - Would return +5\
-            \n${prefix}getmod 1  - Would return -5`;
+            \n${prefix}getmod 10  Would return 0\
+            \n${prefix}getmod 20  Would return +5\
+            \n${prefix}getmod 1   Would return -5`;
             
             const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Getmod Info');
             msg.channel.send(finalHelp);

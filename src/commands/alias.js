@@ -28,7 +28,7 @@ module.exports = {
             msg.channel.send(finalHelp);
         }
         else {
-            const diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
+            
             args = args.toLowerCase();
 
             let split = args.search(/ |$/)
@@ -52,6 +52,7 @@ module.exports = {
         }
     },
     addAlias: function(msg,args) {
+        const diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
         let split = args.search(/(?<=^\w+) /);
         if (split < 1) {
             msg.reply(`Invalid formatting ${prefix}alias add <name> <dice>`);
