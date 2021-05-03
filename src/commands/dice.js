@@ -23,6 +23,7 @@ module.exports = {
         const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Dice Info');
         msg.channel.send(finalHelp);
     },
+
     diceController: function(msg,dicecontent) {
         dicecontent = dicecontent.toLowerCase();
         let argsIndex = dicecontent.search(/~/);
@@ -33,8 +34,7 @@ module.exports = {
         }
         else {
             let diceResults = this.diceroller(dicecontent,msg.guild.cache.getRigged());
-            let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\
-            \nYou rolled: ${diceResults.diceRolls}`;
+            let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\nYou rolled: ${diceResults.diceRolls}`;
             this.formatReply(msg,msgReturn);
         }
     },
@@ -60,8 +60,7 @@ module.exports = {
             \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`
         }
         else {
-            msgReturn += `**${resvul(diceResults.total)}**\
-            \nYou rolled: ${diceResults.diceRolls}`;
+            msgReturn += `**${resvul(diceResults.total)}**\nYou rolled: ${diceResults.diceRolls}`;
         }
         this.formatReply(msg,msgReturn);
 
@@ -79,15 +78,18 @@ module.exports = {
     },
 
     formatReply: async function(msg,msgReturn) {
-        if (msgReturn.length > 6000) {
-            msg.channel.send("Result is too large to display.");
-        }
-        else if (msgReturn.length > 2000) {
-            do {
-                await msg.channel.send('>>> ' + msgReturn.substr(4,1996));
-                msgReturn = msgReturn.substr(1996);
+        
+        if (msgReturn.length > 2000) {
+            if (msgReturn.length > 6000) {
+                msg.channel.send("Result is too large to display.");
             }
-            while (msgReturn.length > 0);
+            else {
+                do {
+                    await msg.channel.send('>>> ' + msgReturn.substr(4,1996));
+                    msgReturn = msgReturn.substr(1996);
+                }
+                while (msgReturn.length > 0);
+            }
         }
         else {
             msg.channel.send(msgReturn);
@@ -99,10 +101,8 @@ module.exports = {
         let diceRolls = '';
 
         do {
-            let multiplier; 
-            let max;
+            let multiplier;
             let startIndex;
-            let endIndex;
 
             let rMulitplier = dicecontent.match(/\d+(?=d)/);
             let rMax = dicecontent.match(/(?<=d)\d+/);
@@ -114,9 +114,8 @@ module.exports = {
                 startIndex = rMulitplier.index;
                 multiplier = parseInt(rMulitplier[0]);
             }
-            max = parseInt(rMax[0]);
-            endIndex = rMax.index+rMax[0].length;
-
+            let max = parseInt(rMax[0]);
+            let endIndex = rMax.index+rMax[0].length;
             let randomNumbers = 0;
 
             if (rigged > 0) {
@@ -130,7 +129,7 @@ module.exports = {
                 }
             }
             else {
-                while (multiplier > 0) {
+                do {
                     let randomNo = randomNoGen(max,1);
                     randomNumbers += randomNo;
                     if (randomNo == max || randomNo == 1) {
@@ -141,7 +140,7 @@ module.exports = {
                     }
                     multiplier--;
                 }
-                
+                while (multiplier > 0)
             }
             dicecontent = dicecontent.replace(dicecontent.slice(startIndex,endIndex),randomNumbers);
         }
