@@ -1,6 +1,7 @@
-const Discord = require('discord.js'); //12.0.2
+const Discord = require('discord.js'); //12.5.3
+const Repository = require('./repository/Repository');
+const GuildCache = require('./caches/GuildCache');
 const {token} = require("./config/token.json");
-
 const client = new Discord.Client();
 const commands = require('./utils/getCommands.js').getCommands();
 client.commands = commands;
@@ -10,6 +11,16 @@ let guildCaches;
 client.on('ready', () => {
     guildCaches = require('./utils/getGuildCaches.js').getGuildCaches(client.guilds);
     console.log(`Logged in as ${client.user.tag}!`);
+});
+
+client.on('guildDelete', (guild) => {
+    const repo = new Repository(guild.id);
+    repo.deleteGuild();
+    guildCaches.delete(guild.id);
+});
+
+client.on('guildCreate', (guild) => {  
+    guildCaches.set(guild.id,(new GuildCache(guild.id)))
 });
 
 client.on('message', msg => {
