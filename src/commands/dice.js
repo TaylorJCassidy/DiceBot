@@ -130,7 +130,7 @@ module.exports = {
                 }
             }
             else {
-                for (let i=0;i<multiplier;i++) {
+                while (multiplier > 0) {
                     let randomNo = randomNoGen(max,1);
                     randomNumbers += randomNo;
                     if (randomNo == max || randomNo == 1) {
@@ -139,6 +139,7 @@ module.exports = {
                     else {
                         diceRolls += randomNo + ', ';
                     }
+                    multiplier--;
                 }
                 
             }
