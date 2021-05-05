@@ -17,9 +17,9 @@ class Guild {
         }
     }
 
-    setAlias(alias,dice) {
+    setAlias(alias,info) {
         let lastIndex = this.aliases.length;
-        this.aliases[lastIndex] = [alias,dice];
+        this.aliases[lastIndex] = [alias,info];
     }
 
     getAlias(alias) {
