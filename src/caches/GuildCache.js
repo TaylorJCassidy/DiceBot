@@ -22,8 +22,8 @@ class GuildCache {
         return this.guild.getAlias(alias);
     }
 
-    setAlias(alias,dice) {
-        this.guild.setAlias(alias,dice);
+    setAlias(alias,dice,userID) {
+        this.guild.setAlias(alias,{dice: dice,userID: userID});
         return this.repository.setGuild(this.guild);
     }
 
