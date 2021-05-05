@@ -42,7 +42,7 @@ module.exports = {
                 msg.reply('Invalid name. The name provided overrides a command or a previous alias.');
             }
             else {
-                let status = msg.guild.cache.setAlias(name,dice);
+                let status = msg.guild.cache.setAlias(name,dice,msg.author.id);
                 if (!status) {
                     msg.reply('There has been an error. Please try again.');
                 }
@@ -56,25 +56,34 @@ module.exports = {
         if (!/^(\w+)$/.test(args)){
             msg.reply('Invalid name. The name provided includes invalid characters.');
         }
-        else if (msg.guild.cache.getAliases().has(args)) {
-            let status = msg.guild.cache.removeAlias(args);
-            if (!status) {
-                msg.reply('There has been an error. Please try again.');
+        else {
+            const aliases = msg.guild.cache.getAliases();
+            if (aliases.has(args)) {
+                if (aliases.get(args).userID == msg.author.id || msg.member.hasPermission('ADMINISTRATOR')) {
+                    let status = msg.guild.cache.removeAlias(args);
+                    if (!status) {
+                        msg.reply('There has been an error. Please try again.');
+                    }
+                    else {
+                        msg.reply(`Alias '${args}' has been removed.`);
+                    }
+                }
+                else {
+                    msg.reply('You cannot remove an alias that was not created by you.')
+                }
             }
             else {
-                msg.reply(`Alias '${args}' has been removed.`);
+                msg.reply(`There is no '${args}' alias.`)
             }
         }
-        else {
-            msg.reply(`There is no '${args}' alias.`)
-        }
+        
     },
     listAliases: function(msg) {
         const Discord = require('discord.js');
 
         let msgReturn = '';
         msg.guild.cache.getAliases().forEach((value,key) => {
-            msgReturn += `${key}:  ${value}\n`;
+            msgReturn += `${key}:  ${value.dice}\n`;
         });
         msg.channel.send(new Discord.MessageEmbed().setDescription('```' + msg.guild.name + '\'s Aliases:\t\t\n\n' + msgReturn + '```').setTitle('Alias List'));
     },
