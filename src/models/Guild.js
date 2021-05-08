@@ -11,6 +11,7 @@ class Guild {
         this._prefix = prefix || '.'; 
         this._rigged = rigged || 0;
         this._aliases = new Map(aliases);
+        
     }
 
     get guildID() {

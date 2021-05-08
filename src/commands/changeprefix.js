@@ -14,7 +14,7 @@ module.exports = {
             }
             else {
                 let status = msg.guild.cache.setPrefix(args);
-                if (status === false) {
+                if (status == false) {
                     msg.reply('There has been an error. Please try again.');
                 }
                 else {
