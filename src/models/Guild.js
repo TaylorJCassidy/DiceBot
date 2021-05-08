@@ -1,59 +1,61 @@
 class Guild {
 
-    prefix;
+    _guildID;
+    _prefix;
     //-1- unriggable 0-not rigged 1-rigged low 2-rigged high
-    rigged;
+    _rigged;
+    _aliases;
 
-    constructor(guild) {
-        if (guild === undefined) {
-            this.prefix = '.'
-            this.aliases = [];
-            this.rigged = 0;
-        }
-        else {
-            this.prefix = guild.prefix || '.';
-            this.aliases = guild.aliases || [];
-            this.rigged = guild.rigged || 0;
-        }
+    constructor(guildID,prefix,aliases,rigged) {
+        this._guildID = guildID;
+        this._prefix = prefix || '.'; 
+        this._rigged = rigged || 0;
+        this._aliases = new Map(aliases);
     }
 
-    setAlias(alias,info) {
-        let lastIndex = this.aliases.length;
-        this.aliases[lastIndex] = [alias,info];
+    get guildID() {
+        return this._guildID;
+    }
+    set guildID(value) {
+        this._guildID = value;
     }
 
-    getAlias(alias) {
-        return new Map(this.aliases).get(alias);
+    get prefix() {
+        return this._prefix;
+    }
+    set prefix(value) {
+        this._prefix = value;
     }
 
-    removeAlias(alias) {
-        let map = this.getAliases();
-        map.delete(alias);
-        this.setAliases(map);
+    get aliases() {
+        return this._aliases
+    }
+    set aliases(value) {
+        this._aliases = value;
     }
 
-    getAliases() {
-        return new Map(this.aliases);
+    get rigged() {
+        return this._rigged;
     }
-
-    setAliases(aliases) {
-        this.aliases = Array.from(aliases.entries());
-    }
-
-    getRigged() {
-        return this.rigged;
-    }
-
     /**
      * Set the guild's rigged number.
      * -1-unriggable 0-not rigged 1-rigged low 2-rigged high
      * @param {int} rigged the rigged number
      */
-    setRigged(rigged) {
+    set rigged(rigged) {
         if (rigged < -1 || rigged > 2) {
             throw new Error('Guild rigged number must must be either >= -1 and =< 2'); 
         }
-        this.rigged = rigged;
+        this._rigged = rigged;
+    }
+
+    toJSON() {
+        return {
+            guildID: this.guildID,
+            prefix: this.prefix,
+            rigged: this.rigged,
+            aliases: Array.from(this.aliases)
+        }
     }
 }
 

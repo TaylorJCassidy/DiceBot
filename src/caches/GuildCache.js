@@ -1,3 +1,4 @@
+const Guild = require("../models/Guild");
 const Repository = require("../repository/Repository");
 
 class GuildCache {
@@ -15,34 +16,39 @@ class GuildCache {
 
     setPrefix(prefix) {
         this.guild.prefix = prefix;
-        return this.repository.setGuild(this.guild);
+        return this.repository.updateGuild(this.guild);
     }
 
-    getAlias(alias) {
-        return this.guild.getAlias(alias);
+    getAlias(aliasName) {
+        if (this.guild.aliases.has(aliasName)) {
+            return this.guild.aliases.get(aliasName);
+        }
+        else {
+            return null;
+        }
     }
 
-    setAlias(alias,dice,userID) {
-        this.guild.setAlias(alias,{dice: dice,userID: userID});
-        return this.repository.setGuild(this.guild);
+    setAlias(alias) {
+        this.guild.aliases.set(alias.aliasName,alias);
+        return this.repository.setAlias(alias);
     }
 
-    removeAlias(alias) {
-        this.guild.removeAlias(alias);
-        return this.repository.setGuild(this.guild);
+    deleteAlias(aliasName) {
+        if (this.guild.aliases.delete(aliasName)) {
+            return this.repository.deleteAlias(aliasName);
+        }
     }
 
     getAliases() {
-        return this.guild.getAliases();
+        return this.guild.aliases;
     }
 
     getRigged() {
-        return this.guild.getRigged();
+        return this.guild.rigged;
     }
-
     setRigged(rigged) {
-        this.guild.setRigged(rigged);
-        return this.repository.setGuild(this.guild);
+        this.guild.rigged = rigged;
+        return this.repository.updateGuild(this.guild);
     }
 }
 

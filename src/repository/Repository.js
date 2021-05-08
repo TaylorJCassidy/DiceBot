@@ -15,8 +15,28 @@ class Repository {
         return this.dao.setGuild(guild);
     }
 
-    deleteGuild(guildID) {
-        return this.dao.deleteGuild(guildID);
+    updateGuild(guild) {
+        return this.dao.updateGuild(guild);
+    }
+
+    deleteGuild() {
+        return this.dao.deleteGuild();
+    }
+
+    getAliases() {
+        return this.dao.getAliases();
+    }
+
+    setAlias(alias) {
+        return this.dao.setAlias(alias);
+    }
+
+    updateAlias(alias) {
+        return this.dao.updateAlias(alias);
+    }
+
+    deleteAlias(aliasName) {
+        return this.dao.deleteAlias(aliasName);
     }
 }
 
