@@ -1,15 +1,15 @@
 class Alias {
 
     _guildID;
-    _aliasName;
     _userID;
+    _aliasName;
     _dice;
     
-    constructor(guildID,aliasName,userID,dice) {
-        this.guildID = guildID;
-        this.userID = userID;
-        this.aliasName = aliasName;
-        this.dice = dice;
+    constructor(guildID,userID,aliasName,dice) {
+        this._guildID = guildID;
+        this._userID = userID;
+        this._aliasName = aliasName;
+        this._dice = dice;
     }
 
     get guildID() {
@@ -38,6 +38,15 @@ class Alias {
     }
     set dice(value) {
         this._dice = value;
+    }
+
+    toJSON() {
+        return {
+            guildID: this._guildID,
+            userID: this._userID,
+            aliasName: this._aliasName,
+            dice: this._dice
+        }
     }
 
 }
