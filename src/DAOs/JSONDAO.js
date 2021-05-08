@@ -1,4 +1,5 @@
 const fs = require('fs');
+const Alias = require('../models/Alias');
 const Guild = require('../models/Guild');
 
 class JSONDAO {
@@ -12,12 +13,11 @@ class JSONDAO {
         this.filename = `${JSONDAO.filepath}${guildID}.json`;
         try {
             let json = JSON.parse(fs.readFileSync(this.filename));
-            this.localGuild = new Guild(guildID,json.prefix,json.aliases,json.rigged);
+            this.localGuild = this._jsonGuild(guildID,json);
         }
         catch(e) {
             this.localGuild = new Guild(guildID);
-        }
-        
+        }   
     }
 
     writeToFile() {
@@ -30,6 +30,15 @@ class JSONDAO {
             console.log(e.message);
             return false;
         }
+    }
+
+    _jsonGuild(guildID,json) {
+        let aliases = [];
+        let i = 0;
+        json.aliases.forEach(element => {
+            aliases[i] = [element[1].aliasName,new Alias(guildID,element[1].userID,element[1].aliasName,element[1].dice)];
+        });
+        return new Guild(guildID,json.prefix,aliases,json.rigged);
     }
 
     getGuild() {
