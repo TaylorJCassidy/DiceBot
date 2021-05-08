@@ -12,7 +12,7 @@ module.exports = {
                 this.addAlias(msg,args);
                 break;
             case 'remove':
-                this.removeAlias(msg,args);
+                this.deleteAlias(msg,args);
                 break
             case 'list':
                 this.listAliases(msg);
@@ -42,7 +42,9 @@ module.exports = {
                 msg.reply('Invalid name. The name provided overrides a command or a previous alias.');
             }
             else {
-                let status = msg.guild.cache.setAlias(name,dice,msg.author.id);
+                const Alias = require('./../models/Alias.js');
+                let alias = new Alias(msg.guild.id,msg.author.id,name,dice)
+                let status = msg.guild.cache.setAlias(alias);
                 if (!status) {
                     msg.reply('There has been an error. Please try again.');
                 }
@@ -52,7 +54,7 @@ module.exports = {
             }
         }
     },
-    removeAlias: function(msg,args) {
+    deleteAlias: function(msg,args) {
         if (!/^(\w+)$/.test(args)){
             msg.reply('Invalid name. The name provided includes invalid characters.');
         }
@@ -60,7 +62,7 @@ module.exports = {
             const aliases = msg.guild.cache.getAliases();
             if (aliases.has(args)) {
                 if (aliases.get(args).userID == msg.author.id || msg.member.hasPermission('ADMINISTRATOR')) {
-                    let status = msg.guild.cache.removeAlias(args);
+                    let status = msg.guild.cache.deleteAlias(args);
                     if (!status) {
                         msg.reply('There has been an error. Please try again.');
                     }
