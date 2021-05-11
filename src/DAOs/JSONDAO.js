@@ -20,7 +20,7 @@ class JSONDAO {
         }   
     }
 
-    writeToFile() {
+    _writeToFile() {
         try {
             let json = JSON.stringify(this.localGuild)
             fs.writeFileSync(this.filename,json);
@@ -48,7 +48,7 @@ class JSONDAO {
 
     setGuild(guild) {
         this.localGuild = guild;
-        return this.writeToFile();
+        return this._writeToFile();
     }
 
     updateGuild(guild) {
@@ -72,7 +72,7 @@ class JSONDAO {
 
     setAlias(alias) {
         this.localGuild.aliases.set(alias.aliasName,alias)
-        return this.writeToFile();
+        return this._writeToFile();
     }
 
     updateAlias(alias) {
@@ -81,7 +81,7 @@ class JSONDAO {
 
     deleteAlias(aliasName) {
         this.localGuild.aliases.delete(aliasName);
-        return this.writeToFile();
+        return this._writeToFile();
     }
 }
 
