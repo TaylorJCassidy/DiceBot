@@ -24,10 +24,14 @@ class GuildCache {
         return this.repository.setAlias(alias);
     }
 
+    updateAlias(alias) {
+        this.guild.aliases.set(alias.aliasName,alias);
+        return this.repository.updateAlias(alias);
+    }
+
     deleteAlias(aliasName) {
-        if (this.guild.aliases.delete(aliasName)) {
-            return this.repository.deleteAlias(aliasName);
-        }
+        this.guild.aliases.delete(aliasName)
+        return this.repository.deleteAlias(aliasName);
     }
 
     getAliases() {
