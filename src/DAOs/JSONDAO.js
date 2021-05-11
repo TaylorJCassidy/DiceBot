@@ -52,7 +52,7 @@ class JSONDAO {
     }
 
     updateGuild(guild) {
-        this.setGuild(guild);
+        return this.setGuild(guild);
     }
 
     deleteGuild() {
@@ -76,7 +76,7 @@ class JSONDAO {
     }
 
     updateAlias(alias) {
-        this.setAlias(alias);
+        return this.setAlias(alias);
     }
 
     deleteAlias(aliasName) {
