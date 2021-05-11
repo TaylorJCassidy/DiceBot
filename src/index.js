@@ -5,11 +5,11 @@ const {token} = require("./config/token.json");
 const client = new Discord.Client();
 const commands = require('./utils/getCommands.js').getCommands();
 client.commands = commands;
-const diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
 let guildCaches;
 
 client.on('ready', () => {
     guildCaches = require('./utils/getGuildCaches.js').getGuildCaches(client.guilds);
+    client.diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
@@ -33,7 +33,7 @@ client.on('message', msg => {
         if (msg.content.startsWith(prefix)) {
             let msgcontent = msg.content.slice(prefix.length);
 
-            if (diceRegex.test(msgcontent)) {
+            if (client.diceRegex.test(msgcontent)) {
                 commands.get('dice').diceController(msg,msgcontent);
             }
             else {
