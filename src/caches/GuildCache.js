@@ -19,15 +19,6 @@ class GuildCache {
         return this.repository.updateGuild(this.guild);
     }
 
-    getAlias(aliasName) {
-        if (this.guild.aliases.has(aliasName)) {
-            return this.guild.aliases.get(aliasName);
-        }
-        else {
-            return null;
-        }
-    }
-
     setAlias(alias) {
         this.guild.aliases.set(alias.aliasName,alias);
         return this.repository.setAlias(alias);
