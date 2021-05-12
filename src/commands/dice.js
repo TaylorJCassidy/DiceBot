@@ -1,8 +1,6 @@
 module.exports = {
     name: 'dice',
     run: function(msg,args) {
-        const Discord = require('discord.js');
-
         const prefix = msg.guild.cache.getPrefix();
         const help = 
         `Can roll any dice you want. Format the command as you would say it, e.g:\n\
@@ -19,9 +17,8 @@ module.exports = {
         \n${prefix}d20 ~a       Rolls the d20 twice and picks the highest\
         \n${prefix}d20 ~d       Rolls the d20 twice and picks the lowest\
         \n${prefix}d20 ~d ~vul  Same as above, but doubles final number`;
-        
-        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Dice Info');
-        msg.channel.send(finalHelp);
+        const {helpEmbed} = require('../utils/helpEmbed.js')
+        msg.channel.send(helpEmbed(help,'Dice Info'));
     },
 
     diceController: function(msg,dicecontent) {

@@ -2,8 +2,6 @@ module.exports = {
     name: 'getmod',
     run: function(msg,args) {
         if (args.length == 0) {
-            const Discord = require('discord.js');
-
             const prefix = msg.guild.cache.getPrefix();
             const help = 
             `Gets the D&D modifier of any positive whole number e.g:\n\
@@ -11,9 +9,8 @@ module.exports = {
             \n${prefix}getmod 10  Would return 0\
             \n${prefix}getmod 20  Would return +5\
             \n${prefix}getmod 1   Would return -5`;
-            
-            const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Getmod Info');
-            msg.channel.send(finalHelp);
+            const {helpEmbed} = require('../utils/helpEmbed.js')
+            msg.channel.send(helpEmbed(help,'Getmod Info'));
         }
         else {
             if (!/^(\d{1,5})$/.test(args)) {

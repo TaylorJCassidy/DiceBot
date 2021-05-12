@@ -70,7 +70,6 @@ module.exports = {
                     break;
                 case 'help':
                 default:
-                    const Discord = require('discord.js');
                     const prefix = msg.guild.cache.getPrefix();
                     const help = `Can be used to rig any dice rolled within this server\
                     \nTo rig a dice:\n\
@@ -80,8 +79,8 @@ module.exports = {
                     \nTo unrig the dice, simply repeat the same command e.g. if rigged high, retype ${prefix}rig high\n\
                     \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
                     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
-                    const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Rig Info');
-                    msg.channel.send(finalHelp);
+                    const {helpEmbed} = require('../utils/helpEmbed.js')
+                    msg.channel.send(helpEmbed(help,'Rig Info'));
             }
         }
         

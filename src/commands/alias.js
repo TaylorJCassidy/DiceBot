@@ -123,17 +123,15 @@ module.exports = {
     }, 
 
     listAliases: function(msg) {
-        const Discord = require('discord.js');
-
         let msgReturn = '';
         msg.guild.cache.getAliases().forEach((value,key) => {
             msgReturn += `${key}:  ${value.dice}\n`;
         });
-        msg.channel.send(new Discord.MessageEmbed().setDescription('```' + msg.guild.name + '\'s Aliases:\t\t\n\n' + msgReturn + '```').setTitle('Alias List'));
+        const {helpEmbed} = require('../utils/helpEmbed.js')
+        msg.channel.send(helpEmbed(msg.guild.name,'Alias List'));
     },
 
     help: function(msg) {
-        const Discord = require('discord.js');
         const prefix = msg.guild.cache.getPrefix();
         const help = `Can be used to save dice rolls for easy access later.\
         \nTo add an alias format as such:\n\
@@ -157,7 +155,7 @@ module.exports = {
         \n${prefix}attack1 ~a\
         \n${prefix}chr ~res\n\
         \nTo view a list of aliases, type ${prefix}alias list`;
-        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Alias Info');
-        msg.channel.send(finalHelp);
+        const {helpEmbed} = require('../utils/helpEmbed.js')
+        msg.channel.send(helpEmbed(help,'Alias Info'));
     }
 }

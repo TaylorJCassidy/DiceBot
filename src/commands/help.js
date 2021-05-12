@@ -1,9 +1,7 @@
 module.exports = {
     name: 'help',
     run: function(msg,args) {
-        const Discord = require('discord.js');
         const prefix = msg.guild.cache.getPrefix();
-
         const help = 
          `${prefix}ping          Gets a pong response from the bot\
         \n${prefix}uptime        Shows uptime of the bot\
@@ -20,7 +18,7 @@ module.exports = {
         \n${prefix}stats         Shows random dnd stats\
         \n${prefix}getmod        Shows ability modifier of a number\
         \n${prefix}changeprefix  Changes prefix. Currently '${prefix}'`
-        const finalHelp = new Discord.MessageEmbed().setDescription('```' + help + '```').setTitle('Help');
-        msg.channel.send(finalHelp);
+        const {helpEmbed} = require('../utils/helpEmbed.js')
+        msg.channel.send(helpEmbed(help,'Help'));
     }
 }
