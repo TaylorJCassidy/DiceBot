@@ -128,7 +128,7 @@ module.exports = {
             msgReturn += `${key}:  ${value.dice}\n`;
         });
         const {helpEmbed} = require('../utils/helpEmbed.js')
-        msg.channel.send(helpEmbed(msg.guild.name,'Alias List'));
+        msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
     },
 
     help: function(msg) {
