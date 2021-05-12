@@ -25,7 +25,7 @@ client.on('guildCreate', (guild) => {
 
 client.on('message', msg => {
 
-    if (msg.author.id != '774637611482349578' && msg.channel.type == 'text') {
+    if (msg.author.id != client.user.id && msg.channel.type == 'text') {
         const cache = guildCaches.get(msg.guild.id);
         const prefix = cache.getPrefix();
         msg.guild.cache = cache;
