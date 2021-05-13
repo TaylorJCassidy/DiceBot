@@ -124,9 +124,25 @@ module.exports = {
 
     listAliases: function(msg) {
         let msgReturn = '';
-        msg.guild.cache.getAliases().forEach((value,key) => {
-            msgReturn += `${key}:  ${value.dice}\n`;
+        const aliases = Array.from(msg.guild.cache.getAliases().values()).sort((a,b) => {
+            if (a.aliasName > b.aliasName) {
+                return 1;
+            }
+            else {
+                return -1;
+            }
         });
+
+        let biggest = aliases[0].aliasName.length;
+        for (let i=1;i<aliases.length;i++) {
+            if (aliases[i].aliasName.length > biggest) {
+                biggest = aliases[i].aliasName.length;
+            }
+        }
+        aliases.forEach((alias) => {
+            msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`
+        })
+
         const {helpEmbed} = require('../utils/helpEmbed.js')
         msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
     },
