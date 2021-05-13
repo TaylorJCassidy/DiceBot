@@ -5,6 +5,7 @@ USE dicebot;
 /* TABLES */
 CREATE TABLE guilds (
     guildID BIGINT UNSIGNED NOT NULL UNIQUE,
+    prefix CHAR(2) NOT NULL,
     rig TINYINT NOT NULL,
     PRIMARY KEY (guildID)
 );
@@ -23,19 +24,19 @@ DELIMITER $$
 /* GUILDS PROCEDURES*/
 CREATE PROCEDURE getGuild(IN inGuildID BIGINT)
 BEGIN 
-    SELECT guilds.*,aliases.userID,aliases.aliasName,aliases.dice FROM guilds,aliases
-    WHERE guilds.guildID = inGuildID AND aliases.guildID = inGuildID;
+    SELECT * FROM guilds
+    WHERE guilds.guildID = inGuildID;
 END$$
 
-CREATE PROCEDURE setGuild(IN inGuildID BIGINT,IN inRig TINYINT)
+CREATE PROCEDURE setGuild(IN inGuildID BIGINT,IN inPrefix CHAR(2),IN inRig TINYINT)
 BEGIN 
-    INSERT INTO guilds (guildID,rig) VALUES (inGuildID,inRig);
+    INSERT INTO guilds (guildID,prefix,rig) VALUES (inGuildID,inPrefix,inRig);
 END$$
 
-CREATE PROCEDURE updateGuild(IN inGuildID BIGINT,IN inRig TINYINT)
+CREATE PROCEDURE updateGuild(IN inGuildID BIGINT,IN inPrefix CHAR(2),IN inRig TINYINT)
 BEGIN 
     UPDATE guilds
-    SET rig = inRig
+    SET prefix = inPrefix, rig = inRig
     WHERE guildID = inGuildID;
 END$$
 
