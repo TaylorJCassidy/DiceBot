@@ -36,7 +36,7 @@ class JSONDAO {
         let aliases = [];
         let i = 0;
         json.aliases.forEach(element => {
-            aliases[i] = [element[1].aliasName,new Alias(guildID,element[1].userID,element[1].aliasName,element[1].dice)];
+            aliases[i++] = [element[1].aliasName,new Alias(guildID,element[1].userID,element[1].aliasName,element[1].dice)];
         });
         return new Guild(guildID,json.prefix,aliases,json.rigged);
     }
