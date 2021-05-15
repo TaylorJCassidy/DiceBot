@@ -23,16 +23,21 @@ module.exports = {
 
     diceController: function(msg,dicecontent) {
         dicecontent = dicecontent.toLowerCase();
-        let argsIndex = dicecontent.search(/~/);
-        if (argsIndex > 0) {
-            const diceToRoll = dicecontent.substring(0,argsIndex);
-            const args = dicecontent.substring(argsIndex).match(/(?<=~)\w+/g);
-            this.rollWithArguements(msg,diceToRoll,args);
+        if (/d(0|1)/.test(dicecontent)) {
+            msg.reply('Cannot roll a zero or one sided dice.')
         }
         else {
-            let diceResults = this.diceroller(dicecontent,msg.guild.cache.getRigged());
-            let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\nYou rolled: ${diceResults.diceRolls}`;
-            this.formatReply(msg,msgReturn);
+            let argsIndex = dicecontent.search(/~/);
+            if (argsIndex > 0) {
+                const diceToRoll = dicecontent.substring(0,argsIndex);
+                const args = dicecontent.substring(argsIndex).match(/(?<=~)\w+/g);
+                this.rollWithArguements(msg,diceToRoll,args);
+            }
+            else {
+                let diceResults = this.diceroller(dicecontent,msg.guild.cache.getRigged());
+                let msgReturn = `>>> ${msg.author.toString()}, **${diceResults.total}**\nYou rolled: ${diceResults.diceRolls}`;
+                this.formatReply(msg,msgReturn);
+            }
         }
     },
 
