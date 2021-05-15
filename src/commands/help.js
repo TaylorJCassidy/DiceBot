@@ -14,7 +14,7 @@ module.exports = {
         \n${prefix}rig high      Rigs the dice to roll the maximum value\
         \n${prefix}rig low       Rigs the dice to roll the minimum value\
         \n${prefix}rig status    Shows if dice is rigged or not\
-        \n${prefix}rig toggle    Toggles whether users can rig\
+        \n${prefix}rig toggle    Toggles whether users can rig .rig for info\
         \n${prefix}stats         Shows random dnd stats\
         \n${prefix}getmod        Shows ability modifier of a number\
         \n${prefix}changeprefix  Changes prefix. Currently '${prefix}'`
