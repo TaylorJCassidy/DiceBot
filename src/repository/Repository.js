@@ -2,11 +2,15 @@ const Guild = require('../models/Guild.js');
 const JSONDAO = require('../DAOs/JSONDAO.js');
 const Alias = require('../models/Alias.js');
 
+/**
+ * @class
+ * Pulls data from external persistant data store
+ */
 class Repository {
     dao;
 
     /**
-     * Pulls data from external persistant data store
+     * Default constructor
      * @param {String} guildID Discord guild ID to read from
      */
     constructor(guildID) {
