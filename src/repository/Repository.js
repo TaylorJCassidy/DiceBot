@@ -7,14 +7,15 @@ const Alias = require('../models/Alias.js');
  * Pulls data from external persistant data store
  */
 class Repository {
-    dao;
+    /**@private */
+    _dao;
 
     /**
      * Default constructor
      * @param {String} guildID Discord guild ID to read from
      */
     constructor(guildID) {
-        this.dao = new JSONDAO(guildID);
+        this._dao = new JSONDAO(guildID);
     }
 
     /**
@@ -22,7 +23,7 @@ class Repository {
      * @returns {Guild} associated Guild object, or null if no Guild data is held
      */
     getGuild() {
-        return this.dao.getGuild();
+        return this._dao.getGuild();
     }
 
     /**
@@ -31,7 +32,7 @@ class Repository {
      * @returns {boolean} successful or not
      */
     setGuild(guild) {
-        return this.dao.setGuild(guild);
+        return this._dao.setGuild(guild);
     }
 
     /**
@@ -40,7 +41,7 @@ class Repository {
      * @returns {boolean} successful or not
      */
     updateGuild(guild) {
-        return this.dao.updateGuild(guild);
+        return this._dao.updateGuild(guild);
     }
 
     /**
@@ -48,7 +49,7 @@ class Repository {
      * @returns {boolean} successful or not
      */
     deleteGuild() {
-        return this.dao.deleteGuild();
+        return this._dao.deleteGuild();
     }
 
     /**
@@ -56,7 +57,7 @@ class Repository {
      * @returns {Map<String,Alias>} a map of all assocaited aliases, with aliasNames as keys and Alias objects as values
      */
     getAliases() {
-        return this.dao.getAliases();
+        return this._dao.getAliases();
     }
 
     /**
@@ -65,7 +66,7 @@ class Repository {
      * @returns {boolean} successful or not
      */
     setAlias(alias) {
-        return this.dao.setAlias(alias);
+        return this._dao.setAlias(alias);
     }
 
     /**
@@ -75,7 +76,7 @@ class Repository {
      * @returns {boolean} successful or not
      */
     updateAlias(alias) {
-        return this.dao.updateAlias(alias);
+        return this._dao.updateAlias(alias);
     }
 
     /**
@@ -84,7 +85,7 @@ class Repository {
      * @returns {boolean} successful or not
      */
     deleteAlias(aliasName) {
-        return this.dao.deleteAlias(aliasName);
+        return this._dao.deleteAlias(aliasName);
     }
 }
 
