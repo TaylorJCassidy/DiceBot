@@ -12,7 +12,7 @@ class Repository {
 
     /**
      * Default constructor
-     * @param {String} guildID Discord guild ID to read from
+     * @param {String} guildID Discord guild ID to read from or write to
      */
     constructor(guildID) {
         this._dao = new JSONDAO(guildID);
