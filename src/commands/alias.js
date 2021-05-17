@@ -124,27 +124,34 @@ module.exports = {
 
     listAliases: function(msg) {
         let msgReturn = '';
-        const aliases = Array.from(msg.guild.cache.getAliases().values()).sort((a,b) => {
-            if (a.aliasName > b.aliasName) {
-                return 1;
-            }
-            else {
-                return -1;
-            }
-        });
+        const aliases = Array.from(msg.guild.cache.getAliases().values());
 
-        let biggest = aliases[0].aliasName.length;
-        for (let i=1;i<aliases.length;i++) {
-            if (aliases[i].aliasName.length > biggest) {
-                biggest = aliases[i].aliasName.length;
-            }
+        if (aliases.length == 0) {
+            msg.reply('This server has no aliases.')
         }
-        aliases.forEach((alias) => {
-            msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`
-        })
+        else {
+            aliases.sort((a,b) => {
+                if (a.aliasName > b.aliasName) {
+                    return 1;
+                }
+                else {
+                    return -1;
+                }
+            });
 
-        const {helpEmbed} = require('../utils/helpEmbed.js')
-        msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
+            let biggest = aliases[0].aliasName.length;
+            for (let i=1;i<aliases.length;i++) {
+                if (aliases[i].aliasName.length > biggest) {
+                    biggest = aliases[i].aliasName.length;
+                }
+            }
+            aliases.forEach((alias) => {
+                msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`
+            })
+
+            const {helpEmbed} = require('../utils/helpEmbed.js')
+            msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
+        }
     },
 
     help: function(msg) {
