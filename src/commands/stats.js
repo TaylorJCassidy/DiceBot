@@ -4,6 +4,7 @@ module.exports = {
         const {randomNoGen} = require('../utils/randomNoGen.js');
 
         let msgReturn = '\n>>> ';
+        let total = 0;
         const getMod = msg.client.commands.get('getmod').getMod;
 
         for (let i=0;i<6;i++) {
@@ -18,9 +19,10 @@ module.exports = {
                 results += result;
             }
             results -= smallest;
+            total +=results
             
             msgReturn += `${results}${(results < 10 ? '  ' : ' ')}${getMod(results)}\n`
         }
-        msg.reply(msgReturn);
+        msg.reply(msgReturn + 'Total: ' + total);
     }
 }
