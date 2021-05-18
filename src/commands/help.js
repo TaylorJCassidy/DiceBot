@@ -11,13 +11,13 @@ module.exports = {
         \n${prefix}d20           Rolls any dice ${prefix}dice for info\
         \n${prefix}getmod        Shows ability modifier of a number\
         \n${prefix}maths         Evaluate a maths expression\  
-        \n${prefix}ping          Gets a pong response from the bot\      
+        \n${prefix}ping          Gets the bots response times\      
         \n${prefix}rig high      Rigs the dice to roll the maximum value\
         \n${prefix}rig low       Rigs the dice to roll the minimum value\
         \n${prefix}rig status    Shows if dice is rigged or not\
         \n${prefix}rig toggle    Toggles whether users can rig .rig for info\
         \n${prefix}stats         Shows random dnd stats\
-        \n${prefix}uptime        Shows uptime of the bot\'`
+        \n${prefix}uptime        Shows the bots uptime\'`
         const {helpEmbed} = require('../utils/helpEmbed.js')
         msg.channel.send(helpEmbed(help,'Help'));
     }
