@@ -41,9 +41,14 @@ class GuildCache {
     getRigged() {
         return this.guild.rigged;
     }
+
     setRigged(rigged) {
         this.guild.rigged = rigged;
         return this.repository.updateGuild(this.guild);
+    }
+
+    deleteGuild() {
+        return this.repository.deleteGuild();
     }
 }
 
