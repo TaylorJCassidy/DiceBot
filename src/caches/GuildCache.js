@@ -1,54 +1,107 @@
-const Guild = require("../models/Guild");
-const Repository = require("../repository/Repository");
+const Repository = require('../repository/Repository');
+const Alias = require('../models/Alias')
 
+/**
+ * @class
+ * Works to cache guild information
+ * Preferable to use over a straight repository call
+ */
 class GuildCache {
-    guild;
-    repository;
+    /**@private */
+    _guild;
+    /**@private */
+    _repository;
 
+    /**
+     * Default constructor
+     * @param {String} guildID Discord guild ID of the guild to cache
+     */
     constructor(guildID) {
-        this.repository = new Repository(guildID);
-        this.guild = this.repository.getGuild();
+        this._repository = new Repository(guildID);
+        this._guild = this._repository.getGuild();
     }
 
+    /**
+     * Returns the guilds prefix from the cache
+     * @returns {String} the guild prefix 
+     */
     getPrefix() {
-        return this.guild.prefix;
+        return this._guild.prefix;
     }
 
+    /**
+     * Sets the guilds prefix within the cache and the filestore
+     * @param {String} prefix new guild prefix
+     * @returns {boolean} successful or not
+     */
     setPrefix(prefix) {
-        this.guild.prefix = prefix;
-        return this.repository.updateGuild(this.guild);
+        this._guild.prefix = prefix;
+        return this._repository.updateGuild(this._guild);
     }
 
-    setAlias(alias) {
-        this.guild.aliases.set(alias.aliasName,alias);
-        return this.repository.setAlias(alias);
-    }
-
-    updateAlias(alias) {
-        this.guild.aliases.set(alias.aliasName,alias);
-        return this.repository.updateAlias(alias);
-    }
-
-    deleteAlias(aliasName) {
-        this.guild.aliases.delete(aliasName)
-        return this.repository.deleteAlias(aliasName);
-    }
-
-    getAliases() {
-        return this.guild.aliases;
-    }
-
+    /**
+     * Returns the rigged number from the cache
+     * @returns {number} the guilds rigged number
+     */
     getRigged() {
-        return this.guild.rigged;
+        return this._guild.rigged;
     }
 
+    /**
+     * Sets the rigged number within the cache and the filestore
+     * @param {number} rigged new rigged number
+     * @returns {boolean} successful or not
+     */
     setRigged(rigged) {
-        this.guild.rigged = rigged;
-        return this.repository.updateGuild(this.guild);
+        this._guild.rigged = rigged;
+        return this._repository.updateGuild(this._guild);
     }
 
+    /**
+     * Adds an alias to the aliases within the cache and the filestore
+     * @param {Alias} alias alias to add
+     * @returns {boolean} successful or not
+     */
+    setAlias(alias) {
+        this._guild.aliases.set(alias.aliasName,alias);
+        return this._repository.setAlias(alias);
+    }
+
+    /**
+     * Updates an existing alias within the guild cache
+     * Updates alias based on alias parameter's user and guild ID
+     * @param {Alias} alias alias to update.
+     * @returns {boolean} successful or not
+     */
+    updateAlias(alias) {
+        this._guild.aliases.set(alias.aliasName,alias);
+        return this._repository.updateAlias(alias);
+    }
+
+    /**
+     * Deletes an alias from both the guild cache and the filestore
+     * @param {String} aliasName name of alias to delete
+     * @returns {boolean} successful or not
+     */
+    deleteAlias(aliasName) {
+        this._guild.aliases.delete(aliasName)
+        return this._repository.deleteAlias(aliasName);
+    }
+
+    /**
+     * Returns all the aliases currently stored in the guild cache
+     * @returns {Map<String,Alias>} aliases as a map
+     */
+    getAliases() {
+        return this._guild.aliases;
+    }
+
+    /**
+     * Permanently deletes all guild data from both the cache and the filestore
+     * @returns {boolean} successful or not
+     */
     deleteGuild() {
-        return this.repository.deleteGuild();
+        return this._repository.deleteGuild();
     }
 }
 
