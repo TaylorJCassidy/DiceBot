@@ -14,8 +14,7 @@ client.on('ready', () => {
 });
 
 client.on('guildDelete', (guild) => {
-    const repo = new Repository(guild.id);
-    repo.deleteGuild();
+    guildCaches.get(guild.id).deleteGuild();
     guildCaches.delete(guild.id);
 });
 
