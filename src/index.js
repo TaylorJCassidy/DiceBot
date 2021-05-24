@@ -7,9 +7,12 @@ const commands = require('./utils/getCommands.js').getCommands();
 client.commands = commands;
 let guildCaches;
 
-client.on('ready', () => {
+client.once('ready', () => {
     guildCaches = require('./utils/getGuildCaches.js').getGuildCaches(client.guilds);
     client.diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
+});
+
+client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
 });
 
