@@ -23,7 +23,7 @@ module.exports = {
 
     diceController: function(msg,dicecontent) {
         dicecontent = dicecontent.toLowerCase();
-        if (/d(0|1)/.test(dicecontent)) {
+        if (/^(d(0|1))$/.test(dicecontent)) {
             msg.reply('Cannot roll a zero or one sided dice.')
         }
         else {
