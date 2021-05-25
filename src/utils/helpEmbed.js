@@ -8,6 +8,7 @@ module.exports = {
      * @returns {MessageEmbed} the generated embeded message
      */
     helpEmbed: (content,title) => {
-        return new MessageEmbed().setDescription('```' + content + '```').setTitle(title).setFooter('https://github.com/TaylorJCassidy/DiceBot');
+        const {colour,iconProvider} = require('../config/theme.json');
+        return new MessageEmbed().setDescription('```' + content + '```').setTitle(title).setFooter('https://github.com/TaylorJCassidy/DiceBot').setColor(colour);
     }
 }
