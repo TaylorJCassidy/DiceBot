@@ -9,7 +9,7 @@ let guildCaches;
 
 client.once('ready', () => {
     guildCaches = require('./utils/getGuildCaches.js').getGuildCaches(client.guilds);
-    client.diceRegex = new RegExp(/^((((\d{0,3}d\d{1,5})|-?\d{1,5}) ?[\+\-\*\/] ?)*(\d{0,3}d\d{1,5})( ?[\+\-\*\/] ?\d{1,5})*( ?~(res|vul|a|d))*)$/,'i');
+    client.diceRegex = new RegExp(/^((((\d{0,2}d\d{1,3})|-?\d{1,3}) ?[\+\-\*\/] ?)*(\d{0,2}d\d{1,3})( ?[\+\-\*\/] ?\d{1,3})*( ?~(res|vul|a|d))*)$/,'i');
 });
 
 client.on('ready', () => {
@@ -51,7 +51,7 @@ client.on('message', msg => {
                     commands.get(command).run(msg,args);
                 }
                 else {
-                    msg.reply(`There is no ${command} command!`);
+                    msg.reply(`There is no ${command} command! ${prefix}help for help`);
                 }
             }
         }
