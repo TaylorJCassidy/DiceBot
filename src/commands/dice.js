@@ -82,16 +82,7 @@ module.exports = {
     formatReply: async function(msg,msgReturn) {
         
         if (msgReturn.length > 2000) {
-            if (msgReturn.length > 6000) {
-                msg.channel.send("Result is too large to display.");
-            }
-            else {
-                do {
-                    await msg.channel.send('>>> ' + msgReturn.substr(4,1996));
-                    msgReturn = msgReturn.substr(1996);
-                }
-                while (msgReturn.length > 0);
-            }
+            msg.channel.send("Result is too large to display.");
         }
         else {
             msg.channel.send(msgReturn);
