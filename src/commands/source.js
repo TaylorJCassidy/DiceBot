@@ -1,4 +1,4 @@
-const {colour,iconProvider} = require('../config/theme.json');
+const {iconProvider} = require('../config/theme.json');
 
 module.exports = {
     name: 'source',
