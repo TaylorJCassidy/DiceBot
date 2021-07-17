@@ -97,15 +97,15 @@ module.exports = {
             let multiplier;
             let startIndex;
 
-            let rMulitplier = dicecontent.match(/\d+(?=d)/);
+            let rMultiplier = dicecontent.match(/\d+(?=d)/);
             let rMax = dicecontent.match(/(?<=d)\d+/);
-            if (rMulitplier === null) {
+            if (rMultiplier === null) {
                 multiplier = 1;
                 startIndex = rMax.index-1;
             }
             else {
-                startIndex = rMulitplier.index;
-                multiplier = parseInt(rMulitplier[0]);
+                startIndex = rMultiplier.index;
+                multiplier = parseInt(rMultiplier[0]);
             }
             let max = parseInt(rMax[0]);
             let endIndex = rMax.index+rMax[0].length;
