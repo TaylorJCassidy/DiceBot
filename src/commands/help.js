@@ -20,7 +20,7 @@ module.exports = {
         \n${prefix}rig toggle    Toggles whether users can rig .rig for info\
         \n${prefix}stats         Shows random dnd stats\
         \n${prefix}source        Shows all sources of the bot\
-        \n${prefix}uptime        Shows the bots uptime\'`       
+        \n${prefix}uptime        Shows the bots uptime`       
         msg.channel.send(helpEmbed(help,'Help'));
     }
 }
