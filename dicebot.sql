@@ -22,49 +22,49 @@ CREATE TABLE aliases (
 DELIMITER $$
 
 /* GUILDS PROCEDURES*/
-CREATE PROCEDURE getGuild(IN inGuildID BIGINT)
+CREATE PROCEDURE getGuild(IN inGuildID BIGINT UNSIGNED)
 BEGIN 
     SELECT * FROM guilds
     WHERE guilds.guildID = inGuildID;
 END$$
 
-CREATE PROCEDURE setGuild(IN inGuildID BIGINT,IN inPrefix CHAR(2),IN inRig TINYINT)
+CREATE PROCEDURE setGuild(IN inGuildID BIGINT UNSIGNED,IN inPrefix CHAR(2),IN inRig TINYINT)
 BEGIN 
     INSERT INTO guilds (guildID,prefix,rig) VALUES (inGuildID,inPrefix,inRig);
 END$$
 
-CREATE PROCEDURE updateGuild(IN inGuildID BIGINT,IN inPrefix CHAR(2),IN inRig TINYINT)
+CREATE PROCEDURE updateGuild(IN inGuildID BIGINT UNSIGNED,IN inPrefix CHAR(2),IN inRig TINYINT)
 BEGIN 
     UPDATE guilds
     SET prefix = inPrefix, rig = inRig
     WHERE guildID = inGuildID;
 END$$
 
-CREATE PROCEDURE deleteGuild(IN inGuildID BIGINT)
+CREATE PROCEDURE deleteGuild(IN inGuildID BIGINT UNSIGNED)
 BEGIN
     DELETE FROM guilds WHERE guildID = inGuildID;
 END$$
 
 /* ALIASES PROCEDURES */
-CREATE PROCEDURE getAliases(IN inGuildID BIGINT)
+CREATE PROCEDURE getAliases(IN inGuildID BIGINT UNSIGNED)
 BEGIN
     SELECT * FROM aliases
     WHERE guildID = inGuildID;
 END$$
 
-CREATE PROCEDURE setAlias(IN inGuildID BIGINT,IN inUserID BIGINT,IN inAliasName VARCHAR(16),IN inDice VARCHAR(16))
+CREATE PROCEDURE setAlias(IN inGuildID BIGINT UNSIGNED,IN inUserID BIGINT UNSIGNED,IN inAliasName VARCHAR(16),IN inDice VARCHAR(16))
 BEGIN
     INSERT INTO aliases (guildID,userID,aliasName,dice) VALUES (inGuildID,inUserID,inAliasName,inDice);
 END$$
 
-CREATE PROCEDURE updateAlias(IN inGuildID BIGINT,IN inAliasName VARCHAR(16),IN inDice VARCHAR(16))
+CREATE PROCEDURE updateAlias(IN inGuildID BIGINT UNSIGNED,IN inAliasName VARCHAR(16),IN inDice VARCHAR(16))
 BEGIN
     UPDATE aliases
     SET aliasName = inAliasName, dice = inDice
     WHERE (guildID,aliasName) = (inGuildID,inAliasName);
 END$$
 
-CREATE PROCEDURE deleteAlias(IN inGuildID BIGINT, IN inaAliasName VARCHAR(16))
+CREATE PROCEDURE deleteAlias(IN inGuildID BIGINT UNSIGNED, IN inaAliasName VARCHAR(16))
 BEGIN
     DELETE FROM aliases WHERE (guildID,aliasName) = (inGuildID,inAliasName);
 END$$
