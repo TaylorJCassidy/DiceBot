@@ -98,7 +98,6 @@ class JSONDAO {
     deleteGuild() {
         try{
             fs.rmSync(this._filename);
-            this._localGuild = null;
             return true;
         }
         catch(e) {
