@@ -30,10 +30,10 @@ client.on('message', msg => {
     if (msg.author.id != client.user.id && msg.channel.type == 'text') {
         const cache = guildCaches.get(msg.guild.id);
         const prefix = cache.getPrefix();
-        msg.guild.cache = cache;
-
+        
         if (msg.content.startsWith(prefix)) {
             let msgcontent = msg.content.slice(prefix.length);
+            msg.guild.cache = cache;
 
             if (client.diceRegex.test(msgcontent)) {
                 commands.get('dice').diceController(msg,msgcontent);
