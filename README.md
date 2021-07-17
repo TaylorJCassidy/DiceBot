@@ -11,3 +11,5 @@ This bot can currently do:
 
 Planned:
 * Various bug fixes and general hardening
+
+To add this bot to your own Discord server, click [here](https://discord.com/api/oauth2/authorize?client_id=774637611482349578&permissions=3072&scope=bot).
