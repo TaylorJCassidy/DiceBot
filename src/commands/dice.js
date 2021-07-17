@@ -117,7 +117,7 @@ module.exports = {
                     diceRolls += `__${max}__, `.repeat(multiplier);
                 }
                 else {
-                    randomNumbers = 1*multiplier;
+                    randomNumbers = multiplier;
                     diceRolls += '__1__, '.repeat(multiplier);
                 }
             }
@@ -126,7 +126,7 @@ module.exports = {
                     let randomNo = randomNoGen(max,1);
                     randomNumbers += randomNo;
                     if (randomNo == max || randomNo == 1) {
-                        diceRolls += '__' + randomNo + '__, ';
+                        diceRolls += `__${randomNo}__, `;
                     }
                     else {
                         diceRolls += randomNo + ', ';
