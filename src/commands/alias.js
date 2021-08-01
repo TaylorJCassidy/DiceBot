@@ -19,7 +19,8 @@ module.exports = {
                 break;    
             case 'list':
                 this.listAliases(msg);
-                break;      
+                break;
+            case '':
             case 'help':
                 this.help(msg);
                 break;
