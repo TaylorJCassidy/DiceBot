@@ -18,7 +18,7 @@ module.exports = {
         \n${prefix}d20 ~d       Rolls the d20 twice and picks the lowest\
         \n${prefix}d20 ~d ~vul  Same as above, but doubles final number`;
         const {helpEmbed} = require('../utils/helpEmbed.js')
-        msg.channel.send(helpEmbed(help,'Dice Info'));
+        msg.reply(helpEmbed(help,'Dice Info'));
     },
 
     diceController: function(msg,dicecontent) {
@@ -82,7 +82,7 @@ module.exports = {
     formatReply: async function(msg,msgReturn) {
         
         if (msgReturn.length > 2000) {
-            msg.channel.send("Result is too large to display.");
+            msg.reply("Result is too large to display.");
         }
         else {
             msg.channel.send(msgReturn);
