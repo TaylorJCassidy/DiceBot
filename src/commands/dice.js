@@ -99,7 +99,7 @@ module.exports = {
 
             let rMultiplier = dicecontent.match(/\d+(?=d)/);
             let rMax = dicecontent.match(/(?<=d)\d+/);
-            if (rMultiplier === null) {
+            if (rMultiplier === null || rMax.index < rMultiplier.index) {
                 multiplier = 1;
                 startIndex = rMax.index-1;
             }
