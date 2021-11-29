@@ -56,7 +56,7 @@ client.on('message', msg => {
                 }
             }
         }
-        else if (msg.mentions.has(client.user.id)) {
+        else if (msg.mentions.everyone == false && msg.mentions.has(client.user.id)) {
             msg.reply(`The current prefix is '**${prefix}**'`)
         }
     }
