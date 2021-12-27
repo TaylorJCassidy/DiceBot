@@ -8,7 +8,7 @@ const Guild = require('../models/Guild');
  */
 class JSONDAO {
 
-    static FILEPATH = './guildConfigs/';
+    static FILEPATH = './configs/guildConfigs/';
     /**@private */
     _filename;
     /**@private */
