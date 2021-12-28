@@ -1,7 +1,6 @@
 const Discord = require('discord.js'); //12.5.3
-const Repository = require('./repository/Repository');
 const GuildCache = require('./caches/GuildCache');
-const {token} = require("./config/token.json");
+const {token} = require('../configs/config/token');
 const client = new Discord.Client();
 const commands = require('./utils/getCommands.js').getCommands();
 client.commands = commands;
