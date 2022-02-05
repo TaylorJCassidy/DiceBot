@@ -37,7 +37,7 @@ class JSONDAO {
      */
     _writeToFile() {
         try {
-            let json = JSON.stringify(this._localGuild)
+            let json = JSON.stringify(this._localGuild);
             fs.writeFileSync(this._filename,json);
             return true;
         }
@@ -119,7 +119,7 @@ class JSONDAO {
      * @returns {boolean} successful or not
      */
     setAlias(alias) {
-        this._localGuild.aliases.set(alias.aliasName,alias)
+        this._localGuild.aliases.set(alias.aliasName,alias);
         return this._writeToFile();
     }
 
