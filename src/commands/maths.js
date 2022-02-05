@@ -5,12 +5,13 @@ module.exports = {
         if (args.length == 0) {
             msg.reply(`Please supply an equation e.g. ${msg.guild.cache.getPrefix()}maths 2+2`);
         }
+        // eslint-disable-next-line no-useless-escape
         else if (/[^0-9%^*\/()\-+.]/g.test(args)) {
             msg.reply('The equation only contain the following operators: () - + * / ^ %');
         }
         else {
-            args = args.replace(/\^/g,'**')
-            msg.reply(new Function('return ' + args)())
+            args = args.replace(/\^/g,'**');
+            msg.reply(new Function('return ' + args)());
         }
     }
-}
+};

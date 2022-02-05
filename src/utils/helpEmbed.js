@@ -16,7 +16,7 @@ module.exports = {
                 text: 'https://github.com/TaylorJCassidy/DiceBot'
             },
             color: colour
-        }
+        };
         return new MessageEmbed(embed);
     }
-}
+};

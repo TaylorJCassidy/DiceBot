@@ -3,7 +3,7 @@ module.exports = {
     run: function(msg,args) {
         args = args.split(' ');
         if (args.length > 1) {
-            msg.reply(`Invalid format ${msg.guild.cache.getPrefix()}rig high/low/status/toggle`)
+            msg.reply(`Invalid format ${msg.guild.cache.getPrefix()}rig high/low/status/toggle`);
         }
         else {
             let rigged = msg.guild.cache.getRigged();
@@ -47,8 +47,8 @@ module.exports = {
                             msg.reply('The dice is rigged for maximum.');
                             break;
                         case -1:
-                            msg.reply('The dice cannot be rigged in this server.')
-                            break
+                            msg.reply('The dice cannot be rigged in this server.');
+                            break;
                         case 0:
                             msg.reply('The dice is not rigged.');
                     }
@@ -57,19 +57,19 @@ module.exports = {
                     if (msg.member.hasPermission('ADMINISTRATOR')) {
                         if (rigged == -1) {
                             msg.guild.cache.setRigged(0);
-                            msg.reply('The dice can now be rigged.')
+                            msg.reply('The dice can now be rigged.');
                         }
                         else {
                             msg.guild.cache.setRigged(-1);
-                            msg.reply('The dice can now no longer be rigged.')
+                            msg.reply('The dice can now no longer be rigged.');
                         }
                     }
                     else {
-                        msg.reply('You do not have the permission to do this action.')
+                        msg.reply('You do not have the permission to do this action.');
                     }
                     break;
                 case 'help':
-                default:
+                default: {
                     const prefix = msg.guild.cache.getPrefix();
                     const help = `Can be used to rig any dice rolled within this server\
                     \nTo rig a dice:\n\
@@ -79,10 +79,11 @@ module.exports = {
                     \nTo unrig the dice, simply repeat the same command e.g. if rigged high, retype ${prefix}rig high\n\
                     \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
                     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
-                    const {helpEmbed} = require('../utils/helpEmbed.js')
+                    const {helpEmbed} = require('../utils/helpEmbed.js');
                     msg.channel.send(helpEmbed(help,'Rig Info'));
+                }
             }
         }
         
     }
-}
+};

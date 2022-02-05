@@ -4,13 +4,13 @@ module.exports = {
 
         if (msg.member.hasPermission('ADMINISTRATOR')) {
             if (args.length == 0) {
-                msg.reply(`Please supply a prefix e.g. ${msg.guild.cache.getPrefix()}changeprefix /`)
+                msg.reply(`Please supply a prefix e.g. ${msg.guild.cache.getPrefix()}changeprefix /`);
             }
             else if (!/^([^~\\']{1,2})$/.test(args)) {
                 msg.reply('Prefix cannot be more than two characters and cannot be any of the following: ^ ~ \\ \'');
             }
             else if (msg.guild.cache.getPrefix() == args) {
-                msg.reply(`Prefix is already '${args}'.`)
+                msg.reply(`Prefix is already '${args}'.`);
             }
             else {
                 let status = msg.guild.cache.setPrefix(args);
@@ -26,4 +26,4 @@ module.exports = {
             msg.reply('You do not have the permission to do this action.');
         }
     }
-}
+};

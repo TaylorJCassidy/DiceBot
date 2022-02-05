@@ -3,7 +3,7 @@ module.exports = {
     run: function(msg,args) {
         args = args.toLowerCase();
 
-        const split = args.search(/ |$/)
+        const split = args.search(/ |$/);
         const arguement = args.substring(0,split);
         args = args.substring(split+1);
 
@@ -25,7 +25,7 @@ module.exports = {
                 this.help(msg);
                 break;
             default:
-                msg.reply(`There is no ${arguement} command ${msg.guild.cache.getPrefix()}alias help for help.`)
+                msg.reply(`There is no ${arguement} command ${msg.guild.cache.getPrefix()}alias help for help.`);
         }
     },
 
@@ -49,7 +49,7 @@ module.exports = {
             }
             else {
                 const Alias = require('./../models/Alias.js');
-                let alias = new Alias(msg.guild.id,msg.author.id,name,dice)
+                let alias = new Alias(msg.guild.id,msg.author.id,name,dice);
                 let status = msg.guild.cache.setAlias(alias);
                 if (!status) {
                     msg.reply('There has been an error. Please try again.');
@@ -128,7 +128,7 @@ module.exports = {
         const aliases = Array.from(msg.guild.cache.getAliases().values());
 
         if (aliases.length == 0) {
-            msg.reply('This server has no aliases.')
+            msg.reply('This server has no aliases.');
         }
         else {
             aliases.sort((a,b) => {
@@ -147,10 +147,10 @@ module.exports = {
                 }
             }
             aliases.forEach((alias) => {
-                msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`
-            })
+                msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`;
+            });
 
-            const {helpEmbed} = require('../utils/helpEmbed.js')
+            const {helpEmbed} = require('../utils/helpEmbed.js');
             msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
         }
     },
@@ -179,7 +179,7 @@ module.exports = {
         \n${prefix}attack1 ~a\
         \n${prefix}chr ~res\n\
         \nTo view a list of aliases, type ${prefix}alias list`;
-        const {helpEmbed} = require('../utils/helpEmbed.js')
+        const {helpEmbed} = require('../utils/helpEmbed.js');
         msg.channel.send(helpEmbed(help,'Alias Info'));
     }
-}
+};

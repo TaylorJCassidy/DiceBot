@@ -8,12 +8,13 @@ let guildCaches;
 
 client.once('ready', () => {
     guildCaches = require('./utils/getGuildCaches.js').getGuildCaches(client.guilds);
+    // eslint-disable-next-line no-useless-escape
     client.diceRegex = new RegExp(/^((((\d{0,2}d\d{1,3})|-?\d{1,3}) *[\+\-\*\/] *)*(\d{0,2}d\d{1,3})( *[\+\-\*\/] *\d{1,3})*( *~ *(res|vul|a|d))*)$/,'i');
 });
 
 client.on('ready', () => {
     console.log(`Logged in as ${client.user.tag}!`);
-    client.user.setActivity(`for dice in ${guildCaches.size} servers`, { type: 'WATCHING' })
+    client.user.setActivity(`for dice in ${guildCaches.size} servers`, { type: 'WATCHING' });
 });
 
 client.on('guildDelete', (guild) => {
@@ -22,7 +23,7 @@ client.on('guildDelete', (guild) => {
 });
 
 client.on('guildCreate', (guild) => {  
-    guildCaches.set(guild.id,(new GuildCache(guild.id)))
+    guildCaches.set(guild.id,(new GuildCache(guild.id)));
 });
 
 client.on('message', msg => {
@@ -56,7 +57,7 @@ client.on('message', msg => {
             }
         }
         else if (msg.mentions.everyone == false && msg.mentions.has(client.user.id)) {
-            msg.reply(`The current prefix is '**${prefix}**'`)
+            msg.reply(`The current prefix is '**${prefix}**'`);
         }
     }
 
