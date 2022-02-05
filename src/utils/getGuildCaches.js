@@ -1,5 +1,5 @@
 const { Guild } = require('discord.js');
-const GuildCache = require('../caches/GuildCache.js')
+const GuildCache = require('../caches/GuildCache.js');
 
 module.exports = {
     /**
@@ -10,9 +10,9 @@ module.exports = {
     getGuildCaches: (guilds) => {
         const guildCache = new Map();
         const guildKeys = Array.from(guilds.cache.keys());
-        for (key of guildKeys) {
-            guildCache.set(key,new GuildCache(key))
+        for (const key of guildKeys) {
+            guildCache.set(key,new GuildCache(key));
         }
         return guildCache;
     }
-}
+};

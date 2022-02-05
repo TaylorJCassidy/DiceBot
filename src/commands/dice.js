@@ -17,14 +17,15 @@ module.exports = {
         \n${prefix}d20 ~a       Rolls the d20 twice and picks the highest\
         \n${prefix}d20 ~d       Rolls the d20 twice and picks the lowest\
         \n${prefix}d20 ~d ~vul  Same as above, but doubles final number`;
-        const {helpEmbed} = require('../utils/helpEmbed.js')
+        const {helpEmbed} = require('../utils/helpEmbed.js');
         msg.reply(helpEmbed(help,'Dice Info'));
     },
 
     diceController: function(msg,dicecontent) {
         dicecontent = dicecontent.toLowerCase();
+        // eslint-disable-next-line no-useless-escape
         if (/^(d(0|1) *([\+\-\*\/]|$))/.test(dicecontent)) {
-            msg.reply('Cannot roll a zero or one sided dice.')
+            msg.reply('Cannot roll a zero or one sided dice.');
         }
         else {
             let argsIndex = dicecontent.search(/~/);
@@ -43,7 +44,7 @@ module.exports = {
 
     rollWithArguements: function(msg,dicecontent,args) {
         const diceResults = this.diceroller(dicecontent,msg.guild.cache.getRigged());
-        let msgReturn = `>>> ${msg.author.toString()}, `
+        let msgReturn = `>>> ${msg.author.toString()}, `;
         
         if (args.indexOf('a') >= 0) {
             const diceResults2 = this.diceroller(dicecontent,msg.guild.cache.getRigged());
@@ -51,7 +52,7 @@ module.exports = {
             diceResults2.total = resvul(diceResults2.total);
             msgReturn += `**${diceResults.total > diceResults2.total ? diceResults.total:diceResults2.total}**\
             \n1st Roll:   **${diceResults.total}**\t${diceResults.diceRolls}\
-            \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`
+            \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`;
         }
         else if (args.indexOf('d') >= 0) {
             const diceResults2 = this.diceroller(dicecontent,msg.guild.cache.getRigged());
@@ -59,7 +60,7 @@ module.exports = {
             diceResults2.total = resvul(diceResults2.total);
             msgReturn += `**${diceResults.total < diceResults2.total ? diceResults.total:diceResults2.total}**\
             \n1st Roll:   **${diceResults.total}**\t${diceResults.diceRolls}\
-            \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`
+            \n2nd Roll: **${diceResults2.total}**\t${diceResults2.diceRolls}`;
         }
         else {
             msgReturn += `**${resvul(diceResults.total)}**\nYou rolled: ${diceResults.diceRolls}`;
@@ -133,7 +134,7 @@ module.exports = {
                     }
                     multiplier--;
                 }
-                while (multiplier > 0)
+                while (multiplier > 0);
             }
             dicecontent = dicecontent.replace(dicecontent.slice(startIndex,endIndex),randomNumbers);
         }
@@ -143,4 +144,4 @@ module.exports = {
             diceRolls: diceRolls.substring(0,diceRolls.length-2)
         };
     }
-}
+};

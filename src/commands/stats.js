@@ -19,10 +19,10 @@ module.exports = {
                 results += result;
             }
             results -= smallest;
-            total +=results
+            total +=results;
             
-            msgReturn += `${results}${(results < 10 ? '  ' : ' ')}${getMod(results)}\n`
+            msgReturn += `${results}${(results < 10 ? '  ' : ' ')}${getMod(results)}\n`;
         }
         msg.reply(msgReturn + 'Total: ' + total);
     }
-}
+};

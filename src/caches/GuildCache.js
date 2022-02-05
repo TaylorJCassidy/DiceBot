@@ -1,5 +1,5 @@
 const Repository = require('../repository/Repository');
-const Alias = require('../models/Alias')
+const Alias = require('../models/Alias');
 
 /**
  * @class
@@ -84,7 +84,7 @@ class GuildCache {
      * @returns {boolean} successful or not
      */
     deleteAlias(aliasName) {
-        this._guild.aliases.delete(aliasName)
+        this._guild.aliases.delete(aliasName);
         return this._repository.deleteAlias(aliasName);
     }
 

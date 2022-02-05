@@ -102,7 +102,7 @@ class Alias {
             userID: this._userID,
             aliasName: this._aliasName,
             dice: this._dice
-        }
+        };
     }
 
 }
