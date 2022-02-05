@@ -1,5 +1,6 @@
 const Guild = require('../models/Guild.js');
 const Alias = require('../models/Alias.js');
+const JSONDAO = require('../DAOs/JSONDAO.js');
 
 /**
  * @class
@@ -14,7 +15,7 @@ class Repository {
      * @param {String} guildID Discord guild ID to read from or write to
      */
     constructor(guildID) {
-        
+        this._dao = new JSONDAO(guildID);
     }
 
     /**
