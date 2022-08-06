@@ -1,4 +1,5 @@
-const Alias = require("./Alias");
+const Alias = require('./Alias');
+const {defaultPrefix} = require('../../config/app.json');
 
 /**
  * @class

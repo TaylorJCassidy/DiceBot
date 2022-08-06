@@ -83,7 +83,7 @@ module.exports = {
     formatReply: async function(msg,msgReturn) {
         
         if (msgReturn.length > 2000) {
-            msg.reply("Result is too large to display.");
+            msg.reply('Result is too large to display.');
         }
         else {
             msg.channel.send(msgReturn);

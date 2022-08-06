@@ -1,0 +1,10 @@
+.git
+.vscode
+.gitignore
+.eslintrc
+config
+guildJSONs
+icon
+node_modules
+LICENSE
+run.bat
