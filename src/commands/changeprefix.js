@@ -2,7 +2,7 @@ module.exports = {
     name: 'changeprefix',
     run: function(msg,args) {
 
-        if (msg.member.hasPermission('ADMINISTRATOR')) {
+        if (msg.member.permissions.has('ADMINISTRATOR')) {
             if (args.length == 0) {
                 msg.reply(`Please supply a prefix e.g. ${msg.guild.cache.getPrefix()}changeprefix /`);
             }

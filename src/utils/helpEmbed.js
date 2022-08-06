@@ -17,6 +17,6 @@ module.exports = {
             },
             color: colour
         };
-        return new MessageEmbed(embed);
+        return {embeds: [new MessageEmbed(embed)]};
     }
 };
