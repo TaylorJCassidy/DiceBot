@@ -1,6 +1,7 @@
 const Guild = require('../models/Guild.js');
 const Alias = require('../models/Alias.js');
 const JSONDAO = require('../DAOs/JSONDAO.js');
+const SQLDAO = require('../DAOs/SQLDAO.js');
 
 /**
  * @class
@@ -16,6 +17,7 @@ class Repository {
      */
     constructor(guildID) {
         this._dao = new JSONDAO(guildID);
+        //this._dao = new SQLDAO(guildID);
     }
 
     /**
