@@ -1,4 +1,4 @@
-FROM node:16-alpine
+FROM node:16.6-alpine
 ENV NODE_ENV=production
 COPY package*.json .
 RUN npm install
