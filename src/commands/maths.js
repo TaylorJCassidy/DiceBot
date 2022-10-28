@@ -7,11 +7,11 @@ module.exports = {
         }
         // eslint-disable-next-line no-useless-escape
         else if (/[^0-9%^*\/()\-+.]/g.test(args)) {
-            msg.reply('The equation only contain the following operators: () - + * / ^ %');
+            msg.reply('The equation can only contain the following operators: () - + * / ^ %');
         }
         else {
             args = args.replace(/\^/g,'**');
-            msg.reply(new Function('return ' + args)());
+            msg.reply(new Function('return ' + args)().toString());
         }
     }
 };

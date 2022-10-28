@@ -1,4 +1,3 @@
-const { MessageEmbed } = require('discord.js');
 const {colour} = require('../../config/app.json').theme;
 
 module.exports = {
@@ -15,8 +14,8 @@ module.exports = {
             footer: {
                 text: 'https://github.com/TaylorJCassidy/DiceBot'
             },
-            color: colour
+            color: parseInt(colour,16)
         };
-        return {embeds: [new MessageEmbed(embed)]};
+        return {embeds: [embed]};
     }
 };

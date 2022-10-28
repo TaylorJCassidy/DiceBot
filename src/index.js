@@ -1,10 +1,10 @@
-const {Client, Intents} = require('discord.js'); //13.9.2
+const {Client, GatewayIntentBits, ChannelType} = require('discord.js'); //14.6.0
 const {token} = require('../config/app.json');
 const {getCommands} = require('./utils/getCommands.js');
 const {getGuildCaches} = require('./utils/getGuildCaches.js');
 const GuildCache = require('./caches/GuildCache');
 
-const client = new Client({intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]});
+const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 const commands = getCommands();
 client.commands = commands;
 let guildCaches;
@@ -31,7 +31,7 @@ client.on('guildCreate', (guild) => {
 
 client.on('messageCreate', msg => {
 
-    if (msg.author.id != client.user.id && msg.channel.type == 'GUILD_TEXT') {
+    if (msg.author.id != client.user.id && msg.channel.type == ChannelType.GuildText) {
         const cache = guildCaches.get(msg.guild.id);
         const prefix = cache.getPrefix();
         

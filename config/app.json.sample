@@ -2,7 +2,7 @@
     "token": "REPLACE-ME",
     "defaultPrefix": ".",
     "theme": {
-        "colour": "#FFFFFF",
+        "colour": "FFFFFF",
         "iconProvider": ""
     },
     "mysql": {
