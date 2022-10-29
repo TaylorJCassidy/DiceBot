@@ -1,6 +1,6 @@
-FROM node:16.6-alpine
+FROM node:18.12-alpine
 ENV NODE_ENV=production
-COPY package*.json .
+COPY package.json .
 RUN npm install
 COPY . .
 CMD ["node","./src/index.js"]

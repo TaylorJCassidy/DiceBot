@@ -2,7 +2,7 @@
 .vscode
 .gitignore
 .eslintrc
-config
+config/app.json.sample
 guildJSONs
 icon
 node_modules
