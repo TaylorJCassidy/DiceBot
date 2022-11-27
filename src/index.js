@@ -59,7 +59,7 @@ client.on('messageCreate', msg => {
                 }
             }
         }
-        else if (msg.mentions.everyone == false && msg.mentions.has(client.user.id)) {
+        else if (msg.mentions.everyone == false && msg.mentions.has(client.user.id) && !msg.author.bot) {
             msg.reply(`The current prefix is '**${prefix}**'`);
         }
     }
