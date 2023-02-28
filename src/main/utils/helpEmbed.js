@@ -1,4 +1,4 @@
-const {colour} = require('../../config/app.json').theme;
+const {colour} = require('../app.json').theme;
 
 module.exports = {
     /**

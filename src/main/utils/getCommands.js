@@ -1,3 +1,5 @@
+const path = require('path');
+
 module.exports = {
     /**
      * Returns all the commands from the commands directory as a map
@@ -5,7 +7,7 @@ module.exports = {
      */
     getCommands: () => {
         const fs = require('fs');
-        const files = fs.readdirSync(`./src/commands`);
+        const files = fs.readdirSync(path.resolve(__dirname, '../commands'));
         const commands = new Map();
 
         for (const file of files) {

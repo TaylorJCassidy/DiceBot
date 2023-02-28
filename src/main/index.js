@@ -1,5 +1,4 @@
 const {Client, GatewayIntentBits, ChannelType} = require('discord.js'); //14.6.0
-const {token} = require('../config/app.json');
 const {getCommands} = require('./utils/getCommands.js');
 const {getGuildCaches} = require('./utils/getGuildCaches.js');
 const GuildCache = require('./caches/GuildCache');
@@ -66,4 +65,4 @@ client.on('messageCreate', msg => {
 
 });
 
-client.login(token);
+client.login(process.env.TOKEN);
