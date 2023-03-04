@@ -1,3 +1,5 @@
+const helpEmbed = require('../utils/helpEmbed.js');
+
 module.exports = {
     name: 'rig',
     run: function(msg,args) {
@@ -79,7 +81,7 @@ module.exports = {
                     \nTo unrig the dice, simply repeat the same command e.g. if rigged high, retype ${prefix}rig high\n\
                     \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
                     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
-                    const {helpEmbed} = require('../utils/helpEmbed.js');
+                    
                     msg.channel.send(helpEmbed(help,'Rig Info'));
                 }
             }

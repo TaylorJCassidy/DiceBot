@@ -1,8 +1,8 @@
+const randomNoGen = require('../utils/randomNoGen.js');
+
 module.exports = {
     name: 'stats',
     run: function(msg,args) {
-        const {randomNoGen} = require('../utils/randomNoGen.js');
-
         let msgReturn = '\n>>> ';
         let total = 0;
         const getMod = msg.client.commands.get('getmod').getMod;

@@ -1,6 +1,6 @@
 const {Client, GatewayIntentBits, ChannelType} = require('discord.js'); //14.6.0
-const {getCommands} = require('./utils/getCommands.js');
-const {getGuildCaches} = require('./utils/getGuildCaches.js');
+const getCommands = require('./utils/getCommands.js');
+const getGuildCaches = require('./utils/getGuildCaches.js');
 const GuildCache = require('./caches/GuildCache');
 
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});

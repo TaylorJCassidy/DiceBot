@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node -r dotenv/config ./src/main/index.js",
     "start:ci": "node ./src/main/index.js",
+    "start:docker": "docker build --tag dicebot:local . && docker run --env-file .env dicebot:local",
     "test": "jest"
   },
   "dependencies": {

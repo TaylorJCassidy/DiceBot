@@ -1,3 +1,6 @@
+const Alias = require('./../models/Alias.js');
+const helpEmbed = require('../utils/helpEmbed.js');
+
 module.exports = {
     name: 'alias',
     run: function(msg,args) {
@@ -48,7 +51,7 @@ module.exports = {
                 msg.reply('Invalid name. The name provided overrides a command or a previous alias.');
             }
             else {
-                const Alias = require('./../models/Alias.js');
+                
                 let alias = new Alias(msg.guild.id,msg.author.id,name,dice);
                 let status = msg.guild.cache.setAlias(alias);
                 if (!status) {
@@ -150,7 +153,7 @@ module.exports = {
                 msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`;
             });
 
-            const {helpEmbed} = require('../utils/helpEmbed.js');
+            
             msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
         }
     },
@@ -179,7 +182,6 @@ module.exports = {
         \n${prefix}attack1 ~a\
         \n${prefix}chr ~res\n\
         \nTo view a list of aliases, type ${prefix}alias list`;
-        const {helpEmbed} = require('../utils/helpEmbed.js');
         msg.channel.send(helpEmbed(help,'Alias Info'));
     }
 };

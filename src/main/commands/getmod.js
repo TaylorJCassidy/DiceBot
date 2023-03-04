@@ -1,3 +1,5 @@
+const helpEmbed = require('../utils/helpEmbed.js');
+
 module.exports = {
     name: 'getmod',
     run: function(msg,args) {
@@ -9,7 +11,6 @@ module.exports = {
             \n${prefix}getmod 10  Would return 0\
             \n${prefix}getmod 20  Would return +5\
             \n${prefix}getmod 1   Would return -5`;
-            const {helpEmbed} = require('../utils/helpEmbed.js');
             msg.channel.send(helpEmbed(help,'Getmod Info'));
         }
         else {

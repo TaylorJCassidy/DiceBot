@@ -1,3 +1,6 @@
+const helpEmbed = require('../utils/helpEmbed.js');
+const randomNoGen = require('../utils/randomNoGen.js');
+
 module.exports = {
     name: 'dice',
     run: function(msg,args) {
@@ -17,7 +20,6 @@ module.exports = {
         \n${prefix}d20 ~a       Rolls the d20 twice and picks the highest\
         \n${prefix}d20 ~d       Rolls the d20 twice and picks the lowest\
         \n${prefix}d20 ~d ~vul  Same as above, but doubles final number`;
-        const {helpEmbed} = require('../utils/helpEmbed.js');
         msg.reply(helpEmbed(help,'Dice Info'));
     },
 
@@ -91,7 +93,6 @@ module.exports = {
     },
 
     diceroller: function(dicecontent,rigged) {
-        const {randomNoGen} = require('../utils/randomNoGen.js');
         let diceRolls = '';
 
         do {
