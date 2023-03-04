@@ -5,7 +5,6 @@ const GuildCache = require('./caches/GuildCache');
 
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 const commands = getCommands();
-client.commands = commands;
 let guildCaches;
 
 client.once('ready', () => {

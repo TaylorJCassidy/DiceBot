@@ -5,6 +5,7 @@ icon
 guildJSONs
 
 node_modules
+coverage
 
 .env
 !.env.sample

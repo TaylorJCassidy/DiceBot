@@ -3,9 +3,16 @@
     "configurations": [
         {
             "type": "node-terminal",
-            "name": "Run Script: start",
+            "name": "Start",
             "request": "launch",
             "command": "npm run start",
+            "cwd": "${workspaceFolder}"
+        },
+        {
+            "type": "node-terminal",
+            "name": "Test",
+            "request": "launch",
+            "command": "npm run test",
             "cwd": "${workspaceFolder}"
         }
     ]
