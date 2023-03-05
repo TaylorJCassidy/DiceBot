@@ -31,7 +31,7 @@ module.exports = {
                         status(msg, rigged);
                         break;
                     default: 
-                        help(msg);
+                        msg.reply(`Invalid format ${msg.guild.cache.getPrefix()}rig high/low/status/toggle`);
                 }
             }
         }
@@ -42,8 +42,8 @@ module.exports = {
 };
 
 function toggle(msg, rigged) {
-    if (msg.member.hasPermission('ADMINISTRATOR')) {
-        if (rigged == -1) {
+    if (msg.member.permissions.has('ADMINISTRATOR')) {
+        if (rigged == rigStatus.DISABLED) {
             msg.guild.cache.setRigged(rigStatus.NONE);
             msg.reply('The dice can now be rigged.');
         }
@@ -94,14 +94,17 @@ function low(msg, rigged) {
 }
 
 function status(msg, rigged) {
+    let status;
     switch(rigged) {
         case rigStatus.HIGH:
-            msg.reply('The dice is rigged for maximum.');
+            status = 'rigged for maximum.';
             break;
         case rigStatus.LOW:
-            msg.reply('The dice is rigged for minimum.');
+            status = 'rigged for minimum.';
             break;
         case rigStatus.NONE:
-            msg.reply('The dice is not rigged.');
+            status = 'not rigged.';
+            break;
     }
+    msg.reply(`The dice is ${status}`);
 }

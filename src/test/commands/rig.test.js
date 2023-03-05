@@ -17,7 +17,9 @@ const mockMsg = {
         }
     },
     member: {
-        hasPermission: mockHasPermission
+        permissions: {
+            has: mockHasPermission
+        }
     },
     channel: {
         send: mockSend
@@ -41,6 +43,9 @@ describe('rig invalid', () => {
         expect(mockReply).toBeCalledWith('Invalid format PREFIXrig high/low/status/toggle');
 
         rig.run(mockMsg, '');
+        expect(mockReply).toBeCalledWith('Invalid format PREFIXrig high/low/status/toggle');
+
+        rig.run(mockMsg, 'invalidarg');
         expect(mockReply).toBeCalledWith('Invalid format PREFIXrig high/low/status/toggle');
     });    
 });
