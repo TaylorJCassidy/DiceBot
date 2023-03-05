@@ -8,7 +8,9 @@ const mockMsg = {
     reply: mockReply
 };
 
-it('should return a formatted uptime', () => {
-    uptime.run(mockMsg, null);
-    expect(mockReply).toBeCalledWith('0d 0h 10m 54s');
+describe('uptime', () => {
+    it('should return a formatted uptime', () => {
+        uptime.run(mockMsg, null);
+        expect(mockReply).toBeCalledWith('0d 0h 10m 54s');
+    });
 });

@@ -14,12 +14,13 @@ const mockMsg = {
 };
 
 const stats = require('../../main/commands/stats');
-
-it('should return a list of stats', () => {
-    populateMocks(mockRandomNoGen, mockGetMod);
-
-    stats.run(mockMsg, null);
-    expect(mockReply).toBeCalledWith('\n>>> 7  -2\n7  -2\n7  -2\n13 +1\n13 +1\n13 +1\nTotal: 60');
+describe('stats', () => {
+    it('should return a list of stats', () => {
+        populateMocks(mockRandomNoGen, mockGetMod);
+    
+        stats.run(mockMsg, null);
+        expect(mockReply).toBeCalledWith('\n>>> 7  -2\n7  -2\n7  -2\n13 +1\n13 +1\n13 +1\nTotal: 60');
+    });
 });
 
 function populateMocks(randomNoGen, getMod) {

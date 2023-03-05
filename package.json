@@ -7,7 +7,8 @@
     "start": "node -r dotenv/config ./src/main/index.js",
     "start:ci": "node ./src/main/index.js",
     "start:docker": "docker build --tag dicebot:local . && docker run --env-file .env dicebot:local",
-    "test": "jest"
+    "test": "jest",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "discord.js": "^14.6.0",

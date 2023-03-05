@@ -19,4 +19,4 @@ In order to run this bot locally, you will need a Discord bot token, which you c
 Next, you will have to install the dependencies through npm. Open a terminal window within this directory and type `npm install`.
 
 ### Starting
-Once the above has been completed, to start the bot open a terminal window within this directory and type `node start`.
+Once the above has been completed, to start the bot open a terminal window within this directory and type `npm start`.
