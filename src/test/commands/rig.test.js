@@ -50,6 +50,15 @@ describe('rig invalid', () => {
     });    
 });
 
+describe('rig help', () => {
+    it('should return a help message', () => {
+        mockGetPrefix.mockReturnValue('PREFIX');
+
+        rig.run(mockMsg, 'help');
+        expect(mockHelpEmbed).toBeCalledWith(expect.any(String), 'Rig Info');
+    });
+});
+
 describe('rig high', () => {
     it('should rig the dice high', () => {
         mockGetRigged.mockReturnValue(rigStatus.NONE);
