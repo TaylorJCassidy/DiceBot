@@ -1,12 +1,4 @@
-const mockReply = jest.fn();
-const mockMsg = {
-    reply: mockReply,
-    client: {
-        ws: {
-            ping: 100
-        }
-    }
-};
+const {mockMsg, mockReply} = require('../testdata/mockMsg');
 
 const mockEdit = jest.fn();
 

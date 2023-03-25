@@ -1,30 +1,5 @@
 const rigStatus = require('../../main/utils/rigStatus.json');
-
-const mockReply = jest.fn();
-const mockGetPrefix = jest.fn();
-const mockGetRigged = jest.fn();
-const mockSetRigged = jest.fn();
-const mockHasPermission = jest.fn();
-const mockSend = jest.fn();
-
-const mockMsg = {
-    reply: mockReply,
-    guild: {
-        cache: {
-            getPrefix: mockGetPrefix,
-            getRigged: mockGetRigged,
-            setRigged: mockSetRigged
-        }
-    },
-    member: {
-        permissions: {
-            has: mockHasPermission
-        }
-    },
-    channel: {
-        send: mockSend
-    }
-};
+const {mockMsg, mockReply, mockGetPrefix, mockGetRigged, mockSetRigged, mockHasPermission, mockSend} = require('../testdata/mockMsg');
 
 const mockHelpEmbed = jest.fn();
 jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);

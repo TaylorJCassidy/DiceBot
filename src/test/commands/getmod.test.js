@@ -1,12 +1,11 @@
 const mockReply = jest.fn();
-const mockGetPrefix = jest.fn();
 const mockSend = jest.fn();
 
 const mockMsg = {
     reply: mockReply,
     guild: {
         cache: {
-            getPrefix: mockGetPrefix,
+            getPrefix: () => 'PREFIX',
         }
     },
     channel: {

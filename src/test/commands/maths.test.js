@@ -1,13 +1,4 @@
-const mockReply = jest.fn();
-const mockGetPrefix = jest.fn();
-const mockMsg = {
-    reply: mockReply,
-    guild: {
-        cache: {
-            getPrefix: mockGetPrefix,
-        }
-    }
-};
+const {mockMsg, mockReply, mockGetPrefix} = require('../testdata/mockMsg');
 
 const maths = require('../../main/commands/maths');
 

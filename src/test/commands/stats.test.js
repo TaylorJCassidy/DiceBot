@@ -1,3 +1,5 @@
+const {mockMsg, mockReply} = require('../testdata/mockMsg');
+
 const mockRandomNoGen = jest.fn();
 jest.mock('../../main/utils/randomNoGen', () => mockRandomNoGen);
 
@@ -7,11 +9,6 @@ jest.mock('../../main/commands/getmod', () => {
         getMod: mockGetMod
     };
 });
-
-const mockReply = jest.fn();
-const mockMsg = {
-    reply: mockReply
-};
 
 const stats = require('../../main/commands/stats');
 describe('stats', () => {

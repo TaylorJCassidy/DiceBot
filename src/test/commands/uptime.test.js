@@ -1,12 +1,5 @@
 const uptime = require('../../main/commands/uptime');
-
-const mockReply = jest.fn();
-const mockMsg = {
-    client: {
-        uptime: 654321
-    },
-    reply: mockReply
-};
+const {mockMsg, mockReply} = require('../testdata/mockMsg');
 
 describe('uptime', () => {
     it('should return a formatted uptime', () => {

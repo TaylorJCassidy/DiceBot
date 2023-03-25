@@ -1,7 +1,4 @@
-const mockReply = jest.fn();
-const mockMsg = {
-    reply: mockReply
-};
+const {mockMsg, mockReply} = require('../testdata/mockMsg');
 
 jest.mock('../../main/app.json', () => {
     return {
