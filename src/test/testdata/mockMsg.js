@@ -27,6 +27,9 @@ const mockMsg = {
     },
     channel: {
         send: mockSend
+    },
+    author: {
+        toString: () => '<@123456789012345678>'
     }
 };
 
