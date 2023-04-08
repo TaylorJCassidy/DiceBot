@@ -1,5 +1,6 @@
 const mockReply = jest.fn();
 const mockGetPrefix = jest.fn();
+const mockSetPrefix = jest.fn();
 const mockGetRigged = jest.fn();
 const mockSetRigged = jest.fn();
 const mockHasPermission = jest.fn();
@@ -16,6 +17,7 @@ const mockMsg = {
     guild: {
         cache: {
             getPrefix: mockGetPrefix,
+            setPrefix: mockSetPrefix,
             getRigged: mockGetRigged,
             setRigged: mockSetRigged
         }
@@ -33,4 +35,4 @@ const mockMsg = {
     }
 };
 
-module.exports = {mockMsg, mockReply, mockGetPrefix, mockGetRigged, mockSetRigged, mockHasPermission, mockSend};
+module.exports = {mockMsg, mockReply, mockGetPrefix, mockSetPrefix, mockGetRigged, mockSetRigged, mockHasPermission, mockSend};
