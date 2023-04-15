@@ -14,7 +14,7 @@ client.once('ready', () => {
 });
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Logged in as ${client.user.tag} at ${new Date().toISOString()}`);
     client.user.setActivity(`for dice in ${guildCaches.size} servers`, { type: 'WATCHING' });
 });
 
