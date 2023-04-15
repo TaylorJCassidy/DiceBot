@@ -3,6 +3,7 @@ const changeprefix = require('../../main/commands/changeprefix');
 
 beforeEach(() => {
     jest.clearAllMocks();
+    mockGetPrefix.mockReturnValue('#');
 });
 
 describe('changeprefix invalid', () => {
@@ -15,15 +16,13 @@ describe('changeprefix invalid', () => {
 
     it('should return an invalid arguements message when given no arguement', () => {
         mockHasPermission.mockReturnValue(true);
-        mockGetPrefix.mockReturnValue('PREFIX');
-
+        
         changeprefix.run(mockMsg, '');
-        expect(mockReply).toBeCalledWith('Please supply a prefix e.g. PREFIXchangeprefix /');
+        expect(mockReply).toBeCalledWith('Please supply a prefix e.g. #changeprefix /');
     });
 
     it('should return an invalid arguements message when given an invalid arguement', () => {
         mockHasPermission.mockReturnValue(true);
-        mockGetPrefix.mockReturnValue('PREFIX');
 
         changeprefix.run(mockMsg, '~');
         expect(mockReply).toBeCalledWith('Prefix cannot be more than two characters and cannot be any of the following: ^ ~ \\ \'');
@@ -40,17 +39,15 @@ describe('changeprefix invalid', () => {
 
     it('should return an invalid arguements message when given prefix is the same', () => {
         mockHasPermission.mockReturnValue(true);
-        mockGetPrefix.mockReturnValue('a');
 
-        changeprefix.run(mockMsg, 'a');
-        expect(mockReply).toBeCalledWith('Prefix is already \'a\'.');
+        changeprefix.run(mockMsg, '#');
+        expect(mockReply).toBeCalledWith('Prefix is already \'#\'.');
     });
 });
 
 describe('changeprefix valid', (() => {
     it('should change the server prefix', () => {
         mockHasPermission.mockReturnValue(true);
-        mockGetPrefix.mockReturnValue('#');
         mockSetPrefix.mockReturnValue(true);
 
         changeprefix.run(mockMsg, '.');
@@ -60,7 +57,6 @@ describe('changeprefix valid', (() => {
 
     it('should fail to change the server prefix', () => {
         mockHasPermission.mockReturnValue(true);
-        mockGetPrefix.mockReturnValue('#');
         mockSetPrefix.mockReturnValue(false);
 
         changeprefix.run(mockMsg, '.');
