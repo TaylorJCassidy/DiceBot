@@ -1,5 +1,5 @@
 const Alias = require('./Alias');
-const {defaultPrefix} = require('../../config/app.json');
+const {defaultPrefix} = require('../app.json');
 
 /**
  * @class
@@ -28,7 +28,7 @@ class Guild {
      */
     constructor(guildID,prefix,aliases,rigged) {
         this._guildID = guildID;
-        this._prefix = prefix || '.'; 
+        this._prefix = prefix || defaultPrefix; 
         this._rigged = Guild._validRigged(rigged) || 0;
         this._aliases = new Map(aliases);     
     }

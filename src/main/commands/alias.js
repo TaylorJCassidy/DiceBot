@@ -1,3 +1,6 @@
+const Alias = require('./../models/Alias.js');
+const helpEmbed = require('../utils/helpEmbed.js');
+
 module.exports = {
     name: 'alias',
     run: function(msg,args) {
@@ -41,14 +44,11 @@ module.exports = {
             if (!msg.client.diceRegex.test(dice)) {
                 msg.reply('The dice provided is an invalid dice roll. Please check the alias name has no spaces.');
             }
-            else if (!/^(\w+)$/.test(name)){
-                msg.reply('Invalid name. The name provided includes invalid characters.');
-            }
             else if (msg.client.commands.has(name) || msg.guild.cache.getAliases().has(name)) {
                 msg.reply('Invalid name. The name provided overrides a command or a previous alias.');
             }
             else {
-                const Alias = require('./../models/Alias.js');
+                
                 let alias = new Alias(msg.guild.id,msg.author.id,name,dice);
                 let status = msg.guild.cache.setAlias(alias);
                 if (!status) {
@@ -79,7 +79,7 @@ module.exports = {
             }
             else {
                 const alias = msg.guild.cache.getAliases().get(name);
-                if (msg.author.id == alias.userID || msg.member.hasPermission('ADMINISTRATOR')) {
+                if (msg.author.id == alias.userID || msg.member.permissions.has('ADMINISTRATOR')) {
                     alias.dice = dice;
                     let status = msg.guild.cache.updateAlias(alias);
                     if (!status) {
@@ -103,7 +103,7 @@ module.exports = {
         else {
             const aliases = msg.guild.cache.getAliases();
             if (aliases.has(args)) {
-                if (aliases.get(args).userID == msg.author.id || msg.member.hasPermission('ADMINISTRATOR')) {
+                if (aliases.get(args).userID == msg.author.id || msg.member.permissions.has('ADMINISTRATOR')) {
                     let status = msg.guild.cache.deleteAlias(args);
                     if (!status) {
                         msg.reply('There has been an error. Please try again.');
@@ -150,7 +150,7 @@ module.exports = {
                 msgReturn += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`;
             });
 
-            const {helpEmbed} = require('../utils/helpEmbed.js');
+            
             msg.channel.send(helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${msgReturn}`,'Alias List'));
         }
     },
@@ -179,7 +179,6 @@ module.exports = {
         \n${prefix}attack1 ~a\
         \n${prefix}chr ~res\n\
         \nTo view a list of aliases, type ${prefix}alias list`;
-        const {helpEmbed} = require('../utils/helpEmbed.js');
         msg.channel.send(helpEmbed(help,'Alias Info'));
     }
 };

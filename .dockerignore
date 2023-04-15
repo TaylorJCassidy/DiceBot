@@ -1,10 +1,10 @@
 .git
 .vscode
-.gitignore
+.env*
 .eslintrc
-config/app.json.sample
-guildJSONs
-icon
-node_modules
+.gitignore
 LICENSE
-run.bat
+README.md
+/guildJSONs
+/icon
+/node_modules

@@ -1,12 +1,10 @@
 const {Client, GatewayIntentBits, ChannelType} = require('discord.js'); //14.6.0
-const {token} = require('../config/app.json');
-const {getCommands} = require('./utils/getCommands.js');
-const {getGuildCaches} = require('./utils/getGuildCaches.js');
+const getCommands = require('./utils/getCommands.js');
+const getGuildCaches = require('./utils/getGuildCaches.js');
 const GuildCache = require('./caches/GuildCache');
 
 const client = new Client({intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.MessageContent]});
 const commands = getCommands();
-client.commands = commands;
 let guildCaches;
 
 client.once('ready', () => {
@@ -16,7 +14,7 @@ client.once('ready', () => {
 });
 
 client.on('ready', () => {
-    console.log(`Logged in as ${client.user.tag}!`);
+    console.log(`Logged in as ${client.user.tag} at ${new Date().toISOString()}`);
     client.user.setActivity(`for dice in ${guildCaches.size} servers`, { type: 'WATCHING' });
 });
 
@@ -66,4 +64,4 @@ client.on('messageCreate', msg => {
 
 });
 
-client.login(token);
+client.login(process.env.TOKEN);
