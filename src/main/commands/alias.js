@@ -44,9 +44,6 @@ module.exports = {
             if (!msg.client.diceRegex.test(dice)) {
                 msg.reply('The dice provided is an invalid dice roll. Please check the alias name has no spaces.');
             }
-            else if (!/^(\w+)$/.test(name)){
-                msg.reply('Invalid name. The name provided includes invalid characters.');
-            }
             else if (msg.client.commands.has(name) || msg.guild.cache.getAliases().has(name)) {
                 msg.reply('Invalid name. The name provided overrides a command or a previous alias.');
             }
@@ -82,7 +79,7 @@ module.exports = {
             }
             else {
                 const alias = msg.guild.cache.getAliases().get(name);
-                if (msg.author.id == alias.userID || msg.member.hasPermission('ADMINISTRATOR')) {
+                if (msg.author.id == alias.userID || msg.member.permissions.has('ADMINISTRATOR')) {
                     alias.dice = dice;
                     let status = msg.guild.cache.updateAlias(alias);
                     if (!status) {
@@ -106,7 +103,7 @@ module.exports = {
         else {
             const aliases = msg.guild.cache.getAliases();
             if (aliases.has(args)) {
-                if (aliases.get(args).userID == msg.author.id || msg.member.hasPermission('ADMINISTRATOR')) {
+                if (aliases.get(args).userID == msg.author.id || msg.member.permissions.has('ADMINISTRATOR')) {
                     let status = msg.guild.cache.deleteAlias(args);
                     if (!status) {
                         msg.reply('There has been an error. Please try again.');
