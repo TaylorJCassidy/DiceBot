@@ -1,17 +1,4 @@
-const mockReply = jest.fn();
-const mockSend = jest.fn();
-
-const mockMsg = {
-    reply: mockReply,
-    guild: {
-        cache: {
-            getPrefix: () => 'PREFIX',
-        }
-    },
-    channel: {
-        send: mockSend
-    }
-};
+const {mockMsg, mockGetPrefix, mockReply} = require('../testdata/mockMsg');
 
 const mockHelpEmbed = jest.fn();
 jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);
@@ -19,7 +6,8 @@ jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);
 const getmod = require('../../main/commands/getmod');
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
+    mockGetPrefix.mockReturnValue('#');
 });
 
 describe('getmod invalid', () => {

@@ -3,7 +3,7 @@ const {mockMsg, mockReply, mockGetPrefix} = require('../testdata/mockMsg');
 const maths = require('../../main/commands/maths');
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
 });
 
 describe('maths invalid', () => {

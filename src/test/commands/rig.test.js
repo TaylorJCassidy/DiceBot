@@ -7,7 +7,7 @@ jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);
 const rig = require('../../main/commands/rig');
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
 });
 
 describe('rig invalid', () => {

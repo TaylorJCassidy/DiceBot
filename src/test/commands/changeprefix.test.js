@@ -2,7 +2,7 @@ const {mockMsg, mockHasPermission, mockGetPrefix, mockReply, mockSetPrefix} = re
 const changeprefix = require('../../main/commands/changeprefix');
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
     mockGetPrefix.mockReturnValue('#');
 });
 

@@ -10,7 +10,7 @@ jest.mock('../../main/utils/randomNoGen', () => mockRandomNoGen);
 const dice = require('../../main/commands/dice');
 
 beforeEach(() => {
-    jest.clearAllMocks();
+    jest.resetAllMocks();
 });
 
 describe('dice help', () => {
