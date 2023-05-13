@@ -10,6 +10,7 @@
 	},
 	"rules": {
         "semi": ["error", "always"],
-		"no-unused-vars": "off"
+		"prefer-const": "error",
+		"comma-dangle": "error"
 	}
 }
