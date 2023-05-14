@@ -2,8 +2,8 @@ const cleanRegex = /[^0-9%^*/()\-+.]/g;
 
 module.exports = {
     name: 'maths',
-    aliases: ['m','math'],
-    run: function(msg,args) {
+    aliases: ['m', 'math'],
+    run: function(msg, args) {
         if (args.length == 0) {
             msg.reply(`Please supply an equation e.g. ${msg.guild.cache.getPrefix()}maths 2+2`);
         }
@@ -11,7 +11,7 @@ module.exports = {
             msg.reply('The equation can only contain the following operators: () - + * / ^ %');
         }
         else {
-            args = args.replace(/\^/g,'**');
+            args = args.replace(/\^/g, '**');
             msg.reply(this.calc(args));
         }
     },

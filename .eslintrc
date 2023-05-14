@@ -11,6 +11,8 @@
 	"rules": {
         "semi": ["error", "always"],
 		"prefer-const": "error",
-		"comma-dangle": "error"
+		"comma-dangle": "error",
+		"prefer-arrow-callback": "error",
+		"comma-spacing": ["error", {"before": false, "after": true}]
 	}
 }

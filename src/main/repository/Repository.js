@@ -1,5 +1,3 @@
-const Guild = require('../models/Guild.js');
-const Alias = require('../models/Alias.js');
 const JSONDAO = require('../DAOs/JSONDAO.js');
 const SQLDAO = require('../DAOs/SQLDAO.js');
 const {mysql} = require('../app.json');

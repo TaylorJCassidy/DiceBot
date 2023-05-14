@@ -1,4 +1,3 @@
-const Alias = require('./Alias');
 const {defaultPrefix} = require('../app.json');
 
 /**
@@ -26,7 +25,7 @@ class Guild {
      * @param {Array} aliases Any aliases to be attached to the guild
      * @param {Number} rigged Rigged number -1-unriggable 0-not rigged 1-rigged low 2-rigged high
      */
-    constructor(guildID,prefix,aliases,rigged) {
+    constructor(guildID, prefix, aliases, rigged) {
         this._guildID = guildID;
         this._prefix = prefix || defaultPrefix; 
         this._rigged = Guild._validRigged(rigged) || 0;

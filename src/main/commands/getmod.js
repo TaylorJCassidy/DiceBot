@@ -2,7 +2,7 @@ const helpEmbed = require('../utils/helpEmbed.js');
 
 module.exports = {
     name: 'getmod',
-    run: function(msg,args) {
+    run: function(msg, args) {
         if (args.length == 0) {
             const prefix = msg.guild.cache.getPrefix();
             const help = 
@@ -11,7 +11,7 @@ module.exports = {
             \n${prefix}getmod 10  Would return 0\
             \n${prefix}getmod 20  Would return +5\
             \n${prefix}getmod 1   Would return -5`;
-            msg.channel.send(helpEmbed(help,'Getmod Info'));
+            msg.channel.send(helpEmbed(help, 'Getmod Info'));
         }
         else {
             if (!/^(\d{1,5})$/.test(args)) {

@@ -1,8 +1,8 @@
 module.exports = {
     name: 'uptime',
-    run : function(msg,args) {
+    run : function(msg) {
         let uptimeTimestamp = msg.client.uptime;
-        let time = [];
+        const time = [];
 
         time[0] = Math.floor(uptimeTimestamp / 86400000);
         uptimeTimestamp %= 86400000;
@@ -12,7 +12,7 @@ module.exports = {
         uptimeTimestamp %= 60000;
         time[3] = Math.floor(uptimeTimestamp / 1000);
 
-        let timeOut = time[0] + 'd ' + time[1] + 'h ' + time[2] + 'm ' + time[3] + 's';
+        const timeOut = time[0] + 'd ' + time[1] + 'h ' + time[2] + 'm ' + time[3] + 's';
 
         msg.reply(timeOut);
     }

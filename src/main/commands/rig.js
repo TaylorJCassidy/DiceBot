@@ -3,7 +3,7 @@ const rigStatus = require('../utils/rigStatus.json');
 
 module.exports = {
     name: 'rig',
-    run: function(msg,args) {
+    run: function(msg, args) {
         args = args.split(' ');
         if (args.length == 1) {
             const rigged = msg.guild.cache.getRigged();
@@ -68,7 +68,7 @@ function help(msg) {
     \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
     
-    msg.channel.send(helpEmbed(help,'Rig Info'));
+    msg.channel.send(helpEmbed(help, 'Rig Info'));
 }
 
 function high(msg, rigged) {

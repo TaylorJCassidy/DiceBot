@@ -1,6 +1,6 @@
 module.exports = {
     name: 'changeprefix',
-    run: function(msg,args) {
+    run: function(msg, args) {
 
         if (msg.member.permissions.has('ADMINISTRATOR')) {
             if (args.length == 0) {
@@ -13,7 +13,7 @@ module.exports = {
                 msg.reply(`Prefix is already '${args}'.`);
             }
             else {
-                let status = msg.guild.cache.setPrefix(args);
+                const status = msg.guild.cache.setPrefix(args);
                 if (status == false) {
                     msg.reply('There has been an error. Please try again.');
                 }

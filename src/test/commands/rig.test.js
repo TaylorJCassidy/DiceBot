@@ -1,5 +1,5 @@
 const rigStatus = require('../../main/utils/rigStatus.json');
-const {mockMsg, mockReply, mockGetPrefix, mockGetRigged, mockSetRigged, mockHasPermission, mockSend} = require('../testdata/mockMsg');
+const {mockMsg, mockReply, mockGetPrefix, mockGetRigged, mockSetRigged, mockHasPermission} = require('../testdata/mockMsg');
 
 const mockHelpEmbed = jest.fn();
 jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);

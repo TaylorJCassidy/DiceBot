@@ -10,7 +10,7 @@ let guildCaches;
 client.once('ready', () => {
     guildCaches = getGuildCaches(client.guilds);
     // eslint-disable-next-line no-useless-escape
-    client.diceRegex = new RegExp(/^((((\d{0,2}d\d{1,3})|-?\d{1,3}) *[\+\-\*\/] *)*(\d{0,2}d\d{1,3})( *[\+\-\*\/] *\d{1,3})*( *~ *(res|vul|a|d))*)$/,'i');
+    client.diceRegex = new RegExp(/^((((\d{0,2}d\d{1,3})|-?\d{1,3}) *[\+\-\*\/] *)*(\d{0,2}d\d{1,3})( *[\+\-\*\/] *\d{1,3})*( *~ *(res|vul|a|d))*)$/, 'i');
 });
 
 client.on('ready', () => {
@@ -24,7 +24,7 @@ client.on('guildDelete', (guild) => {
 });
 
 client.on('guildCreate', (guild) => {  
-    guildCaches.set(guild.id,(new GuildCache(guild.id)));
+    guildCaches.set(guild.id, (new GuildCache(guild.id)));
 });
 
 client.on('messageCreate', msg => {
@@ -34,23 +34,23 @@ client.on('messageCreate', msg => {
         const prefix = cache.getPrefix();
         
         if (msg.content.startsWith(prefix)) {
-            let msgcontent = msg.content.slice(prefix.length);
+            const msgcontent = msg.content.slice(prefix.length);
             msg.guild.cache = cache;
 
             if (client.diceRegex.test(msgcontent)) {
-                commands.get('dice').diceController(msg,msgcontent);
+                commands.get('dice').diceController(msg, msgcontent);
             }
             else {
-                let split = msgcontent.search(/ |$/);
+                const split = msgcontent.search(/ |$/);
                 const aliases = cache.getAliases();
-                const command = msgcontent.substring(0,split).toLowerCase();
+                const command = msgcontent.substring(0, split).toLowerCase();
                 const args = msgcontent.substring(split+1).trim();
 
                 if (aliases.has(command)) {
-                    commands.get('dice').diceController(msg,aliases.get(command).dice+args);
+                    commands.get('dice').diceController(msg, aliases.get(command).dice+args);
                 }
                 else if (commands.has(command)) {
-                    commands.get(command).run(msg,args);
+                    commands.get(command).run(msg, args);
                 }
                 else {
                     msg.reply(`There is no ${command} command! ${prefix}help for help`);

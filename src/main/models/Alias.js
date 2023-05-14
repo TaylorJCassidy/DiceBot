@@ -20,7 +20,7 @@ class Alias {
      * @param {String} aliasName alias name
      * @param {String} dice dice to roll
      */
-    constructor(guildID,userID,aliasName,dice) {
+    constructor(guildID, userID, aliasName, dice) {
         this._guildID = guildID;
         this._userID = userID;
         this._aliasName = aliasName;

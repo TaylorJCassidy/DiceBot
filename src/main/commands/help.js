@@ -2,7 +2,7 @@ const helpEmbed = require('../utils/helpEmbed.js');
 
 module.exports = {
     name: 'help',
-    run: function(msg,args) {
+    run: function(msg) {
         const prefix = msg.guild.cache.getPrefix();
         const help = 
          `${prefix}alias add     Adds an alias ${prefix}alias for info\
@@ -21,6 +21,6 @@ module.exports = {
         \n${prefix}stats         Shows random dnd stats\
         \n${prefix}source        Shows all sources of the bot\
         \n${prefix}uptime        Shows the bots uptime`;
-        msg.channel.send(helpEmbed(help,'Help'));
+        msg.channel.send(helpEmbed(help, 'Help'));
     }
 };

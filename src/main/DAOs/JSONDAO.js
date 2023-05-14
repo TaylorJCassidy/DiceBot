@@ -22,8 +22,8 @@ class JSONDAO {
         this.guildID = guildID;
         this._filename = `${JSONDAO.FILEPATH}${guildID}.json`;
         try {
-            let json = JSON.parse(fs.readFileSync(this._filename));
-            this._localGuild = this._jsonGuild(guildID,json);
+            const json = JSON.parse(fs.readFileSync(this._filename));
+            this._localGuild = this._jsonGuild(guildID, json);
         }
         catch(e) {
             this._localGuild = new Guild(guildID);
@@ -37,8 +37,8 @@ class JSONDAO {
      */
     _writeToFile() {
         try {
-            let json = JSON.stringify(this._localGuild);
-            fs.writeFileSync(this._filename,json);
+            const json = JSON.stringify(this._localGuild);
+            fs.writeFileSync(this._filename, json);
             return true;
         }
         catch (e) {
@@ -54,13 +54,13 @@ class JSONDAO {
      * @param {String} json JSON guild string to translate
      * @returns 
      */
-    _jsonGuild(guildID,json) {
-        let aliases = [];
+    _jsonGuild(guildID, json) {
+        const aliases = [];
         let i = 0;
         json.aliases.forEach(element => {
-            aliases[i++] = [element[1].aliasName,new Alias(guildID,element[1].userID,element[1].aliasName,element[1].dice)];
+            aliases[i++] = [element[1].aliasName, new Alias(guildID, element[1].userID, element[1].aliasName, element[1].dice)];
         });
-        return new Guild(guildID,json.prefix,aliases,json.rigged);
+        return new Guild(guildID, json.prefix, aliases, json.rigged);
     }
 
     /**
@@ -69,7 +69,7 @@ class JSONDAO {
      */
     getGuild() {
         //need to construct new object as js returns by-reference, and any modifications to localGuild would affect here
-        return new Guild(this._localGuild.guildID,this._localGuild.prefix,this._localGuild.aliases,this._localGuild.rigged);
+        return new Guild(this._localGuild.guildID, this._localGuild.prefix, this._localGuild.aliases, this._localGuild.rigged);
     }
 
     /**
@@ -119,7 +119,7 @@ class JSONDAO {
      * @returns {boolean} successful or not
      */
     setAlias(alias) {
-        this._localGuild.aliases.set(alias.aliasName,alias);
+        this._localGuild.aliases.set(alias.aliasName, alias);
         return this._writeToFile();
     }
 

@@ -1,5 +1,4 @@
 const Repository = require('../repository/Repository');
-const Alias = require('../models/Alias');
 
 /**
  * @class
@@ -63,7 +62,7 @@ class GuildCache {
      * @returns {boolean} successful or not
      */
     setAlias(alias) {
-        this._guild.aliases.set(alias.aliasName,alias);
+        this._guild.aliases.set(alias.aliasName, alias);
         return this._repository.setAlias(alias);
     }
 
@@ -74,7 +73,7 @@ class GuildCache {
      * @returns {boolean} successful or not
      */
     updateAlias(alias) {
-        this._guild.aliases.set(alias.aliasName,alias);
+        this._guild.aliases.set(alias.aliasName, alias);
         return this._repository.updateAlias(alias);
     }
 

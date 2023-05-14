@@ -1,6 +1,6 @@
 class SQLDAO {
 
-    constructor(guildID) {
+    constructor() {
         
     }
 
