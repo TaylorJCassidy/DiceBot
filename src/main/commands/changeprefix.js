@@ -1,6 +1,6 @@
 module.exports = {
     name: 'changeprefix',
-    run: function(msg, args) {
+    run: (msg, args) => {
 
         if (msg.member.permissions.has('ADMINISTRATOR')) {
             if (args.length == 0) {

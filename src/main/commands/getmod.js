@@ -18,12 +18,13 @@ module.exports = {
                 msg.reply('The number provided is not a positive whole number, or is too large.');
             }
             else {
+                console.log(this.getMod);
                 msg.reply(this.getMod(args));
             }
             
         }
     },
-    getMod: function(number) {
+    getMod: (number) => {
         number = parseInt(number);
         return (number > 9 ? '+' : '') + Math.floor((number-10)/2);
     }

@@ -51,7 +51,7 @@ describe('calc sanitation', () => {
     });
 
     it('should return invalid when passed invalid values', () => {
-        expect(maths.calc('2+2d')).toBe('Invalid');
-        expect(maths.calc('2++2')).toBe('Invalid');
+        expect(maths.calc('2+2d')).toBe('Invalid equation');
+        expect(maths.calc('2++2')).toBe('Invalid equation');
     });
 });

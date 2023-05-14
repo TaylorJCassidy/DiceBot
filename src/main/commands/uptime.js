@@ -1,6 +1,6 @@
 module.exports = {
     name: 'uptime',
-    run : function(msg) {
+    run : (msg) => {
         let uptimeTimestamp = msg.client.uptime;
         const time = [];
 

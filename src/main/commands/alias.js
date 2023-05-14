@@ -3,7 +3,7 @@ const helpEmbed = require('../utils/helpEmbed.js');
 
 module.exports = {
     name: 'alias',
-    run: function(msg, args) {
+    run: (msg, args) => {
         args = args.toLowerCase();
 
         const split = args.search(/ |$/);

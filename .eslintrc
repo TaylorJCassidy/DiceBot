@@ -8,11 +8,38 @@
 	"parserOptions": {
 		"ecmaVersion": "latest"
 	},
+	"plugins": [
+		"prefer-arrow"
+	],
 	"rules": {
-        "semi": ["error", "always"],
+		"semi": [
+			"error",
+			"always"
+		],
 		"prefer-const": "error",
 		"comma-dangle": "error",
 		"prefer-arrow-callback": "error",
-		"comma-spacing": ["error", {"before": false, "after": true}]
+		"comma-spacing": [
+			"error",
+			{
+				"before": false,
+				"after": true
+			}
+		],
+		"prefer-arrow/prefer-arrow-functions": [
+			"error",
+			{
+				"disallowPrototype": true,
+				"singleReturnOnly": false,
+				"classPropertiesAllowed": false
+			}
+		],
+		"func-style": [
+			"error",
+			"expression",
+			{
+				"allowArrowFunctions": true
+			}
+		]
 	}
 }

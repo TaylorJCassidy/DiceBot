@@ -3,7 +3,7 @@ const rigStatus = require('../utils/rigStatus.json');
 
 module.exports = {
     name: 'rig',
-    run: function(msg, args) {
+    run: (msg, args) => {
         args = args.split(' ');
         if (args.length == 1) {
             const rigged = msg.guild.cache.getRigged();
@@ -41,7 +41,7 @@ module.exports = {
     }
 };
 
-function toggle(msg, rigged) {
+const toggle = (msg, rigged) => {
     if (msg.member.permissions.has('ADMINISTRATOR')) {
         if (rigged == rigStatus.DISABLED) {
             msg.guild.cache.setRigged(rigStatus.NONE);
@@ -55,9 +55,9 @@ function toggle(msg, rigged) {
     else {
         msg.reply('You do not have the permission to do this action.');
     }
-}
+};
 
-function help(msg) {
+const help = (msg) => {
     const prefix = msg.guild.cache.getPrefix();
     const help = `Can be used to rig any dice rolled within this server\
     \nTo rig a dice:\n\
@@ -69,9 +69,9 @@ function help(msg) {
     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
     
     msg.channel.send(helpEmbed(help, 'Rig Info'));
-}
+};
 
-function high(msg, rigged) {
+const high = (msg, rigged) => {
     if (rigged != rigStatus.HIGH) {
         msg.guild.cache.setRigged(rigStatus.HIGH);
         msg.reply('Dice is now rigged for maximum.');
@@ -80,9 +80,9 @@ function high(msg, rigged) {
         msg.reply('Dice is no longer rigged.');
         msg.guild.cache.setRigged(rigStatus.NONE);
     }
-}
+};
 
-function low(msg, rigged) {
+const low = (msg, rigged) => {
     if (rigged != rigStatus.LOW) {
         msg.guild.cache.setRigged(rigStatus.LOW);
         msg.reply('Dice is now rigged for minimum.');
@@ -91,9 +91,9 @@ function low(msg, rigged) {
         msg.reply('Dice is no longer rigged.');
         msg.guild.cache.setRigged(rigStatus.NONE);
     }
-}
+};
 
-function status(msg, rigged) {
+const status = (msg, rigged) => {
     let status;
     switch(rigged) {
         case rigStatus.HIGH:
@@ -107,4 +107,4 @@ function status(msg, rigged) {
             break;
     }
     msg.reply(`The dice is ${status}`);
-}
+};

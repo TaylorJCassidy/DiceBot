@@ -1,4 +1,4 @@
-const cleanRegex = /[^0-9%^*/()\-+.]/g;
+const cleanRegex = /[^0-9%^*/()\-+. ]/g;
 
 module.exports = {
     name: 'maths',
@@ -15,18 +15,18 @@ module.exports = {
             msg.reply(this.calc(args));
         }
     },
-    calc: function(equation) {
-        let toReturn;
-        if (cleanRegex.test(equation)) return 'Invalid';
+    calc: (equation) => {
+        let result;
+        if (cleanRegex.test(equation)) return 'Invalid equation';
         
         try {
-            toReturn = new Function('return ' + equation)().toString();
+            result = new Function('return ' + equation)().toString();
         }
         catch(e) {
-            return 'Invalid';
+            return 'Invalid equation';
         }
         
-        if (/[^0-9.]/g.test(toReturn)) return 'Invalid';
-        return toReturn;
+        if (/[^0-9.]/g.test(result)) return 'Invalid return values';
+        return result;
     }
 };

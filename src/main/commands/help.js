@@ -2,7 +2,7 @@ const helpEmbed = require('../utils/helpEmbed.js');
 
 module.exports = {
     name: 'help',
-    run: function(msg) {
+    run: (msg) => {
         const prefix = msg.guild.cache.getPrefix();
         const help = 
          `${prefix}alias add     Adds an alias ${prefix}alias for info\

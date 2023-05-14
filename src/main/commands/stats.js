@@ -3,7 +3,7 @@ const {getMod} = require('./getmod');
 
 module.exports = {
     name: 'stats',
-    run: function(msg) {
+    run: (msg) => {
         let msgReturn = '\n>>> ';
         let total = 0;
 
