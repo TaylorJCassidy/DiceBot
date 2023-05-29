@@ -1,0 +1,7 @@
+{
+    "aliasResponses": {
+        "regexError": "The dice provided is an invalid dice roll. Please check the alias name has no spaces.",
+        "dbError": "There has been an error. Please try again.",
+        "userNotAuth": "You cannot modify an alias that was not created by you."
+    }
+}

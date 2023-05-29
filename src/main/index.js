@@ -50,7 +50,7 @@ client.on('messageCreate', msg => {
                     commands.get('dice').diceController(msg, aliases.get(command).dice+args);
                 }
                 else if (commands.has(command)) {
-                    commands.get(command).run(msg, args);
+                    msg.reply(commands.get(command).run(msg, args));
                 }
                 else {
                     msg.reply(`There is no ${command} command! ${prefix}help for help`);
