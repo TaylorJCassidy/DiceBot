@@ -1,9 +1,10 @@
 const helpEmbed = require('../utils/helpEmbed.js');
-const {aliasResponses} = require('../utils/commonReplies.json');
+const {aliasResponses} = require('../configs/commonReplies.json');
+const {diceRegex} = require('../utils/consts.js');
 
 module.exports = {
     name: 'alias',
-    run: (msg, args) => {
+    run: (msg, args, {guildInfo, commands}) => {
         args = args.toLowerCase();
 
         const split = args.search(/ |$/);
@@ -12,34 +13,34 @@ module.exports = {
 
         switch (arguement) {
             case 'add':
-                return addAlias(msg, args);
+                return addAlias(msg, args, guildInfo, commands);
             case 'edit':
-                return editAlias(msg, args);
+                return editAlias(msg, args, guildInfo);
             case 'remove':
-                return deleteAlias(msg, args);
+                return deleteAlias(msg, args, guildInfo);
             case 'list':
-                return listAliases(msg);
+                return listAliases(msg, guildInfo);
             case '':
             case 'help':
-                return help(msg);
+                return help(guildInfo);
             default:
-                return `There is no ${arguement} command ${msg.guild.cache.getPrefix()}alias help for help.`;
+                return `There is no ${arguement} command ${guildInfo.getPrefix()}alias help for help.`;
         }
     }
 };
 
-const addAlias = (msg, args) => {     
+const addAlias = (msg, args, guildInfo, commands) => {     
     const split = args.search(/(?<=^\w+) /); 
-    if (split < 1) return `Invalid formatting ${msg.guild.cache.getPrefix()}alias add <name> <dice>`;
+    if (split < 1) return `Invalid formatting ${guildInfo.getPrefix()}alias add <name> <dice>`;
 
     const aliasName = args.substring(0, split);
     const dice = args.substring(split + 1);
     let reply;
 
-    if (!msg.client.diceRegex.test(dice)) {
+    if (!diceRegex.test(dice)) {
         reply = aliasResponses.regexError;
     }
-    else if (msg.client.commands.has(aliasName) || msg.guild.cache.getAliases().has(aliasName)) {
+    else if (commands.has(aliasName) || guildInfo.getAliases().has(aliasName)) {
         reply = 'Invalid name. The name provided overrides a command or a previous alias.';
     }
     else {        
@@ -49,7 +50,7 @@ const addAlias = (msg, args) => {
             aliasName,
             dice
         };
-        const status = msg.guild.cache.setAlias(alias);
+        const status = guildInfo.setAlias(alias);
         if (status) {
             reply = `Alias '${aliasName}' has been added.`;
         }
@@ -60,25 +61,25 @@ const addAlias = (msg, args) => {
     return reply;
 };
 
-const editAlias = (msg, args) => {
+const editAlias = (msg, args, guildInfo) => {
     const split = args.search(/(?<=^\w+) /);
-    if (split < 1) return `Invalid formatting ${msg.guild.cache.getPrefix()}alias edit <name> <dice>`;
+    if (split < 1) return `Invalid formatting ${guildInfo.getPrefix()}alias edit <name> <dice>`;
 
     const name = args.substring(0, split);
     const dice = args.substring(split+1);
     let reply;
 
-    if (!msg.client.diceRegex.test(dice)) {
+    if (!diceRegex.test(dice)) {
         reply = aliasResponses.regexError;
     }
-    else if (!msg.guild.cache.getAliases().has(name)) {
+    else if (!guildInfo.getAliases().has(name)) {
         reply = 'Invalid alias name. The alias provided does not exist.';
     }
     else {
-        const alias = msg.guild.cache.getAliases().get(name);
+        const alias = guildInfo.getAliases().get(name);
         if (msg.author.id == alias.userID || msg.member.permissions.has('ADMINISTRATOR')) {
             alias.dice = dice;
-            const status = msg.guild.cache.updateAlias(alias);
+            const status = guildInfo.updateAlias(alias);
             if (status) {
                 reply = `Alias '${name}' has been edited.`;
             }
@@ -93,15 +94,15 @@ const editAlias = (msg, args) => {
     return reply;
 };
 
-const deleteAlias = (msg, args) => {
+const deleteAlias = (msg, args, guildInfo) => {
     if (!/^(\w+)$/.test(args)) return 'Invalid name. The name provided includes invalid characters.';
 
-    const aliases = msg.guild.cache.getAliases();
+    const aliases = guildInfo.getAliases();
     let reply;
 
     if (aliases.has(args)) {
         if (aliases.get(args).userID == msg.author.id || msg.member.permissions.has('ADMINISTRATOR')) {
-            const status = msg.guild.cache.deleteAlias(args);
+            const status = guildInfo.deleteAlias(args);
             if (status) {
                 reply = `Alias '${args}' has been removed.`;
             }
@@ -119,8 +120,8 @@ const deleteAlias = (msg, args) => {
     return reply;
 };
 
-const listAliases = (msg) => {
-    const aliasesMap = msg.guild.cache.getAliases();
+const listAliases = (msg, guildInfo) => {
+    const aliasesMap = guildInfo.getAliases();
     if (aliasesMap.size == 0) return 'This server has no aliases.';
 
     const aliases = Array.from(aliasesMap.values());
@@ -142,8 +143,8 @@ const listAliases = (msg) => {
     return helpEmbed(`Aliases in ${msg.guild.name}:\t\t\t\t\n\n${aliasList}`, 'Alias List');
 };
 
-const help = (msg) => {
-    const prefix = msg.guild.cache.getPrefix();
+const help = (guildInfo) => {
+    const prefix = guildInfo.getPrefix();
     const help = 
         'Can be used to save dice rolls for easy access later.\n\n' +
         'To add an alias format as such:\n' +

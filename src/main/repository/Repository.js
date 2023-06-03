@@ -1,6 +1,4 @@
 const JSONDAO = require('../DAOs/JSONDAO.js');
-const SQLDAO = require('../DAOs/SQLDAO.js');
-const {mysql} = require('../app.json');
 
 /**
  * @class
@@ -15,12 +13,7 @@ class Repository {
      * @param {String} guildID Discord guild ID to read from or write to
      */
     constructor(guildID) {
-        if (mysql.enabled) {
-            this._dao = new SQLDAO(guildID);
-        }
-        else {
             this._dao = new JSONDAO(guildID);
-        }
     }
 
     /**

@@ -1,3 +1,4 @@
+//guildInfo
 const mockGetPrefix = jest.fn();
 const mockSetPrefix = jest.fn();
 const mockGetRigged = jest.fn();
@@ -7,8 +8,11 @@ const mockSetAlias = jest.fn();
 const mockUpdateAlias = jest.fn();
 const mockDeleteAlias = jest.fn();
 
-const mockGuildCache = {
-    cache: {
+//commands
+const mockCommand = jest.fn();
+
+const mockOptions = {
+    guildInfo: {
         getPrefix: mockGetPrefix,
         setPrefix: mockSetPrefix,
         getRigged: mockGetRigged,
@@ -18,12 +22,16 @@ const mockGuildCache = {
         updateAlias: mockUpdateAlias,
         deleteAlias: mockDeleteAlias
     },
-    id: '12345678912345678',
-    name: 'Testing Guild'
+    commands: new Map([
+        ['mockcommand', {run: mockCommand}]
+    ]),
+    log: jest.fn()
 };
 
 module.exports = {
-    mockGuildCache,
+    mockOptions,
+
+    //guildInfo
     mockGetPrefix,
     mockSetPrefix,
     mockGetRigged,
@@ -31,5 +39,8 @@ module.exports = {
     mockGetAliases,
     mockSetAlias,
     mockUpdateAlias,
-    mockDeleteAlias
+    mockDeleteAlias,
+
+    //commands
+    mockCommand
 };

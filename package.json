@@ -11,8 +11,7 @@
     "test:coverage": "jest --coverage"
   },
   "dependencies": {
-    "discord.js": "^14.11.0",
-    "mysql": "^2.18.1"
+    "discord.js": "^14.11.0"
   },
   "devDependencies": {
     "@types/jest": "^29.4.0",

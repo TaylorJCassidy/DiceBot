@@ -1,4 +1,5 @@
-const {mockMsg, mockGetPrefix, mockGetAliases, mockSetAlias, mockHasPermission, mockUpdateAlias, mockDeleteAlias} = require('../testdata/mockMsg');
+const {mockMsg, mockHasPermission} = require('../testdata/mockMsg');
+const {mockOptions, mockUpdateAlias, mockDeleteAlias, mockGetPrefix, mockGetAliases, mockSetAlias} = require('../testdata/mockOptions');
 
 const mockHelpEmbed = jest.fn();
 jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);
@@ -12,27 +13,27 @@ beforeEach(() => {
 
 describe('alias invalid', () => {
     it('should return a help message when given no arguements', () => {
-        alias.run(mockMsg, '');
+        alias.run(mockMsg, '', mockOptions);
         expect(mockHelpEmbed).toBeCalled();
     });
 
     it('should return a error message when given an invalid action arguement', () => {
-        expect(alias.run(mockMsg, 'abcdefg')).toBe('There is no abcdefg command #alias help for help.');
+        expect(alias.run(mockMsg, 'abcdefg', mockOptions)).toBe('There is no abcdefg command #alias help for help.');
     });
 });
 
 describe('alias add', () => {
     it('should return a error message when wrong number of secondary arguements are given', () => {
-        expect(alias.run(mockMsg, 'add')).toBe('Invalid formatting #alias add <name> <dice>');
-        expect(alias.run(mockMsg, 'add test')).toBe('Invalid formatting #alias add <name> <dice>');
+        expect(alias.run(mockMsg, 'add', mockOptions)).toBe('Invalid formatting #alias add <name> <dice>');
+        expect(alias.run(mockMsg, 'add test', mockOptions)).toBe('Invalid formatting #alias add <name> <dice>');
     });
 
     it('should return a error message when trying to add an invalid dice', () => {
-        expect(alias.run(mockMsg, 'add dice invaliddice')).toBe('The dice provided is an invalid dice roll. Please check the alias name has no spaces.');
+        expect(alias.run(mockMsg, 'add dice invaliddice', mockOptions)).toBe('The dice provided is an invalid dice roll. Please check the alias name has no spaces.');
     });
 
     it('should return a error message when trying to override an existing command', () => {
-        expect(alias.run(mockMsg, 'add mockCommand d20')).toBe('Invalid name. The name provided overrides a command or a previous alias.');
+        expect(alias.run(mockMsg, 'add mockCommand d20', mockOptions)).toBe('Invalid name. The name provided overrides a command or a previous alias.');
     });
 
     it('should return a error message when trying to override an existing alias', () => {
@@ -41,7 +42,7 @@ describe('alias add', () => {
         ]);
         mockGetAliases.mockReturnValue(mockAlias);
 
-        expect(alias.run(mockMsg, 'add mockAlias d20')).toBe('Invalid name. The name provided overrides a command or a previous alias.');
+        expect(alias.run(mockMsg, 'add mockAlias d20', mockOptions)).toBe('Invalid name. The name provided overrides a command or a previous alias.');
     });
 
     it('should successfully add an alias', () => {
@@ -51,7 +52,7 @@ describe('alias add', () => {
         mockGetAliases.mockReturnValue(mockAlias);
         mockSetAlias.mockReturnValue(true);
 
-        expect(alias.run(mockMsg, 'add newAlias d20')).toBe(`Alias 'newalias' has been added.`);
+        expect(alias.run(mockMsg, 'add newAlias d20', mockOptions)).toBe(`Alias 'newalias' has been added.`);
         expect(mockSetAlias).toBeCalledWith({guildID: '12345678912345678', userID: '12345678912345678', aliasName: 'newalias', dice: 'd20'});
     });
 
@@ -62,25 +63,25 @@ describe('alias add', () => {
         mockGetAliases.mockReturnValue(mockAlias);
         mockSetAlias.mockReturnValue(false);
 
-        expect(alias.run(mockMsg, 'add newAlias d20')).toBe(`There has been an error. Please try again.`);
+        expect(alias.run(mockMsg, 'add newAlias d20', mockOptions)).toBe(`There has been an error. Please try again.`);
         expect(mockSetAlias).toBeCalledWith({guildID: '12345678912345678', userID: '12345678912345678', aliasName: 'newalias', dice: 'd20'});
     });
 });
 
 describe('alias edit', () => {
     it('should return a error message when wrong number of secondary arguements are given', () => {
-        expect(alias.run(mockMsg, 'edit')).toBe('Invalid formatting #alias edit <name> <dice>'); 
-        expect(alias.run(mockMsg, 'edit test')).toBe('Invalid formatting #alias edit <name> <dice>');
+        expect(alias.run(mockMsg, 'edit', mockOptions)).toBe('Invalid formatting #alias edit <name> <dice>'); 
+        expect(alias.run(mockMsg, 'edit test', mockOptions)).toBe('Invalid formatting #alias edit <name> <dice>');
     });
 
     it('should return a error message when trying to edit an invalid dice', () => {
-        expect(alias.run(mockMsg, 'edit dice invaliddice')).toBe('The dice provided is an invalid dice roll. Please check the alias name has no spaces.');
+        expect(alias.run(mockMsg, 'edit dice invaliddice', mockOptions)).toBe('The dice provided is an invalid dice roll. Please check the alias name has no spaces.');
     });
 
     it('should return a error message when trying to edit an alias that doesnt exist', () => {
         mockGetAliases.mockReturnValue(new Map());
 
-        expect(alias.run(mockMsg, 'edit dice d20')).toBe('Invalid alias name. The alias provided does not exist.');
+        expect(alias.run(mockMsg, 'edit dice d20', mockOptions)).toBe('Invalid alias name. The alias provided does not exist.');
     });
 
     it('should return an error message when trying to edit an alias not created by the user', () => {
@@ -90,7 +91,7 @@ describe('alias edit', () => {
         mockGetAliases.mockReturnValue(mockAlias);
         mockHasPermission.mockReturnValue(false);
 
-        expect(alias.run(mockMsg, 'edit dice d10')).toBe('You cannot modify an alias that was not created by you.');
+        expect(alias.run(mockMsg, 'edit dice d10', mockOptions)).toBe('You cannot modify an alias that was not created by you.');
         expect(mockUpdateAlias).not.toBeCalledWith({guildID: 'guildID', userID: 'invalidUserID', aliasName: 'dice', dice: 'd10'});
     });
 
@@ -102,7 +103,7 @@ describe('alias edit', () => {
         mockHasPermission.mockReturnValue(false);
         mockUpdateAlias.mockReturnValue(true);
 
-        expect(alias.run(mockMsg, 'edit dice d10')).toBe(`Alias 'dice' has been edited.`);
+        expect(alias.run(mockMsg, 'edit dice d10', mockOptions)).toBe(`Alias 'dice' has been edited.`);
         expect(mockUpdateAlias).toBeCalledWith({guildID: 'guildID', userID: '12345678912345678', aliasName: 'dice', dice: 'd10'});
     });
 
@@ -114,7 +115,7 @@ describe('alias edit', () => {
         mockHasPermission.mockReturnValue(true);
         mockUpdateAlias.mockReturnValue(true);
 
-        expect(alias.run(mockMsg, 'edit dice d10')).toBe(`Alias 'dice' has been edited.`);
+        expect(alias.run(mockMsg, 'edit dice d10', mockOptions)).toBe(`Alias 'dice' has been edited.`);
         expect(mockUpdateAlias).toBeCalledWith({guildID: 'guildID', userID: 'invalidUserID', aliasName: 'dice', dice: 'd10'});
     });
 
@@ -126,20 +127,20 @@ describe('alias edit', () => {
         mockHasPermission.mockReturnValue(false);
         mockUpdateAlias.mockReturnValue(false);
 
-        expect(alias.run(mockMsg, 'edit dice d10')).toBe(`There has been an error. Please try again.`);
+        expect(alias.run(mockMsg, 'edit dice d10', mockOptions)).toBe(`There has been an error. Please try again.`);
         expect(mockUpdateAlias).toBeCalledWith({guildID: 'guildID', userID: '12345678912345678', aliasName: 'dice', dice: 'd10'});
     });
 });
 
 describe('alias remove', () => {
     it('should return a error message when wrong number of secondary arguements are given', () => {
-        expect(alias.run(mockMsg, 'remove #')).toBe('Invalid name. The name provided includes invalid characters.');
+        expect(alias.run(mockMsg, 'remove #', mockOptions)).toBe('Invalid name. The name provided includes invalid characters.');
     });
 
     it('should return an error when trying to remove an alias that doesnt exist', () => {
         mockGetAliases.mockReturnValue(new Map());
 
-        expect(alias.run(mockMsg, 'remove dice')).toBe(`There is no 'dice' alias.`);
+        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe(`There is no 'dice' alias.`);
     });
 
     it('should return an error when trying to remove an alias not created by the user', () => {
@@ -149,7 +150,7 @@ describe('alias remove', () => {
         mockGetAliases.mockReturnValue(mockAlias);
         mockHasPermission.mockReturnValue(false);
 
-        expect(alias.run(mockMsg, 'remove dice')).toBe(`You cannot modify an alias that was not created by you.`);
+        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe(`You cannot modify an alias that was not created by you.`);
         expect(mockDeleteAlias).not.toBeCalledWith('dice');
     });
 
@@ -161,7 +162,7 @@ describe('alias remove', () => {
         mockHasPermission.mockReturnValue(false);
         mockDeleteAlias.mockReturnValue(true);
 
-        expect(alias.run(mockMsg, 'remove dice')).toBe(`Alias 'dice' has been removed.`);
+        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe(`Alias 'dice' has been removed.`);
         expect(mockDeleteAlias).toBeCalledWith('dice');
     });
 
@@ -173,7 +174,7 @@ describe('alias remove', () => {
         mockHasPermission.mockReturnValue(true);
         mockDeleteAlias.mockReturnValue(true);
 
-        expect(alias.run(mockMsg, 'remove dice')).toBe(`Alias 'dice' has been removed.`);
+        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe(`Alias 'dice' has been removed.`);
         expect(mockDeleteAlias).toBeCalledWith('dice');
     });
 
@@ -185,7 +186,7 @@ describe('alias remove', () => {
         mockHasPermission.mockReturnValue(false);
         mockDeleteAlias.mockReturnValue(false);
 
-        expect(alias.run(mockMsg, 'remove dice')).toBe(`There has been an error. Please try again.`);
+        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe(`There has been an error. Please try again.`);
         expect(mockDeleteAlias).toBeCalledWith('dice');
     });
 });
@@ -194,7 +195,7 @@ describe('alias list', () => {
     it('should print a empty aliases message', () => {
         mockGetAliases.mockReturnValue(new Map());
 
-        expect(alias.run(mockMsg, 'list')).toBe('This server has no aliases.');
+        expect(alias.run(mockMsg, 'list', mockOptions)).toBe('This server has no aliases.');
     });
 
     it('should print a sorted aliases list', () => {
@@ -211,7 +212,7 @@ describe('alias list', () => {
             'alongaliasname:  2d10+5\n' +
             'dice:            d20\n';
 
-        alias.run(mockMsg, 'list');
+        alias.run(mockMsg, 'list', mockOptions);
         expect(mockHelpEmbed).toBeCalledWith(`Aliases in Testing Guild:\t\t\t\t\n\n${aliasList}`, 'Alias List');
     });
 });
