@@ -1,4 +1,4 @@
-const {colour} = require('../app.json').theme;
+const {colour} = require('../configs/app.json').theme;
 
 /**
  * The default bot embeded message

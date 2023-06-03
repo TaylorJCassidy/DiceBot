@@ -1,4 +1,4 @@
-const {defaultPrefix} = require('../app.json');
+const {defaultPrefix} = require('../configs/app.json');
 
 /**
  * @class
