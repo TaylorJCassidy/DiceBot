@@ -1,31 +1,26 @@
-const helpEmbed = require('../utils/helpEmbed.js');
+const {helpEmbed} = require('./common/extras');
+const getmod = require('./common/getmod.js');
 
 module.exports = {
     name: 'getmod',
-    run: function(msg, args) {
+    run: (msg, args, {guildInfo}) => {
+        let reply;
         if (args.length == 0) {
-            const prefix = msg.guild.cache.getPrefix();
+            const prefix = guildInfo.getPrefix();
             const help = 
-            `Gets the D&D modifier of any positive whole number e.g:\n\
-            \n${prefix}getmod <number>\
-            \n${prefix}getmod 10  Would return 0\
-            \n${prefix}getmod 20  Would return +5\
-            \n${prefix}getmod 1   Would return -5`;
-            msg.channel.send(helpEmbed(help, 'Getmod Info'));
+                'Gets the D&D modifier of any positive whole number e.g:\n' +
+                `\n${prefix}getmod <number>` + 
+                `\n${prefix}getmod 10  Would return 0` +
+                `\n${prefix}getmod 20  Would return +5` +
+                `\n${prefix}getmod 1   Would return -5`;
+            reply = helpEmbed(help, 'Getmod Info');
+        }
+        else if (!/^(\d{1,5})$/.test(args)) {
+            reply = 'The number provided is not a positive whole number, or is too large.';
         }
         else {
-            if (!/^(\d{1,5})$/.test(args)) {
-                msg.reply('The number provided is not a positive whole number, or is too large.');
-            }
-            else {
-                console.log(this.getMod);
-                msg.reply(this.getMod(args));
-            }
-            
+            reply = getmod(args);
         }
-    },
-    getMod: (number) => {
-        number = parseInt(number);
-        return (number > 9 ? '+' : '') + Math.floor((number-10)/2);
+        return reply;
     }
 };

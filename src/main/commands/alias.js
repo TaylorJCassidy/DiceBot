@@ -1,6 +1,5 @@
-const helpEmbed = require('../utils/helpEmbed.js');
+const {diceRegex, helpEmbed} = require('./common/extras');
 const commonReplies = require('../configs/commonReplies.json');
-const {diceRegex} = require('../utils/consts.js');
 
 module.exports = {
     name: 'alias',
