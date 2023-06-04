@@ -1,5 +1,5 @@
 const helpEmbed = require('../utils/helpEmbed.js');
-const {aliasResponses} = require('../configs/commonReplies.json');
+const commonReplies = require('../configs/commonReplies.json');
 const {diceRegex} = require('../utils/consts.js');
 
 module.exports = {
@@ -38,7 +38,7 @@ const addAlias = (msg, args, guildInfo, commands) => {
     let reply;
 
     if (!diceRegex.test(dice)) {
-        reply = aliasResponses.regexError;
+        reply = commonReplies.alias.regexError;
     }
     else if (commands.has(aliasName) || guildInfo.getAliases().has(aliasName)) {
         reply = 'Invalid name. The name provided overrides a command or a previous alias.';
@@ -55,7 +55,7 @@ const addAlias = (msg, args, guildInfo, commands) => {
             reply = `Alias '${aliasName}' has been added.`;
         }
         else {
-            reply = aliasResponses.dbError;
+            reply = commonReplies.common.error;
         }
     }
     return reply;
@@ -70,7 +70,7 @@ const editAlias = (msg, args, guildInfo) => {
     let reply;
 
     if (!diceRegex.test(dice)) {
-        reply = aliasResponses.regexError;
+        reply = commonReplies.alias.regexError;
     }
     else if (!guildInfo.getAliases().has(name)) {
         reply = 'Invalid alias name. The alias provided does not exist.';
@@ -84,11 +84,11 @@ const editAlias = (msg, args, guildInfo) => {
                 reply = `Alias '${name}' has been edited.`;
             }
             else {
-                reply = aliasResponses.dbError;
+                reply = commonReplies.common.error;
             }
         }
         else {
-            reply = aliasResponses.userNotAuth;
+            reply = commonReplies.alias.userNotAuth;
         }
     }
     return reply;
@@ -107,11 +107,11 @@ const deleteAlias = (msg, args, guildInfo) => {
                 reply = `Alias '${args}' has been removed.`;
             }
             else {
-                reply = aliasResponses.dbError;
+                reply = commonReplies.common.error;
             }
         }
         else {
-            reply = aliasResponses.userNotAuth;
+            reply = commonReplies.alias.userNotAuth;
         }
     }
     else {

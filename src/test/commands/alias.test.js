@@ -1,5 +1,5 @@
-const {mockMsg, mockHasPermission} = require('../testdata/mockMsg');
-const {mockOptions, mockUpdateAlias, mockDeleteAlias, mockGetPrefix, mockGetAliases, mockSetAlias} = require('../testdata/mockOptions');
+const {mockMsg, mockHasPermission} = require('../mocks/mockMsg');
+const {mockOptions, mockUpdateAlias, mockDeleteAlias, mockGetPrefix, mockGetAliases, mockSetAlias} = require('../mocks/mockOptions');
 
 const mockHelpEmbed = jest.fn();
 jest.mock('../../main/utils/helpEmbed', () => mockHelpEmbed);
