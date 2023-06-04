@@ -2,21 +2,26 @@ const commands = require('./utils/getCommands.js');
 const getGuildCaches = require('./utils/getGuildCaches.js');
 const GuildCache = require('./caches/GuildCache.js');
 const logger = require('./utils/logger.js');
-const {dicebotAscii} = require('./configs/app.json');
 const {ChannelType} = require('discord.js');
-const {diceRegex} = require('./utils/consts.js');
+const {diceRegex} = require('./commands/common/extras.js');
 
 let guilds;
 
 module.exports = (client) => {
     client.on('ready', () => {
-        console.log(dicebotAscii);
+        console.log(
+            '    ____     _                  ____           __ \n' + 
+            '   / __ \\   (_)  _____  ___    / __ )  ____   / /_\n' + 
+            '  / / / /  / /  / ___/ / _ \\  / __  | / __ \\ / __/\n' + 
+            ' / /_/ /  / /  / /__  /  __/ / /_/ / / /_/ // /_  \n' +
+            '/_____/  /_/   \\___/  \\___/ /_____/  \\____/ \\__/  \n'
+        );
         console.log(`Logged in as ${client.user.tag} at ${new Date().toISOString()}`);
 
         guilds = getGuildCaches(client.guilds);
     });
 
-    client.on('guildDelete', guild => {
+    client.on('guildDelete', (guild) => {
         guilds.get(guild.id).deleteGuild();
         guilds.delete(guild.id);
     });
@@ -53,7 +58,8 @@ module.exports = (client) => {
                         commands,
                         log: logger(commandObject.name)
                     };
-                    msg.reply(commandObject.run(msg, args, options));
+                    const reply = commandObject.run(msg, args, options);
+                    if (reply) msg.reply(reply);
                 }
                 else {
                     msg.reply(`There is no ${command} command! ${prefix}help for help`);
@@ -63,6 +69,5 @@ module.exports = (client) => {
         else if (!msg.mentions.everyone && msg.mentions.has(client.user.id) && !msg.author.bot) {
             msg.reply(`The current prefix is '**${prefix}**'`);
         }
-    
     });
 };

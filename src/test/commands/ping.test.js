@@ -1,28 +1,36 @@
-const {mockMsg, mockReply} = require('../testdata/mockMsg');
+const {mockMsg, mockReply} = require('../mocks/mockMsg');
 
 const mockEdit = jest.fn();
 
-const ping = require('../../main/commands/ping');
+const pingCommand = require('../../main/commands/ping');
 
 describe('ping', () => {
-    it('should return a list of latencies', async () => {
+    it('should return a list of latencies', (done) => {
         jest.useFakeTimers();
+        const time = 1000;
+        const ping = 100;
 
         const mockReplyResolve = {
-            edit: mockEdit
+            edit: (value) => {
+                mockEdit(value);
+                expect(mockEdit).toBeCalledWith(`Discord API response time: ${ping}ms\nMessage response time: ${time}ms`);
+                done();
+            },
+            client: {
+                ws: {
+                    ping
+                }
+            }
         };
         mockReply.mockReturnValue(
             new Promise(resolve => {
-                setTimeout(() => {
+                setTimeout(() => { 
                     resolve(mockReplyResolve);
-                }, 1000);
+                }, time);
             })
         );
 
-        const pingRun = ping.run(mockMsg, null);
-        jest.runOnlyPendingTimers();
-        await pingRun;
-
-        expect(mockEdit).toBeCalledWith('Discord API response time: 100ms\nMessage response time: 1000ms');
+        pingCommand.run(mockMsg);
+        jest.runAllTimers();
     });
 });

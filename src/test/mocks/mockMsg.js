@@ -15,9 +15,6 @@ const mockMsg = {
     reply: mockReply,
     client: {
         uptime: 654321,
-        ws: {
-            ping: 100
-        },
         // eslint-disable-next-line no-useless-escape
         diceRegex: new RegExp(/^((((\d{0,2}d\d{1,3})|-?\d{1,3}) *[\+\-\*\/] *)*(\d{0,2}d\d{1,3})( *[\+\-\*\/] *\d{1,3})*( *~ *(res|vul|a|d))*)$/,'i'),
         commands: new Map([
