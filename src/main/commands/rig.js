@@ -1,5 +1,5 @@
-const helpEmbed = require('../utils/helpEmbed.js');
-const rigStatus = require('../utils/rigStatus.json');
+const helpEmbed = require('./common/extras');
+const rigStatus = require('./common/rigStatus.json');
 
 module.exports = {
     name: 'rig',

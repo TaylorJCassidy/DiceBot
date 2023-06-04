@@ -1,4 +1,4 @@
-const helpEmbed = require('../utils/helpEmbed.js');
+const {helpEmbed} = require('./common/extras.js');
 const randomNoGen = require('../utils/randomNoGen.js');
 const maths = require('./maths.js');
 
