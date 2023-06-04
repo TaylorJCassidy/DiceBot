@@ -67,16 +67,17 @@ const editAlias = (msg, args, guildInfo) => {
 
     const name = args.substring(0, split);
     const dice = args.substring(split+1);
+    const aliases = guildInfo.getAliases();
     let reply;
 
     if (!diceRegex.test(dice)) {
         reply = commonReplies.alias.regexError;
     }
-    else if (!guildInfo.getAliases().has(name)) {
-        reply = 'Invalid alias name. The alias provided does not exist.';
+    else if (!aliases.has(name)) {
+        reply = commonReplies.alias.invalidName;
     }
     else {
-        const alias = guildInfo.getAliases().get(name);
+        const alias = aliases.get(name);
         if (msg.author.id == alias.userID || msg.member.permissions.has('ADMINISTRATOR')) {
             alias.dice = dice;
             const status = guildInfo.updateAlias(alias);
@@ -100,11 +101,15 @@ const deleteAlias = (msg, args, guildInfo) => {
     const aliases = guildInfo.getAliases();
     let reply;
 
-    if (aliases.has(args)) {
-        if (aliases.get(args).userID == msg.author.id || msg.member.permissions.has('ADMINISTRATOR')) {
+    if (!aliases.has(args)) { 
+        reply = commonReplies.alias.invalidName;
+    }
+    else {
+        const alias = aliases.get(args);
+        if (alias.userID == msg.author.id || msg.member.permissions.has('ADMINISTRATOR')) {
             const status = guildInfo.deleteAlias(args);
             if (status) {
-                reply = `Alias '${args}' has been removed.`;
+                reply = `Alias '${alias.aliasName}' has been removed.`;
             }
             else {
                 reply = commonReplies.common.error;
@@ -112,10 +117,7 @@ const deleteAlias = (msg, args, guildInfo) => {
         }
         else {
             reply = commonReplies.alias.userNotAuth;
-        }
-    }
-    else {
-        reply = `There is no '${args}' alias.`;
+        }   
     }
     return reply;
 };
@@ -129,12 +131,7 @@ const listAliases = (msg, guildInfo) => {
 
     aliases.sort((a, b) => a.aliasName > b.aliasName ? 1 : -1);
 
-    let biggest = aliases[0].aliasName.length;
-    for (let i = 1; i < aliases.length; i++) {
-        if (aliases[i].aliasName.length > biggest) {
-            biggest = aliases[i].aliasName.length;
-        }
-    }
+    const biggest = Math.max(...aliases.map(a => a.aliasName.length));
 
     aliases.forEach((alias) => {
         aliasList += `${alias.aliasName}:${' '.repeat(biggest-alias.aliasName.length)}  ${alias.dice}\n`;

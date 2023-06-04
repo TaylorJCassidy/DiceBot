@@ -5,6 +5,7 @@
     },
     "alias": {
         "regexError": "The dice provided is an invalid dice roll. Please check the alias name has no spaces.",
-        "userNotAuth": "You cannot modify an alias that was not created by you."
+        "userNotAuth": "You cannot modify an alias that was not created by you.",
+        "invalidName": "Invalid alias name. The alias provided does not exist."
     }
 }

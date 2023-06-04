@@ -140,7 +140,7 @@ describe('alias remove', () => {
     it('should return an error when trying to remove an alias that doesnt exist', () => {
         mockGetAliases.mockReturnValue(new Map());
 
-        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe(`There is no 'dice' alias.`);
+        expect(alias.run(mockMsg, 'remove dice', mockOptions)).toBe('Invalid alias name. The alias provided does not exist.');
     });
 
     it('should return an error when trying to remove an alias not created by the user', () => {
