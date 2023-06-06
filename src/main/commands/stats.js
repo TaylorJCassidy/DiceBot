@@ -1,10 +1,10 @@
 const randomNoGen = require('../utils/randomNoGen.js');
-const {getMod} = require('./getmod');
+const getMod = require('./common/getmod');
 
 module.exports = {
     name: 'stats',
-    run: (msg) => {
-        let msgReturn = '\n>>> ';
+    run: () => {
+        let msgReturn = '>>> ```';
         let total = 0;
 
         for (let i=0; i<6; i++) {
@@ -23,6 +23,6 @@ module.exports = {
             
             msgReturn += `${results}${(results < 10 ? '  ' : ' ')}${getMod(results)}\n`;
         }
-        msg.reply(msgReturn + 'Total: ' + total);
+        return msgReturn + '```Total: ' + total;
     }
 };

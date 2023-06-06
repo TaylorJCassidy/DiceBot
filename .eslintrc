@@ -40,6 +40,13 @@
 			{
 				"allowArrowFunctions": true
 			}
+		],
+		"arrow-parens": [
+			"error",
+			"as-needed",
+			{
+				"requireForBlockBody": true 
+			}
 		]
 	}
 }

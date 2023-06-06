@@ -1,5 +1,3 @@
-const {mockMsg, mockReply} = require('../testdata/mockMsg');
-
 const mockRandomNoGen = jest.fn();
 jest.mock('../../main/utils/randomNoGen', () => mockRandomNoGen);
 
@@ -15,12 +13,11 @@ describe('stats', () => {
     it('should return a list of stats', () => {
         populateMocks(mockRandomNoGen, mockGetMod);
     
-        stats.run(mockMsg, null);
-        expect(mockReply).toBeCalledWith('\n>>> 7  -2\n7  -2\n7  -2\n13 +1\n13 +1\n13 +1\nTotal: 60');
+        expect(stats.run()).toBe('>>> ```7  -2\n7  -2\n7  -2\n13 +1\n13 +1\n13 +1\n```Total: 60');
     });
 });
 
-function populateMocks(randomNoGen, getMod) {
+const populateMocks = (randomNoGen, getMod) => {
     randomNoGen.mockClear();
     for(let i=0; i<3; i++) {
         randomNoGen
@@ -38,4 +35,4 @@ function populateMocks(randomNoGen, getMod) {
             .mockReturnValueOnce(1);
         getMod.mockReturnValueOnce('+1');
     }
-}
+};

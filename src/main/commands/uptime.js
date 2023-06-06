@@ -14,6 +14,6 @@ module.exports = {
 
         const timeOut = time[0] + 'd ' + time[1] + 'h ' + time[2] + 'm ' + time[3] + 's';
 
-        msg.reply(timeOut);
+        return timeOut;
     }
 };

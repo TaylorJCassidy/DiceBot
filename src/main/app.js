@@ -26,11 +26,11 @@ module.exports = (client) => {
         guilds.delete(guild.id);
     });
     
-    client.on('guildCreate', guild => {  
+    client.on('guildCreate', (guild) => {  
         guilds.set(guild.id, new GuildCache(guild.id));
     });
     
-    client.on('messageCreate', msg => {
+    client.on('messageCreate', (msg) => {
         if (msg.author.id == client.user.id || msg.channel.type != ChannelType.GuildText) return;
     
         const guildInfo = guilds.get(msg.guild.id);
