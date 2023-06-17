@@ -7,6 +7,7 @@
     "start": "node -r dotenv/config ./src/main/index.js",
     "start:ci": "node ./src/main/index.js",
     "start:docker": "docker build --tag dicebot:local . && docker run --env-file .env dicebot:local",
+    "start:debug": "nodemon -r dotenv/config ./src/main/index.js",
     "test": "jest",
     "test:coverage": "jest --coverage"
   },
@@ -19,23 +20,24 @@
     "eslint": "^8.40.0",
     "eslint-plugin-prefer-arrow": "^1.2.3",
     "jest": "^29.5.0",
-    "jest-runner-eslint": "^2.0.0"
+    "jest-runner-eslint": "^2.0.0",
+    "nodemon": "^2.0.22"
   },
   "jest": {
     "projects": [
       {
-        "displayName": "test"
+        "displayName": "test",
+        "testMatch": [
+          "<rootDir>/src/test/**/*.js"
+        ]
       },
       {
         "runner": "jest-runner-eslint",
         "displayName": "lint",
         "testMatch": [
-          "<rootDir>/src/main/**/*.js"
+          "<rootDir>/src/**/*.js"
         ]
       }
-    ],
-    "coveragePathIgnorePatterns": [
-      "/testdata/"
     ]
   }
 }

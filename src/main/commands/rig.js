@@ -1,64 +1,59 @@
-const helpEmbed = require('./common/extras');
+const {helpEmbed} = require('./common/extras');
 const rigStatus = require('./common/rigStatus.json');
 
 module.exports = {
     name: 'rig',
-    run: (msg, args) => {
+    run: (msg, args, {guildInfo}) => {
         args = args.split(' ');
         if (args.length == 1) {
-            const rigged = msg.guild.cache.getRigged();
             switch(args[0]) {
                 case 'toggle':
-                    toggle(msg, rigged);
-                    return;
+                    return toggle(msg, guildInfo);
                 case 'help': 
-                    help(msg);
-                    return;
+                    return help(guildInfo);
             }
 
-            if (rigged == rigStatus.DISABLED) {
-                msg.reply('Dice cannot be rigged in this server.');
+            if (guildInfo.getRigged() == rigStatus.DISABLED) {
+                return 'Dice cannot be rigged in this server.';
             }
             else {
                 switch(args[0]) {
                     case 'high':
-                        high(msg, rigged);
-                        break;
                     case 'low':
-                        low(msg, rigged);
-                        break;
+                        return toggleHighLow(args[0], guildInfo);
                     case 'status':
-                        status(msg, rigged);
-                        break;
+                        return status(guildInfo);
                     default: 
-                        msg.reply(`Invalid format ${msg.guild.cache.getPrefix()}rig high/low/status/toggle`);
+                        return `Invalid format ${guildInfo.getPrefix()}rig high/low/status/toggle`;
                 }
             }
         }
         else {
-            msg.reply(`Invalid format ${msg.guild.cache.getPrefix()}rig high/low/status/toggle`);
+            return `Invalid format ${guildInfo.getPrefix()}rig high/low/status/toggle`;
         }       
     }
 };
 
-const toggle = (msg, rigged) => {
+const toggle = (msg, guildInfo) => {
+    let reply;
     if (msg.member.permissions.has('ADMINISTRATOR')) {
-        if (rigged == rigStatus.DISABLED) {
-            msg.guild.cache.setRigged(rigStatus.NONE);
-            msg.reply('The dice can now be rigged.');
+        if (guildInfo.getRigged() == rigStatus.DISABLED) {
+            guildInfo.setRigged(rigStatus.NONE);
+            reply = 'The dice can now be rigged.';
         }
         else {
-            msg.guild.cache.setRigged(rigStatus.DISABLED);
-            msg.reply('The dice can now no longer be rigged.');
+            guildInfo.setRigged(rigStatus.DISABLED);
+            reply = 'The dice can now no longer be rigged.';
         }
     }
     else {
-        msg.reply('You do not have the permission to do this action.');
+        reply = 'You do not have the permission to do this action.';
     }
+    return reply;
 };
 
-const help = (msg) => {
-    const prefix = msg.guild.cache.getPrefix();
+const help = (guildInfo) => {
+    const prefix = guildInfo.getPrefix();
     const help = `Can be used to rig any dice rolled within this server\
     \nTo rig a dice:\n\
     \n${prefix}rig high    Rigs the dice to only roll the maximum value\
@@ -68,43 +63,36 @@ const help = (msg) => {
     \nServer Administrators can also toggle whether the dice can be rigged or not:\n\
     \n${prefix}rig toggle  Toggles whether the dice can be rigged`;
     
-    msg.channel.send(helpEmbed(help, 'Rig Info'));
+    return helpEmbed(help, 'Rig Info');
 };
 
-const high = (msg, rigged) => {
-    if (rigged != rigStatus.HIGH) {
-        msg.guild.cache.setRigged(rigStatus.HIGH);
-        msg.reply('Dice is now rigged for maximum.');
+const toggleHighLow = (type, guildInfo) => {
+    let reply;
+    const upperType = type.toUpperCase();
+    if (guildInfo.getRigged() == rigStatus[upperType]) {
+        guildInfo.setRigged(rigStatus.NONE);
+        reply = 'Dice is no longer rigged.';
     }
     else {
-        msg.reply('Dice is no longer rigged.');
-        msg.guild.cache.setRigged(rigStatus.NONE);
+        guildInfo.setRigged(rigStatus[upperType]);
+        reply = `Dice is now rigged ${type}.`;
     }
+    
+    return reply;
 };
 
-const low = (msg, rigged) => {
-    if (rigged != rigStatus.LOW) {
-        msg.guild.cache.setRigged(rigStatus.LOW);
-        msg.reply('Dice is now rigged for minimum.');
-    }
-    else {
-        msg.reply('Dice is no longer rigged.');
-        msg.guild.cache.setRigged(rigStatus.NONE);
-    }
-};
-
-const status = (msg, rigged) => {
+const status = (guildInfo) => {
     let status;
-    switch(rigged) {
+    switch(guildInfo.getRigged()) {
         case rigStatus.HIGH:
-            status = 'rigged for maximum.';
+            status = 'rigged high.';
             break;
         case rigStatus.LOW:
-            status = 'rigged for minimum.';
+            status = 'rigged low.';
             break;
         case rigStatus.NONE:
             status = 'not rigged.';
             break;
     }
-    msg.reply(`The dice is ${status}`);
+    return `The dice is ${status}`;
 };
