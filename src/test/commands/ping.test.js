@@ -23,7 +23,7 @@ describe('ping', () => {
             }
         };
         mockReply.mockReturnValue(
-            new Promise(resolve => {
+            new Promise((resolve) => {
                 setTimeout(() => { 
                     resolve(mockReplyResolve);
                 }, time);

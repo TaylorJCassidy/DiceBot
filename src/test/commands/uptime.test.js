@@ -1,4 +1,4 @@
-const {mockMsg} = require('../testdata/mockMsg');
+const {mockMsg} = require('../mocks/mockMsg');
 
 const uptime = require('../../main/commands/uptime');
 

@@ -11,7 +11,7 @@ describe('changeprefix invalid', () => {
     it('should return an invalid permissions message', () => {
         mockHasPermission.mockReturnValue(false);
         
-        expect(changeprefix.run(mockMsg, '', mockOptions)).toBe('You do not have the permission to do this action.');
+        expect(changeprefix.run(mockMsg, '', mockOptions)).toBe(`You must have the 'Administrator' permission to perform this action.`);
     });
 
     it('should return an invalid arguements message when given no arguement', () => {
