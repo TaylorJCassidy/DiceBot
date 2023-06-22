@@ -40,7 +40,7 @@ module.exports = (client) => {
             const msgcontent = msg.content.slice(prefix.length);
 
             if (diceRegex.test(msgcontent)) {
-                commands.get('dice').diceController(msg, msgcontent);
+                msg.reply(commands.get('dice').diceController(msg, msgcontent));
             }
             else {
                 const split = msgcontent.search(/ |$/);
@@ -49,7 +49,7 @@ module.exports = (client) => {
                 const args = msgcontent.substring(split+1).trim();
 
                 if (aliases.has(command)) {
-                    commands.get('dice').diceController(msg, aliases.get(command).dice+args);
+                    msg.reply(commands.get('dice').diceController(msg, aliases.get(command).dice+args));
                 }
                 else if (commands.has(command)) {
                     const commandObject = commands.get(command);
