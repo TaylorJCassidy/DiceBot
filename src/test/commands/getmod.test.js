@@ -1,13 +1,15 @@
 const {mockMsg} = require('../mocks/mockMsg');
-const {mockOptions, mockGetPrefix} = require('../mocks/mockOptions');
+const {mockOptions} = require('../mocks/mockOptions');
 
 const mockHelpEmbed = require('../mocks/mockHelpEmbed');
+
+const mockGetMod = jest.fn();
+jest.mock('../../main/commands/common/getmod.js', () => mockGetMod);
 
 const getmod = require('../../main/commands/getmod');
 
 beforeEach(() => {
     jest.resetAllMocks();
-    mockGetPrefix.mockReturnValue('#');
 });
 
 describe('getmod invalid', () => {
@@ -29,14 +31,7 @@ describe('getmod invalid', () => {
 
 describe('getmod number', () => {
     it('should return +5 when given 20', () => {
+        mockGetMod.mockReturnValue('+5');
         expect(getmod.run(mockMsg, '20', mockOptions)).toBe('+5');
-    });
-
-    it('should return +0 when given 10', () => {
-        expect(getmod.run(mockMsg, '10', mockOptions)).toBe('+0');
-    });
-
-    it('should return -1 when given 8', () => {
-        expect(getmod.run(mockMsg, '8', mockOptions)).toBe('-1');
     });
 });

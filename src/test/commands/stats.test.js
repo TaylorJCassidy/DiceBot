@@ -2,11 +2,7 @@ const mockRandomNoGen = jest.fn();
 jest.mock('../../main/utils/randomNoGen', () => mockRandomNoGen);
 
 const mockGetMod = jest.fn();
-jest.mock('../../main/commands/getmod', () => {
-    return {
-        getMod: mockGetMod
-    };
-});
+jest.mock('../../main/commands/common/getmod', () => mockGetMod);
 
 const stats = require('../../main/commands/stats');
 describe('stats', () => {
