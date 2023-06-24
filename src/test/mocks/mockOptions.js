@@ -24,8 +24,7 @@ const mockOptions = {
     },
     commands: new Map([
         ['mockcommand', {run: mockCommand}]
-    ]),
-    log: jest.fn()
+    ])
 };
 
 module.exports = {

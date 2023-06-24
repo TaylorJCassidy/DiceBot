@@ -9,7 +9,7 @@ module.exports = {
         return help(guildInfo);
     },
 
-    diceController: (msg, diceString, guildInfo) => {
+    diceController: (msg, diceString, {guildInfo}) => {
         diceString = diceString.toLowerCase();
         // eslint-disable-next-line no-useless-escape
         if (/^(d[01] *([\+\-\*\/]|$))/.test(diceString)) return 'Cannot roll a zero or one sided dice.';

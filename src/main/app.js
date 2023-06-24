@@ -1,7 +1,6 @@
 const commands = require('./utils/getCommands.js');
 const getGuildCaches = require('./utils/getGuildCaches.js');
 const GuildCache = require('./caches/GuildCache.js');
-const logger = require('./utils/logger.js');
 const {ChannelType} = require('discord.js');
 const {diceRegex} = require('./commands/common/extras.js');
 
@@ -38,9 +37,13 @@ module.exports = (client) => {
         
         if (msg.content.startsWith(prefix)) {
             const msgcontent = msg.content.slice(prefix.length);
+            const options = {
+                guildInfo,
+                commands
+            };
 
             if (diceRegex.test(msgcontent)) {
-                msg.reply(commands.get('dice').diceController(msg, msgcontent, guildInfo));
+                msg.reply(commands.get('dice').diceController(msg, msgcontent, options));
             }
             else {
                 const split = msgcontent.search(/ |$/);
@@ -53,11 +56,6 @@ module.exports = (client) => {
                 }
                 else if (commands.has(command)) {
                     const commandObject = commands.get(command);
-                    const options = {
-                        guildInfo,
-                        commands,
-                        log: logger(commandObject.name)
-                    };
                     const reply = commandObject.run(msg, args, options);
                     if (reply) msg.reply(reply);
                 }
