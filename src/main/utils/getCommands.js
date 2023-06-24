@@ -12,7 +12,7 @@ for (const file of files) {
     commands.set(command.name, command);
     //if command has aliases, adds alias as a different key to same command object
     if (command.aliases !== undefined) {
-        command.aliases.forEach(alias => {
+        command.aliases.forEach((alias) => {
             if (commands.get(alias)) {
                 log(`Found clashing alias '${alias}'`, 'warn');
             }
