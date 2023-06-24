@@ -29,7 +29,9 @@
         "displayName": "test",
         "testMatch": [
           "<rootDir>/src/test/**/*.js"
-        ]
+        ],
+        "testPathIgnorePatterns": ["/mocks/"],
+        "coveragePathIgnorePatterns": ["/mocks/"]
       },
       {
         "runner": "jest-runner-eslint",

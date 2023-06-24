@@ -40,7 +40,7 @@ module.exports = (client) => {
             const msgcontent = msg.content.slice(prefix.length);
 
             if (diceRegex.test(msgcontent)) {
-                msg.reply(commands.get('dice').diceController(msg, msgcontent));
+                msg.reply(commands.get('dice').diceController(msg, msgcontent, guildInfo));
             }
             else {
                 const split = msgcontent.search(/ |$/);
