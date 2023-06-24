@@ -169,6 +169,12 @@ describe('rolling invalid dice', () => {
 
         expect(dice.diceController(mockMsg, 'd1', mockOptions)).toBe('Cannot roll a zero or one sided dice.');
         expect(mockRandomNoGen).not.toBeCalled();
+
+        expect(dice.diceController(mockMsg, 'd10+d1', mockOptions)).toBe('Cannot roll a zero or one sided dice.');
+        expect(mockRandomNoGen).not.toBeCalled();
+
+        expect(dice.diceController(mockMsg, 'd0+10+d20', mockOptions)).toBe('Cannot roll a zero or one sided dice.');
+        expect(mockRandomNoGen).not.toBeCalled();
     });
 
     it('should return an error related to a result that is too large', () => {

@@ -11,41 +11,54 @@ module.exports = {
 
     diceController: (msg, diceString, {guildInfo}) => {
         diceString = diceString.toLowerCase();
-        // eslint-disable-next-line no-useless-escape
-        if (/^(d[01] *([\+\-\*\/]|$))/.test(diceString)) return 'Cannot roll a zero or one sided dice.';
+        if (/d[01]([+-]|$)/.test(diceString)) return 'Cannot roll a zero or one sided dice.';
         
+        const diceFunc = () => diceRoller(noFlagsDiceString, rigged);
         const rigged = guildInfo.getRigged();
         const flags = diceString.match(/(?<=~)\w+/g);
         const noFlagsDiceString = diceString.replaceAll(/~\w+/g, '');
-        const diceResults = diceRoller(noFlagsDiceString, rigged);
+        const diceResults = diceFunc();
         
-        let total = diceResults.total;
-        let results = `You rolled: ${diceResults.results}`;
+        let results = {
+            total: diceResults.total,
+            results: `You rolled: ${diceResults.results}`
+        };
 
-        if (flags) {
-            diceResults.total = applyTotalModifier(diceResults.total, flags);
-            total = diceResults.total;
-            
-            const hasAdvFlag = flags.includes('a');
-            if (hasAdvFlag || flags.includes('d')) {
-                const secondDiceResults = diceRoller(noFlagsDiceString, rigged);
-                secondDiceResults.total = applyTotalModifier(secondDiceResults.total, flags);
-                if (hasAdvFlag) {
-                    total = diceResults.total > secondDiceResults.total ? diceResults.total : secondDiceResults.total;
-                }
-                else {
-                    total = diceResults.total < secondDiceResults.total ? diceResults.total : secondDiceResults.total;
-                }
-                results = 
-                    `1st Roll:   **${diceResults.total}**\t${diceResults.results}\n` +
-                    `2nd Roll: **${secondDiceResults.total}**\t${secondDiceResults.results}`;
-            }      
-        }
+        results = handleFlags(flags, diceResults, diceFunc, results);
 
-        const finalResultString = `>>> ${msg.author.toString()}, **${total}**\n${results}`;
+        const finalResultString = `>>> ${msg.author.toString()}, **${results.total}**\n${results.results}`;
 
         return (finalResultString.length <= 2000 ? finalResultString : 'Result is too large to display.');
     }
+};
+
+const handleFlags = (flags, diceResults, diceFunc, results) => {
+    if (!flags) return results;
+
+    diceResults.total = applyTotalModifier(diceResults.total, flags);
+    
+    const hasAdvFlag = flags.includes('a');
+    if (hasAdvFlag || flags.includes('d')) {
+        const secondDiceResults = diceFunc();
+        secondDiceResults.total = applyTotalModifier(secondDiceResults.total, flags);
+        let total;
+        if (hasAdvFlag) {
+            total = diceResults.total > secondDiceResults.total ? diceResults.total : secondDiceResults.total;
+        }
+        else {
+            total = diceResults.total < secondDiceResults.total ? diceResults.total : secondDiceResults.total;
+        }
+        results = {
+            total,
+            results:
+                `1st Roll:   **${diceResults.total}**\t${diceResults.results}\n` +
+                `2nd Roll: **${secondDiceResults.total}**\t${secondDiceResults.results}`
+        };
+    }
+    else {
+        results.total = diceResults.total;
+    }
+    return results;
 };
 
 const applyTotalModifier = (total, flags) => {
