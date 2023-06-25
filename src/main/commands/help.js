@@ -1,4 +1,4 @@
-const helpEmbed = require('./common/extras');
+const {helpEmbed} = require('./common/extras');
 
 module.exports = {
     name: 'help',

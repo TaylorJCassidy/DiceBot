@@ -15,7 +15,6 @@ module.exports = {
         
         const diceFunc = () => diceRoller(noFlagsDiceString, rigged);
         const rigged = guildInfo.getRigged();
-        const flags = diceString.match(/(?<=~)\w+/g);
         const noFlagsDiceString = diceString.replaceAll(/~\w+/g, '');
         const diceResults = diceFunc();
         
@@ -24,7 +23,7 @@ module.exports = {
             results: `You rolled: ${diceResults.results}`
         };
 
-        results = handleFlags(flags, diceResults, diceFunc, results);
+        results = handleFlags(diceString, diceResults, diceFunc, results);
 
         const finalResultString = `>>> ${msg.author.toString()}, **${results.total}**\n${results.results}`;
 
@@ -32,7 +31,8 @@ module.exports = {
     }
 };
 
-const handleFlags = (flags, diceResults, diceFunc, results) => {
+const handleFlags = (diceString, diceResults, diceFunc, results) => {
+    const flags = diceString.match(/(?<=~)\w+/g);
     if (!flags) return results;
 
     diceResults.total = applyTotalModifier(diceResults.total, flags);

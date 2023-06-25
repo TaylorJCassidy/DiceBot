@@ -36,36 +36,38 @@ module.exports = (client) => {
         const prefix = guildInfo.getPrefix();
         
         if (msg.content.startsWith(prefix)) {
-            const msgcontent = msg.content.slice(prefix.length);
             const options = {
                 guildInfo,
                 commands
             };
-
-            if (diceRegex.test(msgcontent)) {
-                msg.reply(commands.get('dice').diceController(msg, msgcontent, options));
-            }
-            else {
-                const split = msgcontent.search(/ |$/);
-                const aliases = guildInfo.getAliases();
-                const command = msgcontent.substring(0, split).toLowerCase();
-                const args = msgcontent.substring(split+1).trim();
-
-                if (aliases.has(command)) {
-                    msg.reply(commands.get('dice').diceController(msg, aliases.get(command).dice+args));
-                }
-                else if (commands.has(command)) {
-                    const commandObject = commands.get(command);
-                    const reply = commandObject.run(msg, args, options);
-                    if (reply) msg.reply(reply);
-                }
-                else {
-                    msg.reply(`There is no ${command} command! ${prefix}help for help`);
-                }
-            }
+            callCommand(msg, msg.content.slice(prefix.length), options, prefix);
         }
         else if (!msg.mentions.everyone && msg.mentions.has(client.user.id) && !msg.author.bot) {
             msg.reply(`The current prefix is '**${prefix}**'`);
         }
     });
+};
+
+const callCommand = (msg, commandString, options, prefix) => {
+    if (diceRegex.test(commandString)) {
+        msg.reply(commands.get('dice').diceController(msg, commandString, options));
+    }
+    else {
+        const split = commandString.search(/ |$/);
+        const command = commandString.substring(0, split).toLowerCase();
+        const args = commandString.substring(split+1).trim();
+        const aliases = options.guildInfo.getAliases();
+
+        if (aliases.has(command)) {
+            msg.reply(commands.get('dice').diceController(msg, aliases.get(command).dice+args));
+        }
+        else if (commands.has(command)) {
+            const commandObject = commands.get(command);
+            const reply = commandObject.run(msg, args, options);
+            if (reply) msg.reply(reply);
+        }
+        else {
+            msg.reply(`There is no ${command} command! ${prefix}help for help`);
+        }
+    }
 };
