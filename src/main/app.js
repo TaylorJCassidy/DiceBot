@@ -1,10 +1,7 @@
 const commands = require('./utils/getCommands.js');
-const getGuildCaches = require('./utils/getGuildCaches.js');
-const GuildCache = require('./caches/GuildCache.js');
 const {ChannelType} = require('discord.js');
 const {diceRegex} = require('./commands/common/extras.js');
-
-let guilds;
+const {setupGuildRepos, addGuild, getGuild, deleteGuildCache} = require('./repository/GuildRepoManager.js');
 
 module.exports = (client) => {
     client.on('ready', () => {
@@ -17,22 +14,21 @@ module.exports = (client) => {
         );
         console.log(`Logged in as ${client.user.tag} at ${new Date().toISOString()}`);
 
-        guilds = getGuildCaches(client.guilds);
+        setupGuildRepos(client.guilds);
     });
 
     client.on('guildDelete', (guild) => {
-        guilds.get(guild.id).deleteGuild();
-        guilds.delete(guild.id);
+        deleteGuildCache(guild.id);
     });
     
     client.on('guildCreate', (guild) => {  
-        guilds.set(guild.id, new GuildCache(guild.id));
+        addGuild(guild.id);
     });
     
     client.on('messageCreate', (msg) => {
         if (msg.author.id == client.user.id || msg.channel.type != ChannelType.GuildText) return;
     
-        const guildInfo = guilds.get(msg.guild.id);
+        const guildInfo = getGuild(msg.guild.id);
         const prefix = guildInfo.getPrefix();
         
         if (msg.content.startsWith(prefix)) {

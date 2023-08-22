@@ -2,5 +2,8 @@
     "defaultPrefix": ".",
     "theme": {
         "colour": "fca000"
+    },
+    "cache": {
+        "invalidateRetryAttempts": 3
     }
 }
