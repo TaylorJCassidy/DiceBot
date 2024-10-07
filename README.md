@@ -9,8 +9,6 @@ A Discord Dice bot written using NodeJS and a module called "Discord.JS".
 * Generate D&D stats and other numerous D&D functions
 * Numerous utility bot functions e.g. change command prefixes
 
-To add this bot to your own Discord server, click [here](https://discord.com/api/oauth2/authorize?client_id=774637611482349578&permissions=3072&scope=bot).
-
 ## Running Locally
 
 ### First Time Setup
